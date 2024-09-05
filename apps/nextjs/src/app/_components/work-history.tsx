@@ -1,6 +1,9 @@
 import React from "react";
 import { Minus } from "lucide-react";
 
+import { BackgroundBeamsWithCollision } from "@acme/ui/background-beams-with-collision";
+import { ShootingStars } from "@acme/ui/shooting-stars";
+import { StarsBackground } from "@acme/ui/star-background";
 import { Timeline } from "@acme/ui/timeline";
 
 const items_1 = [
@@ -87,8 +90,10 @@ export function WorkHistory() {
     },
   ];
   return (
-    <div className="w-full">
+    <div className="relative w-full">
       <Timeline data={data} />
+      <ShootingStars />
+      <StarsBackground />
     </div>
   );
 }
