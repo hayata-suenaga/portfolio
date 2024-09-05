@@ -6,9 +6,9 @@ export const runtime = "edge";
 export default function HomePage() {
   return (
     <HydrateClient>
-      {/* <main className="container h-screen py-16"> */}
-      <Home />
-      {/* </main> */}
+      <main className="bg-slate-900 text-slate-50">
+        <Home />
+      </main>
     </HydrateClient>
   );
 }
