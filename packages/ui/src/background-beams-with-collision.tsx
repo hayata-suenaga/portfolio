@@ -115,7 +115,7 @@ const CollisionMechanism = React.forwardRef<
       repeatDelay?: number;
     };
   }
->(({ parentRef, containerRef, beamOptions = {} }, ref) => {
+>(({ parentRef, containerRef, beamOptions = {} }) => {
   const beamRef = useRef<HTMLDivElement>(null);
   const [collision, setCollision] = useState<{
     detected: boolean;
@@ -159,7 +159,7 @@ const CollisionMechanism = React.forwardRef<
     const animationInterval = setInterval(checkCollision, 50);
 
     return () => clearInterval(animationInterval);
-  }, [cycleCollisionDetected, containerRef]);
+  }, [cycleCollisionDetected, containerRef, parentRef]);
 
   useEffect(() => {
     if (collision.detected && collision.coordinates) {
@@ -181,24 +181,24 @@ const CollisionMechanism = React.forwardRef<
         ref={beamRef}
         animate="animate"
         initial={{
-          translateY: beamOptions.initialY || "-200px",
-          translateX: beamOptions.initialX || "0px",
-          rotate: beamOptions.rotate || 0,
+          translateY: beamOptions.initialY ?? "-200px",
+          translateX: beamOptions.initialX ?? "0px",
+          rotate: beamOptions.rotate ?? 0,
         }}
         variants={{
           animate: {
-            translateY: beamOptions.translateY || "1800px",
-            translateX: beamOptions.translateX || "0px",
-            rotate: beamOptions.rotate || 0,
+            translateY: beamOptions.translateY ?? "1800px",
+            translateX: beamOptions.translateX ?? "0px",
+            rotate: beamOptions.rotate ?? 0,
           },
         }}
         transition={{
-          duration: beamOptions.duration || 8,
+          duration: beamOptions.duration ?? 8,
           repeat: Infinity,
           repeatType: "loop",
           ease: "linear",
-          delay: beamOptions.delay || 0,
-          repeatDelay: beamOptions.repeatDelay || 0,
+          delay: beamOptions.delay ?? 0,
+          repeatDelay: beamOptions.repeatDelay ?? 0,
         }}
         className={cn(
           "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent",
