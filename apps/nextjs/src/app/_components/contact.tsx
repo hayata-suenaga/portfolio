@@ -1,9 +1,6 @@
 "use client";
 
-import Link from "next/link";
-
 import { BackgroundBeams } from "@acme/ui/background-beams";
-import { Button } from "@acme/ui/button";
 import { TypewriterEffectSmooth } from "@acme/ui/typewriter-effect";
 
 export function Contact() {
@@ -34,17 +31,17 @@ export function Contact() {
         Let's chat!
       </p>
       <TypewriterEffectSmooth words={words} />
-      <div className="mt-8">
-        <Button
+      hayata.suenaga111@gmail.com
+      {/* <div className="mt-8">
+        <button
           className="z-10 cursor-pointer rounded-md bg-white p-4 font-bold text-slate-950 transition-all hover:opacity-90"
           onClick={() => console.log("clicked")}
-          asChild
         >
           <Link href="https://calendly.com/hayata-suenaga-eisuke/30min">
-            Book a meeting with me
+          Book a meeting with me
           </Link>
-        </Button>
-      </div>
+        </button>
+      </div> */}
       <BackgroundBeams />
     </div>
   );
