@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+// @ts-expect-error
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 import baseConfig from "@acme/tailwind-config/web";
