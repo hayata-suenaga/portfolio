@@ -27,12 +27,15 @@ export function Contact() {
   ];
   return (
     <div className="relative flex h-screen flex-col items-center justify-center">
-      <p className="text-xs text-neutral-600 dark:text-neutral-200 sm:text-base">
+      <p className="text-base text-slate-600 dark:text-slate-200 sm:text-lg">
         Let's chat!
       </p>
       <TypewriterEffectSmooth words={words} />
       <div className="flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-        <button className="h-10 rounded-xl border border-black bg-white py-4 text-sm text-black">
+        <button
+          className="z-10 cursor-pointer rounded-md bg-white p-4 font-bold text-slate-950 transition-all hover:opacity-90"
+          onClick={() => console.log("clicked")}
+        >
           Book a meeting with me
         </button>
       </div>
