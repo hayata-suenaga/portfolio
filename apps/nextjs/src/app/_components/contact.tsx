@@ -26,7 +26,7 @@ export function Contact() {
     },
   ];
   return (
-    <div className="relative flex h-screen flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center py-40">
       <p className="text-base text-slate-600 dark:text-slate-200 sm:text-lg">
         Let's chat!
       </p>
