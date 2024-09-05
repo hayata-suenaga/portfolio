@@ -6,7 +6,7 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { initTRPC, TRPCError } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -24,12 +24,9 @@ import { db } from "@acme/db/client";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = (opts: { headers: Headers }) => {
-  const authToken = opts.headers.get("Authorization") ?? null;
-
+export const createTRPCContext = () => {
   return {
     db,
-    token: authToken,
   };
 };
 
