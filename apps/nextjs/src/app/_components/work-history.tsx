@@ -1,7 +1,6 @@
 import React from "react";
 import { Minus } from "lucide-react";
 
-import { BackgroundBeamsWithCollision } from "@acme/ui/background-beams-with-collision";
 import { ShootingStars } from "@acme/ui/shooting-stars";
 import { StarsBackground } from "@acme/ui/star-background";
 import { Timeline } from "@acme/ui/timeline";
