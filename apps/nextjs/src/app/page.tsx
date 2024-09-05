@@ -6,7 +6,7 @@ export const runtime = "edge";
 export default function HomePage() {
   return (
     <HydrateClient>
-      <main className="bg-slate-900 text-slate-50">
+      <main className="bg-slate-950 text-slate-50">
         <Home />
       </main>
     </HydrateClient>
