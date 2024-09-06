@@ -1,9 +1,5 @@
-import Image from "next/image";
-
 import { BackgroundBeamsWithCollision } from "@acme/ui/background-beams-with-collision";
 import { StarsBackground } from "@acme/ui/star-background";
-
-import me from "../../../public/me.png";
 
 export default function Hero() {
   return (
@@ -25,7 +21,6 @@ export default function Hero() {
             </span>
           </p>
         </div>
-        <Image src={me} alt="Hayata" className="absolute bottom-0 h-80 w-80" />
       </BackgroundBeamsWithCollision>
 
       <StarsBackground />
