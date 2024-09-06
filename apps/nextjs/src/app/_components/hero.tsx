@@ -7,7 +7,7 @@ import me from "../../../public/me.png";
 
 export default function Hero() {
   return (
-    <div className="relative flex h-screen items-center px-6">
+    <div className="relative flex h-svh items-center px-6">
       <BackgroundBeamsWithCollision>
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="mb-4 bg-gradient-to-b from-slate-500 to-white bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
