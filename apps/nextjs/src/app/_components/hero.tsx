@@ -20,7 +20,7 @@ export default function Hero() {
           </h1>
           <p className="mb-8 text-xl text-gray-400 sm:text-2xl md:text-3xl">
             with{" "}
-            <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Hayata
             </span>
           </p>
