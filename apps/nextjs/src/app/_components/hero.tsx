@@ -6,7 +6,7 @@ export default function Hero() {
     <div className="relative flex h-svh items-center px-6">
       <BackgroundBeamsWithCollision>
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="mb-4 bg-gradient-to-b from-slate-500 to-white bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
+          <h1 className="mb-4 bg-gradient-to-b from-slate-500 to-slate-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl">
             Launch Your MVP
             <br />
             in 1 <span className="line-through decoration-slate-50">
