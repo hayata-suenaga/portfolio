@@ -1,9 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { BackgroundBeams } from "@acme/ui/background-beams";
 import { TypewriterEffectSmooth } from "@acme/ui/typewriter-effect";
 
 export function Contact() {
+  const router = useRouter();
   const words = [
     {
       text: "Build",
@@ -31,17 +34,16 @@ export function Contact() {
         Let's chat!
       </p>
       <TypewriterEffectSmooth words={words} />
-      hayata.suenaga111@gmail.com
-      {/* <div className="mt-8">
+      <div className="z-10 mt-8">
         <button
-          className="z-10 cursor-pointer rounded-md bg-white p-4 font-bold text-slate-950 transition-all hover:opacity-90"
-          onClick={() => console.log("clicked")}
+          className="z-10 rounded-md bg-white p-4 font-bold text-slate-950 transition-all hover:opacity-90"
+          onClick={() =>
+            router.push("https://calendly.com/hayata-suenaga-eisuke/30min")
+          }
         >
-          <Link href="https://calendly.com/hayata-suenaga-eisuke/30min">
           Book a meeting with me
-          </Link>
         </button>
-      </div> */}
+      </div>
       <BackgroundBeams />
     </div>
   );
