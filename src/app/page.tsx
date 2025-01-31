@@ -151,7 +151,10 @@ export default function PortfolioPage() {
               Bachelor of Science in Computer Science
             </p>
             <ul className="list-disc pl-4 space-y-2 text-sm">
-              <li>Founder's Scholarship recipient | Dean's List (4 terms)</li>
+              <li>
+                Founder&apos;s Scholarship recipient | Dean&apos;s List (4
+                terms)
+              </li>
               <li>
                 Relevant Coursework: Data Structures (UC Berkeley CS 61B),
                 Statistics, Discrete Structures
