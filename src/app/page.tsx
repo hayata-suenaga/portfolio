@@ -29,10 +29,17 @@ export default function PortfolioPage() {
           <h2 className="text-xl text-muted-foreground mb-6">
             Software Engineer
           </h2>
-          <Button className="gap-2">
-            <Mail className="h-4 w-4" />
-            Contact Me
-          </Button>
+          <div className="flex gap-4">
+            <Button className="gap-2">
+              <Mail className="h-4 w-4" />
+              Contact Me
+            </Button>
+            <Button variant="outline" className="gap-2" asChild>
+              <a href="/resume.pdf" download>
+                Download Resume
+              </a>
+            </Button>
+          </div>
         </header>
 
         {/* Introduction */}
