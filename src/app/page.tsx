@@ -38,7 +38,7 @@ export default function PortfolioPage() {
         {/* Introduction */}
         <article className="prose dark:prose-invert max-w-none">
           <p>
-            Hi! I'm Hayata, a software engineer with over three years of
+            Hi! I&apos;m Hayata, a software engineer with over three years of
             industry experience, much of which I spent at{" "}
             <strong>Expensify</strong> working on systems serving{" "}
             <u>15M+ users</u>. Based in San Francisco and sometimes in Japan.
@@ -46,7 +46,7 @@ export default function PortfolioPage() {
 
           <p>
             At Expensify, I led critical projects and managed engineering teams.
-            Now, I'm building
+            Now, I&apos;m building
             <strong> Eisuke</strong>, a language learning platform that combines
             web and mobile applications to help people master English
             vocabulary.
