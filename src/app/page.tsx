@@ -30,9 +30,11 @@ export default function PortfolioPage() {
             Software Engineer
           </h2>
           <div className="flex gap-4">
-            <Button className="gap-2">
-              <Mail className="h-4 w-4" />
-              Contact Me
+            <Button className="gap-2" asChild>
+              <a href="mailto:hayata.suenaga@eisuke.org">
+                <Mail className="h-4 w-4" />
+                Contact Me
+              </a>
             </Button>
             <Button variant="outline" className="gap-2" asChild>
               <a href="/resume.pdf" download>
