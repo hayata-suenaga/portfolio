@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sun, Moon, Mail, FileDown } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
@@ -30,6 +31,36 @@ export default function PortfolioPage() {
           <h2 className="text-xl text-muted-foreground mb-6">
             Software Engineer
           </h2>
+          <div className="flex gap-2 mb-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="[&_svg]:size-6"
+              asChild
+            >
+              <Link
+                href="https://www.linkedin.com/in/hayata-suenaga/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedin />
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="[&_svg]:size-6"
+              asChild
+            >
+              <Link
+                href="https://github.com/hayata-suenaga"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub />
+              </Link>
+            </Button>
+          </div>
           <div className="flex flex-wrap gap-4">
             <a href="mailto:hayata.suenaga@eisuke.org">
               <Button className="gap-2">
@@ -41,26 +72,6 @@ export default function PortfolioPage() {
               <Button variant="outline" className="gap-2">
                 <FileDown className="h-4 w-4" />
                 Download Resume
-              </Button>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/hayata-suenaga/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" className="gap-2">
-                <FaLinkedin className="h-4 w-4" />
-                LinkedIn
-              </Button>
-            </a>
-            <a
-              href="https://github.com/hayata-suenaga"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" className="gap-2">
-                <FaGithub className="h-4 w-4" />
-                GitHub
               </Button>
             </a>
           </div>
