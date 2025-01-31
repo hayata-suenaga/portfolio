@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Mail, FileDown } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "next-themes";
 
 export default function PortfolioPage() {
@@ -29,19 +30,39 @@ export default function PortfolioPage() {
           <h2 className="text-xl text-muted-foreground mb-6">
             Software Engineer
           </h2>
-          <div className="flex gap-4">
-            <Button className="gap-2" asChild>
-              <a href="mailto:hayata.suenaga@eisuke.org">
+          <div className="flex flex-wrap gap-4">
+            <a href="mailto:hayata.suenaga@eisuke.org">
+              <Button className="gap-2">
                 <Mail className="h-4 w-4" />
                 Contact Me
-              </a>
-            </Button>
-            <Button variant="outline" className="gap-2" asChild>
-              <a href="/resume.pdf" download>
+              </Button>
+            </a>
+            <a href="/resume.pdf" download>
+              <Button variant="outline" className="gap-2">
                 <FileDown className="h-4 w-4" />
                 Download Resume
-              </a>
-            </Button>
+              </Button>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/hayata-suenaga/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="gap-2">
+                <FaLinkedin className="h-4 w-4" />
+                LinkedIn
+              </Button>
+            </a>
+            <a
+              href="https://github.com/hayata-suenaga"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="gap-2">
+                <FaGithub className="h-4 w-4" />
+                GitHub
+              </Button>
+            </a>
           </div>
         </header>
 
