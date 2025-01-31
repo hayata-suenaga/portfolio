@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Mail } from "lucide-react";
+import { Sun, Moon, Mail, FileDown } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export default function PortfolioPage() {
@@ -36,6 +36,7 @@ export default function PortfolioPage() {
             </Button>
             <Button variant="outline" className="gap-2" asChild>
               <a href="/resume.pdf" download>
+                <FileDown className="h-4 w-4" />
                 Download Resume
               </a>
             </Button>
