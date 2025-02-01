@@ -84,16 +84,17 @@ const createCalendar = (
     .select("body")
     .append("div")
     .attr("class", "calendar-tooltip")
+    .classed("bg-background", true)
+    .classed("border-border", true)
+    .classed("border", true)
+    .classed("p-2", true)
+    .classed("rounded-sm", true)
+    .classed("text-foreground", true)
     .style("opacity", 0)
     .style("position", "absolute")
-    .style("background-color", "var(--background)")
-    .style("border", "1px solid var(--border)")
-    .style("padding", "8px")
-    .style("border-radius", "4px")
     .style("pointer-events", "none")
     .style("z-index", "50")
-    .style("font-size", "12px")
-    .style("color", "var(--foreground)");
+    .style("font-size", "12px");
 
   // Create grid for each week
   data.forEach((week, weekIndex) => {
@@ -156,9 +157,9 @@ const createCalendar = (
         return weekIndex * cellSize;
       })
       .text((d) => d3.timeFormat("%b")(d))
-      .attr("font-size", "9px")
-      .attr("text-anchor", "start")
-      .attr("fill", "var(--muted-foreground)");
+      .classed("text-[9px]", true)
+      .classed("fill-muted-foreground", true)
+      .attr("text-anchor", "start");
   }
 
   // Add day labels on the left
@@ -171,8 +172,8 @@ const createCalendar = (
     .attr("y", (_, i) => i * cellSize + cellSize / 2)
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
-    .attr("font-size", "9px")
-    .attr("fill", "var(--muted-foreground)")
+    .classed("text-[9px]", true)
+    .classed("fill-muted-foreground", true)
     .text((d) => d);
 };
 
