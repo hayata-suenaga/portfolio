@@ -26,8 +26,6 @@ export default function PortfolioPage() {
         </Button>
       </div>
 
-      <GitHubContributionCalendar username="hayata-suenaga" />
-
       <main className="container mx-auto max-w-2xl">
         {/* Header */}
         <header className="mb-12">
@@ -92,6 +90,22 @@ export default function PortfolioPage() {
                 </a>
               </div>
             </div>
+          </div>
+
+          {/* GitHub Contributions */}
+          <div className="mt-8 p-4 rounded-lg border bg-card">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">GitHub Contributions</h3>
+              <Link
+                href="https://github.com/hayata-suenaga"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                View Profile
+              </Link>
+            </div>
+            <GitHubContributionCalendar username="hayata-suenaga" />
           </div>
         </header>
 
