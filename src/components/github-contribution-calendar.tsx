@@ -51,14 +51,17 @@ const createCalendar = (
   svgEl: SVGSVGElement,
   data: WeeklyContributionData[]
 ) => {
-  const cellSize = 15;
+  const cellSize = 10;
   const margin = {
-    top: 20, // Space for month labels
-    right: 10,
-    bottom: 10,
-    left: 35, // Space for day labels
+    top: 16,
+    right: 0,
+    bottom: 0,
+    left: 16,
   };
-  const width = 828 + margin.left + margin.right;
+
+  // Calculate the total width based on the number of weeks
+  const gridWidth = data.length * cellSize;
+  const width = gridWidth + margin.left + margin.right;
   const height = 7 * cellSize + margin.top + margin.bottom;
 
   // Clear existing content
@@ -68,9 +71,8 @@ const createCalendar = (
     .select(svgEl)
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("font-family", "sans-serif")
-    .attr("font-size", 10);
+    .attr("font-size", 9);
 
-  // Create a group for the entire chart, translated by the margins
   const g = svg
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -84,12 +86,14 @@ const createCalendar = (
     .attr("class", "calendar-tooltip")
     .style("opacity", 0)
     .style("position", "absolute")
-    .style("background-color", "white")
-    .style("border", "1px solid #ddd")
-    .style("padding", "10px")
+    .style("background-color", "var(--background)")
+    .style("border", "1px solid var(--border)")
+    .style("padding", "8px")
     .style("border-radius", "4px")
     .style("pointer-events", "none")
-    .style("z-index", "10");
+    .style("z-index", "50")
+    .style("font-size", "12px")
+    .style("color", "var(--foreground)");
 
   // Create grid for each week
   data.forEach((week, weekIndex) => {
@@ -137,7 +141,7 @@ const createCalendar = (
     ).sort((a, b) => a.getTime() - b.getTime());
 
     g.append("g")
-      .attr("transform", `translate(0, ${-8})`) // Adjust position upward
+      .attr("transform", `translate(0, ${-6})`)
       .selectAll("text")
       .data(months)
       .join("text")
@@ -152,23 +156,23 @@ const createCalendar = (
         return weekIndex * cellSize;
       })
       .text((d) => d3.timeFormat("%b")(d))
-      .attr("font-size", "10px")
+      .attr("font-size", "9px")
       .attr("text-anchor", "start")
-      .attr("fill", "#767676");
+      .attr("fill", "var(--muted-foreground)");
   }
 
   // Add day labels on the left
-  const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""];
+  const dayLabels = ["", "M", "", "W", "", "F", ""];
   g.append("g")
     .selectAll("text")
     .data(dayLabels)
     .join("text")
-    .attr("x", -8) // Move labels closer to the grid
+    .attr("x", -6)
     .attr("y", (_, i) => i * cellSize + cellSize / 2)
     .attr("text-anchor", "end")
-    .attr("dominant-baseline", "middle") // More reliable than alignment-baseline
-    .attr("font-size", "10px")
-    .attr("fill", "#767676")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", "9px")
+    .attr("fill", "var(--muted-foreground)")
     .text((d) => d);
 };
 
