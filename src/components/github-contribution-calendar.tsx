@@ -13,7 +13,6 @@ function GitHubContributionCalendar({ username }: { username: string }) {
           `/api/github-contributions?username=${username}`
         );
         const data = await response.json();
-        console.log("data", data);
         const contributionData = transformData(data);
 
         if (!svgRef.current) return;
@@ -39,7 +38,11 @@ function GitHubContributionCalendar({ username }: { username: string }) {
     }));
   };
 
-  return <svg ref={svgRef} width="100%" height="auto" />;
+  return (
+    <div className="relative w-full">
+      <svg ref={svgRef} width="100%" height="auto" />
+    </div>
+  );
 }
 
 export default GitHubContributionCalendar;
@@ -49,8 +52,14 @@ const createCalendar = (
   data: WeeklyContributionData[]
 ) => {
   const cellSize = 15;
-  const width = 828;
-  const height = 7 * cellSize; // 7 days per week
+  const margin = {
+    top: 20, // Space for month labels
+    right: 10,
+    bottom: 10,
+    left: 35, // Space for day labels
+  };
+  const width = 828 + margin.left + margin.right;
+  const height = 7 * cellSize + margin.top + margin.bottom;
 
   // Clear existing content
   d3.select(svgEl).selectAll("*").remove();
@@ -60,6 +69,11 @@ const createCalendar = (
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("font-family", "sans-serif")
     .attr("font-size", 10);
+
+  // Create a group for the entire chart, translated by the margins
+  const g = svg
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   // Remove any existing tooltips
   d3.select("body").selectAll(".calendar-tooltip").remove();
@@ -74,11 +88,12 @@ const createCalendar = (
     .style("border", "1px solid #ddd")
     .style("padding", "10px")
     .style("border-radius", "4px")
-    .style("pointer-events", "none");
+    .style("pointer-events", "none")
+    .style("z-index", "10");
 
   // Create grid for each week
   data.forEach((week, weekIndex) => {
-    const weekGroup = svg
+    const weekGroup = g
       .append("g")
       .attr("transform", `translate(${weekIndex * cellSize}, 0)`);
 
@@ -89,7 +104,7 @@ const createCalendar = (
       .attr("width", cellSize - 1)
       .attr("height", cellSize - 1)
       .attr("x", 0)
-      .attr("y", (d) => d.weekday * cellSize) // Position based on day of week
+      .attr("y", (d) => d.weekday * cellSize)
       .attr("fill", (d) => d.color)
       .attr("rx", 2)
       .attr("ry", 2)
@@ -111,7 +126,6 @@ const createCalendar = (
 
   // Add month labels at the top
   if (data.length > 0) {
-    // Get all unique months from the data
     const months = Array.from(
       new Set(
         data.flatMap((week) =>
@@ -122,14 +136,12 @@ const createCalendar = (
       )
     ).sort((a, b) => a.getTime() - b.getTime());
 
-    svg
-      .append("g")
-      .attr("transform", `translate(0, ${-5})`)
+    g.append("g")
+      .attr("transform", `translate(0, ${-8})`) // Adjust position upward
       .selectAll("text")
       .data(months)
       .join("text")
       .attr("x", (d) => {
-        // Find the first week that contains this month
         const weekIndex = data.findIndex((week) =>
           week.contributionDays.some(
             (day) =>
@@ -147,15 +159,14 @@ const createCalendar = (
 
   // Add day labels on the left
   const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  svg
-    .append("g")
+  g.append("g")
     .selectAll("text")
     .data(dayLabels)
     .join("text")
-    .attr("x", -5)
+    .attr("x", -8) // Move labels closer to the grid
     .attr("y", (_, i) => i * cellSize + cellSize / 2)
     .attr("text-anchor", "end")
-    .attr("alignment-baseline", "middle")
+    .attr("dominant-baseline", "middle") // More reliable than alignment-baseline
     .attr("font-size", "10px")
     .attr("fill", "#767676")
     .text((d) => d);
