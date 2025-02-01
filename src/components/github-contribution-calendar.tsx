@@ -1,32 +1,53 @@
-"use client";
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function GitHubContributionCalendar({ username }: { username: string }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [contributionData, setContributionData] = useState<
+    WeeklyContributionData[] | null
+  >(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+      setContributionData(null);
+
       try {
         const response = await fetch(
           `/api/github-contributions?username=${username}`
         );
-        const data = await response.json();
-        const contributionData = transformData(data);
 
-        if (!svgRef.current) return;
-        createCalendar(svgRef.current, contributionData);
+        if (!response.ok) {
+          throw new Error("Failed to fetch contribution data");
+        }
+
+        const data = await response.json();
+        const transformed = transformData(data);
+        setContributionData(transformed);
       } catch (error) {
         console.error(
           "Error fetching or rendering GitHub contributions:",
           error
         );
+        setError(error instanceof Error ? error.message : "An error occurred");
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [username]);
+
+  // Separate useEffect for creating the calendar after data is loaded and component is mounted
+  useEffect(() => {
+    if (contributionData && svgRef.current) {
+      createCalendar(svgRef.current, contributionData);
+    }
+  }, [contributionData]);
 
   const transformData = (data: ContributionData) => {
     return data.weeks.map((week) => ({
@@ -37,6 +58,18 @@ function GitHubContributionCalendar({ username }: { username: string }) {
       })),
     }));
   };
+
+  if (isLoading) {
+    return <Skeleton className="w-full h-24" />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-sm text-red-500">
+        Failed to load contribution data: {error}
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full">
