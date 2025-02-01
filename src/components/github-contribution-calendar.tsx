@@ -158,7 +158,7 @@ const createCalendar = (
   }
 
   // Add day labels on the left
-  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""];
   g.append("g")
     .selectAll("text")
     .data(dayLabels)
