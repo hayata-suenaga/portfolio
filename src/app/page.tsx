@@ -6,6 +6,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
+import GitHubContributionCalendar from "@/components/github-contribution-calendar";
 
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
@@ -24,6 +25,8 @@ export default function PortfolioPage() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
+
+      <GitHubContributionCalendar username="hayata-suenaga" />
 
       <main className="container mx-auto max-w-2xl">
         {/* Header */}
