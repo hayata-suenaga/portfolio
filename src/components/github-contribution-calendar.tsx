@@ -9,6 +9,11 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   const [contributionData, setContributionData] = useState<
     WeeklyContributionData[] | null
   >(null);
+  const [tooltip, setTooltip] = useState<{
+    label: string;
+    x: number;
+    y: number;
+  } | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +50,21 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   // Separate useEffect for creating the calendar after data is loaded and component is mounted
   useEffect(() => {
     if (contributionData && svgRef.current) {
-      createCalendar(svgRef.current, contributionData);
+      createCalendar({
+        svgEl: svgRef.current,
+        weeklyData: contributionData,
+        onMouseOver: (data) => {
+          if (!data) setTooltip(null);
+          else
+            setTooltip({
+              label: `${data.data.contributionCount} contribution${
+                data.data.contributionCount !== 1 ? "s" : ""
+              } on ${data.data.date.toLocaleDateString()}`,
+              x: data.x + 10,
+              y: data.y - 28,
+            });
+        },
+      });
     }
   }, [contributionData]);
 
@@ -72,101 +91,124 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   }
 
   return (
-    <div className="relative w-full">
-      <svg ref={svgRef} width="100%" height="auto" />
-    </div>
+    <>
+      <div>
+        <svg ref={svgRef} width="100%" height="auto" />
+      </div>
+      {tooltip && (
+        <CalendarTooltip label={tooltip.label} x={tooltip.x} y={tooltip.y} />
+      )}
+    </>
   );
 }
 
 export default GitHubContributionCalendar;
 
-const createCalendar = (
-  svgEl: SVGSVGElement,
-  data: WeeklyContributionData[]
-) => {
-  const cellSize = 10;
-  const margin = {
-    top: 16,
-    right: 0,
-    bottom: 0,
-    left: 16,
-  };
+function CalendarTooltip({
+  label,
+  x,
+  y,
+}: {
+  label: string;
+  x: number;
+  y: number;
+}) {
+  return (
+    <div
+      className="absolute pointer-events-none bg-background border border-border p-2 rounded-sm text-foreground text-xs z-50"
+      style={{
+        left: x,
+        top: y,
+      }}
+    >
+      {label}
+    </div>
+  );
+}
 
-  // Calculate the total width based on the number of weeks
-  const gridWidth = data.length * cellSize;
-  const width = gridWidth + margin.left + margin.right;
-  const height = 7 * cellSize + margin.top + margin.bottom;
-
+function createCalendar({
+  svgEl,
+  weeklyData,
+  onMouseOver,
+}: {
+  svgEl: SVGSVGElement;
+  weeklyData: WeeklyContributionData[];
+  onMouseOver: (
+    _: { data: DailyContributionData; x: number; y: number } | null
+  ) => void;
+}) {
   // Clear existing content
   d3.select(svgEl).selectAll("*").remove();
 
+  const MARGIN = {
+    TOP: 16,
+    RIGHT: 0,
+    BOTTOM: 0,
+    LEFT: 16,
+  };
+  const CELL_SIZE = 10;
+  const DAYS_IN_WEEK = 7;
+  const LABEL_PADDING = 4;
+
+  // Calculate the total width based on the number of weeks
+  const gridWidth = weeklyData.length * CELL_SIZE;
+  const canvasWidth = gridWidth + MARGIN.LEFT + MARGIN.RIGHT;
+  const canvasHeight = DAYS_IN_WEEK * CELL_SIZE + MARGIN.TOP + MARGIN.BOTTOM;
+
   const svg = d3
     .select(svgEl)
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 9);
+    .attr("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
 
-  const g = svg
+  const grid = svg
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-  // Remove any existing tooltips
-  d3.select("body").selectAll(".calendar-tooltip").remove();
-
-  const tooltip = d3
-    .select("body")
-    .append("div")
-    .attr("class", "calendar-tooltip")
-    .classed("bg-background", true)
-    .classed("border-border", true)
-    .classed("border", true)
-    .classed("p-2", true)
-    .classed("rounded-sm", true)
-    .classed("text-foreground", true)
-    .style("opacity", 0)
-    .style("position", "absolute")
-    .style("pointer-events", "none")
-    .style("z-index", "50")
-    .style("font-size", "12px");
+    .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
 
   // Create grid for each week
-  data.forEach((week, weekIndex) => {
-    const weekGroup = g
+  weeklyData.forEach((week, weekIndex) => {
+    const column = grid
       .append("g")
-      .attr("transform", `translate(${weekIndex * cellSize}, 0)`);
+      .attr("transform", `translate(${weekIndex * CELL_SIZE}, 0)`);
 
-    weekGroup
+    column
       .selectAll("rect")
       .data(week.contributionDays)
       .join("rect")
-      .attr("width", cellSize - 1)
-      .attr("height", cellSize - 1)
+      .attr("width", CELL_SIZE - 1)
+      .attr("height", CELL_SIZE - 1)
       .attr("x", 0)
-      .attr("y", (d) => d.weekday * cellSize)
-      .attr("fill", (d) => d.color)
-      .attr("rx", 2)
-      .attr("ry", 2)
-      .on("mouseover", (event: MouseEvent, d) => {
-        tooltip.transition().duration(200).style("opacity", 0.9);
-        tooltip
-          .html(
-            `${d.contributionCount} contribution${
-              d.contributionCount !== 1 ? "s" : ""
-            } on ${d.date.toLocaleDateString()}`
-          )
-          .style("left", `${event.pageX + 10}px`)
-          .style("top", `${event.pageY - 28}px`);
+      .attr("y", (d) => d.weekday * CELL_SIZE)
+      .attr("rx", CELL_SIZE / 2)
+      .attr("ry", CELL_SIZE / 2)
+      .classed("fill-muted", (d) => d.contributionLevel === "NONE")
+      .classed(
+        "fill-yellow-300",
+        (d) => d.contributionLevel === "FIRST_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-500",
+        (d) => d.contributionLevel === "SECOND_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-700",
+        (d) => d.contributionLevel === "THIRD_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-900",
+        (d) => d.contributionLevel === "FOURTH_QUARTILE"
+      )
+      .on("mouseover", (event: MouseEvent, data) => {
+        onMouseOver({ data, x: event.pageX, y: event.pageY });
       })
       .on("mouseout", () => {
-        tooltip.transition().duration(500).style("opacity", 0);
+        onMouseOver(null);
       });
   });
 
   // Add month labels at the top
-  if (data.length > 0) {
+  if (weeklyData.length > 0) {
     const months = Array.from(
       new Set(
-        data.flatMap((week) =>
+        weeklyData.flatMap((week) =>
           week.contributionDays.map(
             (day) => new Date(day.date.getFullYear(), day.date.getMonth(), 1)
           )
@@ -174,22 +216,26 @@ const createCalendar = (
       )
     ).sort((a, b) => a.getTime() - b.getTime());
 
-    g.append("g")
-      .attr("transform", `translate(0, ${-6})`)
+    svg
+      .append("g")
+      .attr(
+        "transform",
+        `translate(${MARGIN.LEFT}, ${MARGIN.TOP - LABEL_PADDING})`
+      )
       .selectAll("text")
       .data(months)
       .join("text")
+      .text((d) => d3.timeFormat("%b")(d))
       .attr("x", (d) => {
-        const weekIndex = data.findIndex((week) =>
+        const weekIndex = weeklyData.findIndex((week) =>
           week.contributionDays.some(
             (day) =>
               day.date.getMonth() === d.getMonth() &&
               day.date.getFullYear() === d.getFullYear()
           )
         );
-        return weekIndex * cellSize;
+        return weekIndex * CELL_SIZE;
       })
-      .text((d) => d3.timeFormat("%b")(d))
       .classed("text-[9px]", true)
       .classed("fill-muted-foreground", true)
       .attr("text-anchor", "start");
@@ -197,18 +243,22 @@ const createCalendar = (
 
   // Add day labels on the left
   const dayLabels = ["", "M", "", "W", "", "F", ""];
-  g.append("g")
+  svg
+    .append("g")
+    .attr(
+      "transform",
+      `translate(${MARGIN.LEFT - LABEL_PADDING}, ${MARGIN.TOP})`
+    )
     .selectAll("text")
     .data(dayLabels)
     .join("text")
-    .attr("x", -6)
-    .attr("y", (_, i) => i * cellSize + cellSize / 2)
+    .text((d) => d)
+    .attr("y", (_, i) => i * CELL_SIZE + CELL_SIZE / 2)
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
     .classed("text-[9px]", true)
-    .classed("fill-muted-foreground", true)
-    .text((d) => d);
-};
+    .classed("fill-muted-foreground", true);
+}
 
 type ContributionData = {
   weeks: WeeklyContributionData[];
@@ -216,10 +266,18 @@ type ContributionData = {
 };
 
 type WeeklyContributionData = {
-  contributionDays: Array<{
-    date: Date;
-    contributionCount: number;
-    color: string;
-    weekday: number;
-  }>;
+  contributionDays: DailyContributionData[];
+  firstDay: string;
+};
+
+type DailyContributionData = {
+  date: Date;
+  contributionCount: number;
+  contributionLevel:
+    | "NONE"
+    | "FIRST_QUARTILE"
+    | "SECOND_QUARTILE"
+    | "THIRD_QUARTILE"
+    | "FOURTH_QUARTILE";
+  weekday: number;
 };
