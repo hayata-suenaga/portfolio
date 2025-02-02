@@ -26,7 +26,7 @@ export default function PortfolioPage() {
         </Button>
       </div>
 
-      <main className="container mx-auto max-w-2xl">
+      <main className="mx-auto max-w-4xl">
         {/* Header */}
         <header className="mb-12">
           <div className="flex flex-col md:flex-row md:items-start md:gap-8 mb-6">
