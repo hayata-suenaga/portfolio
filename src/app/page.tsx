@@ -168,22 +168,40 @@ export default function PortfolioPage() {
               </ul>
 
               <div className="mt-8 mb-8">
-                <h4 className="text-sm font-medium mb-4">Our Platforms</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <WebsitePreview url="eisuke.org" title="Main Website" />
-                  <WebsitePreview url="app.eisuke.org" title="Student Portal" />
-                  <WebsitePreview
-                    url="teacher.eisuke.org"
-                    title="Teacher Dashboard"
-                  />
+                <h4 className="text-sm font-medium mb-4 text-center">
+                  Our Platforms
+                </h4>
+                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col items-center">
+                    <WebsitePreview url="eisuke.org" />
+                    <p className="text-sm font-medium mt-2 text-center">
+                      Main Website
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center">
+                    <WebsitePreview url="app.eisuke.org" />
+                    <p className="text-sm font-medium mt-2 text-center">
+                      Student Portal
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center">
+                    <WebsitePreview url="teacher.eisuke.org" />
+                    <p className="text-sm font-medium mt-2 text-center">
+                      Teacher Portal
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <div className="mt-8">
-                <h4 className="text-sm font-medium mb-4">Try Our Beta Apps</h4>
+                <h4 className="text-sm font-medium mb-4 text-center">
+                  Try Our Beta Apps
+                </h4>
                 <div className="flex flex-col sm:flex-row gap-8 justify-center">
                   <div className="flex flex-col items-center">
-                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="p-4 bg-card border rounded-lg">
                       <Image
                         src="/qr-ios.svg"
                         alt="iOS Beta QR Code"
@@ -195,7 +213,7 @@ export default function PortfolioPage() {
                     <span className="text-sm font-medium mt-3">iOS Beta</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="p-4 bg-card border rounded-lg">
                       <Image
                         src="/qr-android.svg"
                         alt="Android Beta QR Code"
@@ -365,25 +383,25 @@ export default function PortfolioPage() {
   );
 }
 
-function WebsitePreview({ url, title }: { url: string; title: string }) {
+function WebsitePreview({ url }: { url: string }) {
   return (
-    <div className="relative group">
-      <a
-        href={`https://${url}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block"
-      >
-        <div className="w-full h-48 border rounded-lg overflow-hidden relative">
-          <iframe
-            src={`https://${url}`}
-            className="w-full h-full transform scale-75 origin-top-left"
-            style={{ pointerEvents: "none" }}
-          />
-          <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
-        </div>
-        <p className="text-sm font-medium mt-2 text-center">{title}</p>
-      </a>
-    </div>
+    <a
+      href={`https://${url}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block hover:scale-105 transition-transform duration-300"
+    >
+      <div className="w-[260px] h-[180px] overflow-hidden rounded-sm border border-border pointer-events-none">
+        <iframe
+          src={`https://${url}`}
+          style={{
+            width: "1300px",
+            height: "900px",
+            transform: "scale(0.2)",
+            transformOrigin: "0 0",
+          }}
+        />
+      </div>
+    </a>
   );
 }
