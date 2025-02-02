@@ -141,7 +141,7 @@ export default function PortfolioPage() {
 
         {/* Experience */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Work History</h2>
+          <h2 className="text-2xl font-bold mb-6">Work History</h2>
 
           <div className="space-y-8">
             <div>
@@ -167,29 +167,43 @@ export default function PortfolioPage() {
                 </li>
               </ul>
 
+              <div className="mt-8 mb-8">
+                <h4 className="text-sm font-medium mb-4">Our Platforms</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <WebsitePreview url="eisuke.org" title="Main Website" />
+                  <WebsitePreview url="app.eisuke.org" title="Student Portal" />
+                  <WebsitePreview
+                    url="teacher.eisuke.org"
+                    title="Teacher Dashboard"
+                  />
+                </div>
+              </div>
+
               <div className="mt-8">
-                <h4 className="text-sm font-medium mb-4 text-center">
-                  Try Our Beta Apps
-                </h4>
+                <h4 className="text-sm font-medium mb-4">Try Our Beta Apps</h4>
                 <div className="flex flex-col sm:flex-row gap-8 justify-center">
                   <div className="flex flex-col items-center">
-                    <Image
-                      src="/qr-ios.svg"
-                      alt="iOS Beta QR Code"
-                      width={140}
-                      height={140}
-                      className="bg-card border rounded-lg"
-                    />
+                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <Image
+                        src="/qr-ios.svg"
+                        alt="iOS Beta QR Code"
+                        width={140}
+                        height={140}
+                        className="dark:invert-[0.15]"
+                      />
+                    </div>
                     <span className="text-sm font-medium mt-3">iOS Beta</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <Image
-                      src="/qr-android.svg"
-                      alt="Android Beta QR Code"
-                      width={140}
-                      height={140}
-                      className="border rounded-lg"
-                    />
+                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <Image
+                        src="/qr-android.svg"
+                        alt="Android Beta QR Code"
+                        width={140}
+                        height={140}
+                        className="dark:invert-[0.15]"
+                      />
+                    </div>
                     <span className="text-sm font-medium mt-3">
                       Android Beta
                     </span>
@@ -347,6 +361,29 @@ export default function PortfolioPage() {
           </div>
         </section>
       </main>
+    </div>
+  );
+}
+
+function WebsitePreview({ url, title }: { url: string; title: string }) {
+  return (
+    <div className="relative group">
+      <a
+        href={`https://${url}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <div className="w-full h-48 border rounded-lg overflow-hidden relative">
+          <iframe
+            src={`https://${url}`}
+            className="w-full h-full transform scale-75 origin-top-left"
+            style={{ pointerEvents: "none" }}
+          />
+          <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
+        </div>
+        <p className="text-sm font-medium mt-2 text-center">{title}</p>
+      </a>
     </div>
   );
 }
