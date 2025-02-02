@@ -167,13 +167,13 @@ export default function PortfolioPage() {
                 </li>
               </ul>
 
-              <div className="space-y-12 my-12">
+              <div>
                 {/* Platforms Section */}
                 <div className="p-12">
                   <h4 className="text-lg font-semibold mb-6 text-center">
                     Our Platforms
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="flex flex-col items-center group">
                       <WebsitePreview url="eisuke.org" />
                       <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
@@ -188,7 +188,7 @@ export default function PortfolioPage() {
                       </p>
                     </div>
 
-                    <div className="flex flex-col items-center md:col-span-2 lg:col-span-1 group">
+                    <div className="flex flex-col items-center sm:col-span-2 lg:col-span-1 group">
                       <WebsitePreview url="teacher.eisuke.org" />
                       <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
                         Teacher Portal
@@ -202,14 +202,14 @@ export default function PortfolioPage() {
                   <h4 className="text-lg font-semibold mb-6 text-center">
                     Try Our Beta Apps
                   </h4>
-                  <div className="flex flex-col sm:flex-row gap-8 justify-center">
+                  <div className="flex gap-12 justify-center">
                     <div className="flex flex-col items-center group">
                       <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">
                         <Image
                           src="/qr-ios.svg"
                           alt="iOS Beta QR Code"
-                          width={140}
-                          height={140}
+                          width={100}
+                          height={100}
                           className="dark:invert-[0.15]"
                         />
                       </div>
@@ -222,8 +222,8 @@ export default function PortfolioPage() {
                         <Image
                           src="/qr-android.svg"
                           alt="Android Beta QR Code"
-                          width={140}
-                          height={140}
+                          width={100}
+                          height={100}
                           className="dark:invert-[0.15]"
                         />
                       </div>
@@ -397,13 +397,13 @@ function WebsitePreview({ url }: { url: string }) {
       rel="noopener noreferrer"
       className="block hover:scale-105 transition-transform duration-300"
     >
-      <div className="w-[260px] h-[180px] overflow-hidden rounded-sm border border-border pointer-events-none">
+      <div className="w-[195px] h-[135px] overflow-hidden rounded-sm border border-border pointer-events-none">
         <iframe
           src={`https://${url}`}
           style={{
             width: "1300px",
             height: "900px",
-            transform: "scale(0.2)",
+            transform: "scale(0.15)",
             transformOrigin: "0 0",
           }}
         />
