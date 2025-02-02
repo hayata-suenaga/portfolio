@@ -141,7 +141,7 @@ export default function PortfolioPage() {
 
         {/* Experience */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Work History</h2>
+          <h2 className="text-2xl font-bold mb-6 text-primary">Experience</h2>
 
           <div className="space-y-8">
             <div>
