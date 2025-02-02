@@ -93,7 +93,7 @@ export default function PortfolioPage() {
           </div>
 
           {/* GitHub Contributions */}
-          <div className="mt-8 p-4 rounded-lg border bg-card">
+          <div className="mt-8 p-4 rounded-lg border bg-card overflow-hidden">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">GitHub Contributions</h3>
               <Link
@@ -105,7 +105,11 @@ export default function PortfolioPage() {
                 View Profile
               </Link>
             </div>
-            <GitHubContributionCalendar username="hayata-suenaga" />
+            <div className="w-full overflow-scroll">
+              <div className="min-w-[700px]">
+                <GitHubContributionCalendar username="hayata-suenaga" />
+              </div>
+            </div>
           </div>
         </header>
 
