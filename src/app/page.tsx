@@ -167,64 +167,70 @@ export default function PortfolioPage() {
                 </li>
               </ul>
 
-              <div className="mt-8 mb-8">
-                <h4 className="text-sm font-medium mb-4 text-center">
-                  Our Platforms
-                </h4>
-                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col items-center">
-                    <WebsitePreview url="eisuke.org" />
-                    <p className="text-sm font-medium mt-2 text-center">
-                      Main Website
-                    </p>
-                  </div>
+              <div className="space-y-12 my-12">
+                {/* Platforms Section */}
+                <div className="p-12">
+                  <h4 className="text-lg font-semibold mb-6 text-center">
+                    Our Platforms
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-col items-center group">
+                      <WebsitePreview url="eisuke.org" />
+                      <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                        Main Website
+                      </p>
+                    </div>
 
-                  <div className="flex flex-col items-center">
-                    <WebsitePreview url="app.eisuke.org" />
-                    <p className="text-sm font-medium mt-2 text-center">
-                      Student Portal
-                    </p>
-                  </div>
+                    <div className="flex flex-col items-center group">
+                      <WebsitePreview url="app.eisuke.org" />
+                      <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                        Student Portal
+                      </p>
+                    </div>
 
-                  <div className="flex flex-col items-center md:col-span-2 lg:col-span-1">
-                    <WebsitePreview url="teacher.eisuke.org" />
-                    <p className="text-sm font-medium mt-2 text-center">
-                      Teacher Portal
-                    </p>
+                    <div className="flex flex-col items-center md:col-span-2 lg:col-span-1 group">
+                      <WebsitePreview url="teacher.eisuke.org" />
+                      <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                        Teacher Portal
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-8">
-                <h4 className="text-sm font-medium mb-4 text-center">
-                  Try Our Beta Apps
-                </h4>
-                <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                  <div className="flex flex-col items-center">
-                    <div className="p-4 bg-card border rounded-lg">
-                      <Image
-                        src="/qr-ios.svg"
-                        alt="iOS Beta QR Code"
-                        width={140}
-                        height={140}
-                        className="dark:invert-[0.15]"
-                      />
+                {/* Beta Apps Section */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-6 text-center">
+                    Try Our Beta Apps
+                  </h4>
+                  <div className="flex flex-col sm:flex-row gap-8 justify-center">
+                    <div className="flex flex-col items-center group">
+                      <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">
+                        <Image
+                          src="/qr-ios.svg"
+                          alt="iOS Beta QR Code"
+                          width={140}
+                          height={140}
+                          className="dark:invert-[0.15]"
+                        />
+                      </div>
+                      <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                        iOS Beta
+                      </span>
                     </div>
-                    <span className="text-sm font-medium mt-3">iOS Beta</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="p-4 bg-card border rounded-lg">
-                      <Image
-                        src="/qr-android.svg"
-                        alt="Android Beta QR Code"
-                        width={140}
-                        height={140}
-                        className="dark:invert-[0.15]"
-                      />
+                    <div className="flex flex-col items-center group">
+                      <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">
+                        <Image
+                          src="/qr-android.svg"
+                          alt="Android Beta QR Code"
+                          width={140}
+                          height={140}
+                          className="dark:invert-[0.15]"
+                        />
+                      </div>
+                      <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                        Android Beta
+                      </span>
                     </div>
-                    <span className="text-sm font-medium mt-3">
-                      Android Beta
-                    </span>
                   </div>
                 </div>
               </div>
