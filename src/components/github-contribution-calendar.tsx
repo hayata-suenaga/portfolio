@@ -79,7 +79,7 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   };
 
   if (isLoading) {
-    return <Skeleton className="w-full h-24" />;
+    return <Skeleton className="w-full h-28" />;
   }
 
   if (error) {

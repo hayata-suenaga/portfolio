@@ -53,7 +53,19 @@ async function getUserContributions(username: string, from: Date, to: Date) {
                   | "FOURTH_QUARTILE";
                 weekday: number;
               }>;
+              firstDay: string;
             }>;
+          };
+          pullRequestContributions: {
+            nodes: Array<{
+              pullRequest: {
+                title: string;
+                url: string;
+                state: string;
+                createdAt: string;
+              };
+            }>;
+            totalCount: number;
           };
         };
       };
@@ -71,9 +83,9 @@ async function getUserContributions(username: string, from: Date, to: Date) {
 }
 
 const GET_USER_CONTRIBUTIONS = `
-  query getUserContributions($username: String!, $from: DateTime!, $to: DateTime!) {
+  query getUserContributions($username: String!) {
     user(login: $username) {
-      contributionsCollection(from: $from, to: $to) {
+      contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
@@ -85,6 +97,17 @@ const GET_USER_CONTRIBUTIONS = `
             }
             firstDay
           }
+        }
+        pullRequestContributions(first: 100, orderBy: {direction: DESC}) {
+          nodes {
+            pullRequest {
+              title
+              url
+              state
+              createdAt
+            }
+          }
+          totalCount
         }
       }
     }
