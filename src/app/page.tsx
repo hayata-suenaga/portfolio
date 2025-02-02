@@ -166,6 +166,38 @@ export default function PortfolioPage() {
                   Native, tRPC, PostgreSQL, Stripe and OpenAI/Anthropic APIs
                 </li>
               </ul>
+
+              <div className="mt-8">
+                <h4 className="text-sm font-medium mb-4">Try Our Beta Apps</h4>
+                <div className="flex flex-col sm:flex-row gap-8 justify-center">
+                  <div className="flex flex-col items-center">
+                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <Image
+                        src="/qr-ios.svg"
+                        alt="iOS Beta QR Code"
+                        width={140}
+                        height={140}
+                        className="dark:invert-[0.15]"
+                      />
+                    </div>
+                    <span className="text-sm font-medium mt-3">iOS Beta</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="p-4 bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <Image
+                        src="/qr-android.svg"
+                        alt="Android Beta QR Code"
+                        width={140}
+                        height={140}
+                        className="dark:invert-[0.15]"
+                      />
+                    </div>
+                    <span className="text-sm font-medium mt-3">
+                      Android Beta
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div>
