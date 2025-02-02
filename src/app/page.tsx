@@ -186,7 +186,7 @@ export default function PortfolioPage() {
                     </p>
                   </div>
 
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center md:col-span-2 lg:col-span-1">
                     <WebsitePreview url="teacher.eisuke.org" />
                     <p className="text-sm font-medium mt-2 text-center">
                       Teacher Portal
