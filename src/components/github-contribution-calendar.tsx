@@ -52,7 +52,7 @@ function GitHubContributionCalendar({ username }: { username: string }) {
     if (contributionData && svgRef.current) {
       createCalendar({
         svgEl: svgRef.current,
-        data: contributionData,
+        weeklyData: contributionData,
         onMouseOver: (data) => {
           if (!data) setTooltip(null);
           else
@@ -128,11 +128,11 @@ function CalendarTooltip({
 
 function createCalendar({
   svgEl,
-  data,
+  weeklyData,
   onMouseOver,
 }: {
   svgEl: SVGSVGElement;
-  data: WeeklyContributionData[];
+  weeklyData: WeeklyContributionData[];
   onMouseOver: (
     _: { data: DailyContributionData; x: number; y: number } | null
   ) => void;
@@ -140,49 +140,62 @@ function createCalendar({
   // Clear existing content
   d3.select(svgEl).selectAll("*").remove();
 
-  const cellSize = 10;
-  const margin = {
-    top: 16,
-    right: 0,
-    bottom: 0,
-    left: 16,
+  const MARGIN = {
+    TOP: 16,
+    RIGHT: 0,
+    BOTTOM: 0,
+    LEFT: 16,
   };
+  const CELL_SIZE = 10;
+  const DAYS_IN_WEEK = 7;
+  const LABEL_PADDING = 4;
 
   // Calculate the total width based on the number of weeks
-  const gridWidth = data.length * cellSize;
-  const width = gridWidth + margin.left + margin.right;
-  const height = 7 * cellSize + margin.top + margin.bottom;
-
-  //TODO: Get the function to get the cell width with scale linear?
+  const gridWidth = weeklyData.length * CELL_SIZE;
+  const canvasWidth = gridWidth + MARGIN.LEFT + MARGIN.RIGHT;
+  const canvasHeight = DAYS_IN_WEEK * CELL_SIZE + MARGIN.TOP + MARGIN.BOTTOM;
 
   const svg = d3
     .select(svgEl)
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    //TODO: Remove the front style
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 9);
+    .attr("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
 
-  const g = svg
+  const grid = svg
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
 
   // Create grid for each week
-  data.forEach((week, weekIndex) => {
-    const weekGroup = g
+  weeklyData.forEach((week, weekIndex) => {
+    const column = grid
       .append("g")
-      .attr("transform", `translate(${weekIndex * cellSize}, 0)`);
+      .attr("transform", `translate(${weekIndex * CELL_SIZE}, 0)`);
 
-    weekGroup
+    column
       .selectAll("rect")
       .data(week.contributionDays)
       .join("rect")
-      .attr("width", cellSize - 1)
-      .attr("height", cellSize - 1)
+      .attr("width", CELL_SIZE - 1)
+      .attr("height", CELL_SIZE - 1)
       .attr("x", 0)
-      .attr("y", (d) => d.weekday * cellSize)
-      .attr("fill", (d) => d.color)
-      .attr("rx", cellSize / 2)
-      .attr("ry", cellSize / 2)
+      .attr("y", (d) => d.weekday * CELL_SIZE)
+      .attr("rx", CELL_SIZE / 2)
+      .attr("ry", CELL_SIZE / 2)
+      .classed("fill-muted", (d) => d.contributionLevel === "NONE")
+      .classed(
+        "fill-yellow-300",
+        (d) => d.contributionLevel === "FIRST_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-500",
+        (d) => d.contributionLevel === "SECOND_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-700",
+        (d) => d.contributionLevel === "THIRD_QUARTILE"
+      )
+      .classed(
+        "fill-yellow-900",
+        (d) => d.contributionLevel === "FOURTH_QUARTILE"
+      )
       .on("mouseover", (event: MouseEvent, data) => {
         onMouseOver({ data, x: event.pageX, y: event.pageY });
       })
@@ -192,10 +205,10 @@ function createCalendar({
   });
 
   // Add month labels at the top
-  if (data.length > 0) {
+  if (weeklyData.length > 0) {
     const months = Array.from(
       new Set(
-        data.flatMap((week) =>
+        weeklyData.flatMap((week) =>
           week.contributionDays.map(
             (day) => new Date(day.date.getFullYear(), day.date.getMonth(), 1)
           )
@@ -203,22 +216,26 @@ function createCalendar({
       )
     ).sort((a, b) => a.getTime() - b.getTime());
 
-    g.append("g")
-      .attr("transform", `translate(0, ${-6})`)
+    svg
+      .append("g")
+      .attr(
+        "transform",
+        `translate(${MARGIN.LEFT}, ${MARGIN.TOP - LABEL_PADDING})`
+      )
       .selectAll("text")
       .data(months)
       .join("text")
+      .text((d) => d3.timeFormat("%b")(d))
       .attr("x", (d) => {
-        const weekIndex = data.findIndex((week) =>
+        const weekIndex = weeklyData.findIndex((week) =>
           week.contributionDays.some(
             (day) =>
               day.date.getMonth() === d.getMonth() &&
               day.date.getFullYear() === d.getFullYear()
           )
         );
-        return weekIndex * cellSize;
+        return weekIndex * CELL_SIZE;
       })
-      .text((d) => d3.timeFormat("%b")(d))
       .classed("text-[9px]", true)
       .classed("fill-muted-foreground", true)
       .attr("text-anchor", "start");
@@ -226,17 +243,21 @@ function createCalendar({
 
   // Add day labels on the left
   const dayLabels = ["", "M", "", "W", "", "F", ""];
-  g.append("g")
+  svg
+    .append("g")
+    .attr(
+      "transform",
+      `translate(${MARGIN.LEFT - LABEL_PADDING}, ${MARGIN.TOP})`
+    )
     .selectAll("text")
     .data(dayLabels)
     .join("text")
-    .attr("x", -6)
-    .attr("y", (_, i) => i * cellSize + cellSize / 2)
+    .text((d) => d)
+    .attr("y", (_, i) => i * CELL_SIZE + CELL_SIZE / 2)
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
     .classed("text-[9px]", true)
-    .classed("fill-muted-foreground", true)
-    .text((d) => d);
+    .classed("fill-muted-foreground", true);
 }
 
 type ContributionData = {
@@ -246,11 +267,17 @@ type ContributionData = {
 
 type WeeklyContributionData = {
   contributionDays: DailyContributionData[];
+  firstDay: string;
 };
 
 type DailyContributionData = {
   date: Date;
   contributionCount: number;
-  color: string;
+  contributionLevel:
+    | "NONE"
+    | "FIRST_QUARTILE"
+    | "SECOND_QUARTILE"
+    | "THIRD_QUARTILE"
+    | "FOURTH_QUARTILE";
   weekday: number;
 };

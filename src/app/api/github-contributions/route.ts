@@ -45,6 +45,13 @@ async function getUserContributions(username: string, from: Date, to: Date) {
               contributionDays: Array<{
                 date: string;
                 contributionCount: number;
+                contributionLevel:
+                  | "NONE"
+                  | "FIRST_QUARTILE"
+                  | "SECOND_QUARTILE"
+                  | "THIRD_QUARTILE"
+                  | "FOURTH_QUARTILE";
+                weekday: number;
               }>;
             }>;
           };
@@ -73,9 +80,10 @@ const GET_USER_CONTRIBUTIONS = `
             contributionDays {
               date
               contributionCount
-              color
+              contributionLevel
               weekday
             }
+            firstDay
           }
         }
       }
