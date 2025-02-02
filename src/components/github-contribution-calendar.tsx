@@ -9,6 +9,11 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   const [contributionData, setContributionData] = useState<
     WeeklyContributionData[] | null
   >(null);
+  const [tooltip, setTooltip] = useState<{
+    label: string;
+    x: number;
+    y: number;
+  } | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +50,21 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   // Separate useEffect for creating the calendar after data is loaded and component is mounted
   useEffect(() => {
     if (contributionData && svgRef.current) {
-      createCalendar(svgRef.current, contributionData);
+      createCalendar({
+        svgEl: svgRef.current,
+        data: contributionData,
+        onMouseOver: (data) => {
+          if (!data) setTooltip(null);
+          else
+            setTooltip({
+              label: `${data.data.contributionCount} contribution${
+                data.data.contributionCount !== 1 ? "s" : ""
+              } on ${data.data.date.toLocaleDateString()}`,
+              x: data.x + 10,
+              y: data.y - 28,
+            });
+        },
+      });
     }
   }, [contributionData]);
 
@@ -72,18 +91,55 @@ function GitHubContributionCalendar({ username }: { username: string }) {
   }
 
   return (
-    <div className="relative w-full">
-      <svg ref={svgRef} width="100%" height="auto" />
-    </div>
+    <>
+      <div>
+        <svg ref={svgRef} width="100%" height="auto" />
+      </div>
+      {tooltip && (
+        <CalendarTooltip label={tooltip.label} x={tooltip.x} y={tooltip.y} />
+      )}
+    </>
   );
 }
 
 export default GitHubContributionCalendar;
 
-const createCalendar = (
-  svgEl: SVGSVGElement,
-  data: WeeklyContributionData[]
-) => {
+function CalendarTooltip({
+  label,
+  x,
+  y,
+}: {
+  label: string;
+  x: number;
+  y: number;
+}) {
+  return (
+    <div
+      className="absolute pointer-events-none bg-background border border-border p-2 rounded-sm text-foreground text-xs z-50"
+      style={{
+        left: x,
+        top: y,
+      }}
+    >
+      {label}
+    </div>
+  );
+}
+
+function createCalendar({
+  svgEl,
+  data,
+  onMouseOver,
+}: {
+  svgEl: SVGSVGElement;
+  data: WeeklyContributionData[];
+  onMouseOver: (
+    _: { data: DailyContributionData; x: number; y: number } | null
+  ) => void;
+}) {
+  // Clear existing content
+  d3.select(svgEl).selectAll("*").remove();
+
   const cellSize = 10;
   const margin = {
     top: 16,
@@ -97,37 +153,18 @@ const createCalendar = (
   const width = gridWidth + margin.left + margin.right;
   const height = 7 * cellSize + margin.top + margin.bottom;
 
-  // Clear existing content
-  d3.select(svgEl).selectAll("*").remove();
+  //TODO: Get the function to get the cell width with scale linear?
 
   const svg = d3
     .select(svgEl)
     .attr("viewBox", `0 0 ${width} ${height}`)
+    //TODO: Remove the front style
     .attr("font-family", "sans-serif")
     .attr("font-size", 9);
 
   const g = svg
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-  // Remove any existing tooltips
-  d3.select("body").selectAll(".calendar-tooltip").remove();
-
-  const tooltip = d3
-    .select("body")
-    .append("div")
-    .attr("class", "calendar-tooltip")
-    .classed("bg-background", true)
-    .classed("border-border", true)
-    .classed("border", true)
-    .classed("p-2", true)
-    .classed("rounded-sm", true)
-    .classed("text-foreground", true)
-    .style("opacity", 0)
-    .style("position", "absolute")
-    .style("pointer-events", "none")
-    .style("z-index", "50")
-    .style("font-size", "12px");
 
   // Create grid for each week
   data.forEach((week, weekIndex) => {
@@ -144,21 +181,13 @@ const createCalendar = (
       .attr("x", 0)
       .attr("y", (d) => d.weekday * cellSize)
       .attr("fill", (d) => d.color)
-      .attr("rx", 2)
-      .attr("ry", 2)
-      .on("mouseover", (event: MouseEvent, d) => {
-        tooltip.transition().duration(200).style("opacity", 0.9);
-        tooltip
-          .html(
-            `${d.contributionCount} contribution${
-              d.contributionCount !== 1 ? "s" : ""
-            } on ${d.date.toLocaleDateString()}`
-          )
-          .style("left", `${event.pageX + 10}px`)
-          .style("top", `${event.pageY - 28}px`);
+      .attr("rx", cellSize / 2)
+      .attr("ry", cellSize / 2)
+      .on("mouseover", (event: MouseEvent, data) => {
+        onMouseOver({ data, x: event.pageX, y: event.pageY });
       })
       .on("mouseout", () => {
-        tooltip.transition().duration(500).style("opacity", 0);
+        onMouseOver(null);
       });
   });
 
@@ -208,7 +237,7 @@ const createCalendar = (
     .classed("text-[9px]", true)
     .classed("fill-muted-foreground", true)
     .text((d) => d);
-};
+}
 
 type ContributionData = {
   weeks: WeeklyContributionData[];
@@ -216,10 +245,12 @@ type ContributionData = {
 };
 
 type WeeklyContributionData = {
-  contributionDays: Array<{
-    date: Date;
-    contributionCount: number;
-    color: string;
-    weekday: number;
-  }>;
+  contributionDays: DailyContributionData[];
+};
+
+type DailyContributionData = {
+  date: Date;
+  contributionCount: number;
+  color: string;
+  weekday: number;
 };
