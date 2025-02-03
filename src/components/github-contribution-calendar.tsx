@@ -192,7 +192,7 @@ function createCalendar({
         );
         return weekIndex * CELL_SIZE;
       })
-      .attr("class", "text-[10px] font-medium fill-muted-foreground");
+      .attr("class", "text-[8px] font-medium fill-muted-foreground");
 
     // Add day labels on the left
     const dayLabels = ["", "M", "", "W", "", "F", ""];
@@ -209,6 +209,6 @@ function createCalendar({
       .attr("y", (_, i) => i * CELL_SIZE + CELL_SIZE / 2)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .attr("class", "text-[10px] font-medium fill-muted-foreground");
+      .attr("class", "text-[8px] font-medium fill-muted-foreground");
   }
 }
