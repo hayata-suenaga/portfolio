@@ -1,8 +1,6 @@
-import { graphql } from "@octokit/graphql";
+import { Octokit } from "@octokit/core";
+import { paginateGraphQL } from "@octokit/plugin-paginate-graphql";
 
-// GraphQL client setup
-export const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${process.env.GITHUB_TOKEN}`,
-  },
-});
+const MyOctokit = Octokit.plugin(paginateGraphQL);
+
+export const octokit = new MyOctokit({ auth: process.env.GITHUB_TOKEN });

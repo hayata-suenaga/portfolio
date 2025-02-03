@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { graphqlWithAuth } from "./graphql-client";
+import { octokit } from "./graphql-client";
+import {
+  GitHubContributionsResponseSchema,
+  GitHubPRResponseSchema,
+} from "./types";
+import { groupPullRequestsIntoWeeks } from "./formatter";
 
 export async function getUserContributions(
   username: string,
@@ -7,16 +12,36 @@ export async function getUserContributions(
   to: Date
 ) {
   try {
-    const result = await graphqlWithAuth(GET_USER_CONTRIBUTIONS, {
+    const contributionDataPromise = octokit.graphql(CONTRIBUTIONS_QUERY, {
       username,
       from: from.toISOString(),
       to: to.toISOString(),
     });
+    const prDataResponsePromise = octokit.graphql.paginate(
+      getPRQuery({ username, from, to })
+    );
+    const prByDateResponsePromise = octokit.graphql(
+      getPRByDateQuery({ username, date: new Date() })
+    );
 
-    // Validate the response with Zod
-    const validatedResponse = GitHubContributionsResponseSchema.parse(result);
+    const contributionData = GitHubContributionsResponseSchema.parse(
+      await contributionDataPromise
+    );
+    const prData = GitHubPRResponseSchema.parse(await prDataResponsePromise);
+    const prByDateData = GitHubPRResponseSchema.parse(
+      await prByDateResponsePromise
+    );
 
-    return validatedResponse.user.contributionsCollection.contributionCalendar;
+    return {
+      contributionCalendar:
+        contributionData.user.contributionsCollection.contributionCalendar,
+      pullRequestContributions: groupPullRequestsIntoWeeks(
+        prData.search.nodes,
+        from,
+        to
+      ),
+      prsMadeToday: prByDateData.search.nodes,
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Response validation error:", error.errors);
@@ -26,10 +51,10 @@ export async function getUserContributions(
   }
 }
 
-const GET_USER_CONTRIBUTIONS = `
-  query getUserContributions($username: String!) {
+const CONTRIBUTIONS_QUERY = `
+  query getUserContributions($username: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $username) {
-      contributionsCollection {
+      contributionsCollection(from: $from, to: $to) {
         contributionCalendar {
           totalContributions
           weeks {
@@ -42,68 +67,70 @@ const GET_USER_CONTRIBUTIONS = `
             firstDay
           }
         }
-        pullRequestContributions(first: 100, orderBy: {direction: DESC}) {
-          nodes {
-            pullRequest {
-              title
-              url
-              state
-              createdAt
-            }
-          }
-          totalCount
-        }
       }
     }
   }
 `;
 
-// Define Zod schemas
-const ContributionLevelEnum = z.enum([
-  "NONE",
-  "FIRST_QUARTILE",
-  "SECOND_QUARTILE",
-  "THIRD_QUARTILE",
-  "FOURTH_QUARTILE",
-]);
+const getPRQuery = ({
+  username,
+  from,
+  to,
+}: {
+  username: string;
+  from: Date;
+  to: Date;
+}) => `
+  query ($cursor: String) {
+    search(
+      query: "is:pr author:${username} created:${from.toISOString()}..${to.toISOString()} is:merged", 
+      type: ISSUE, 
+      first: 100, 
+      after: $cursor
+    ) {
+      issueCount
+      nodes {
+        ... on PullRequest {
+          number
+          title
+          url
+          state
+          createdAt
+          repository {
+            name
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
 
-const ContributionDaySchema = z.object({
-  date: z.string().transform((date) => new Date(date)),
-  contributionCount: z.number(),
-  contributionLevel: ContributionLevelEnum,
-  weekday: z.number(),
-});
-
-const WeekSchema = z.object({
-  contributionDays: z.array(ContributionDaySchema),
-  firstDay: z.string().transform((date) => new Date(date)),
-});
-
-const PullRequestSchema = z.object({
-  title: z.string(),
-  url: z.string().url(),
-  state: z.string(),
-  createdAt: z.string().transform((date) => new Date(date)),
-});
-const PullRequestContributionSchema = z.object({
-  pullRequest: PullRequestSchema,
-});
-
-const ContributionCalendarSchema = z.object({
-  totalContributions: z.number(),
-  weeks: z.array(WeekSchema),
-});
-
-const ContributionsCollectionSchema = z.object({
-  contributionCalendar: ContributionCalendarSchema,
-  pullRequestContributions: z.object({
-    nodes: z.array(PullRequestContributionSchema),
-    totalCount: z.number(),
-  }),
-});
-
-const GitHubContributionsResponseSchema = z.object({
-  user: z.object({
-    contributionsCollection: ContributionsCollectionSchema,
-  }),
-});
+const getPRByDateQuery = ({
+  username,
+  date,
+}: {
+  username: string;
+  date: Date;
+}) => `
+  query {
+    search(query: "is:pr author:${username} created:>${date.toISOString()}", type: ISSUE, first: 100) {
+      issueCount
+      nodes {
+          ... on PullRequest {
+            number
+            title
+            url
+            state
+            createdAt
+            repository {
+              name
+            }
+          }
+        }
+    }
+  }
+`;
