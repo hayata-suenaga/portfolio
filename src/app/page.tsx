@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
 import GitHubContributionCalendar from "@/components/github-contribution-calendar";
-
+import { ContactDialog } from "@/components/contact-dialog";
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
 
@@ -91,6 +91,8 @@ export default function PortfolioPage() {
               </div>
             </div>
           </div>
+
+          <ContactDialog />
 
           {/* GitHub Contributions */}
           <div className="mt-8 p-4 rounded-lg border bg-card overflow-hidden">
