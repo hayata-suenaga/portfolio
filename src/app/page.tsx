@@ -87,8 +87,6 @@ export default function PortfolioPage() {
             </div>
           </div>
 
-          <ContactDialog />
-
           {/* GitHub Contributions */}
           <div className="mt-8 p-4 rounded-lg border bg-card overflow-hidden">
             <div className="flex items-center justify-between mb-4">
