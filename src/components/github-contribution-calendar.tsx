@@ -1,93 +1,57 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/trpc/react";
+import { GithubContributionData } from "@/server/api/root";
 
 function GitHubContributionCalendar({ username }: { username: string }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [contributionData, setContributionData] = useState<
-    WeeklyContributionData[] | null
-  >(null);
+  const { data, error } = api.github.getUserContributions.useQuery({
+    username,
+    fromDate: new Date("2024-01-01"),
+    toDate: new Date("2024-12-31"),
+  });
+
   const [tooltip, setTooltip] = useState<{
     label: string;
     x: number;
     y: number;
   } | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
-      setContributionData(null);
-
-      try {
-        const response = await fetch(
-          `/api/github-contributions?username=${username}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch contribution data");
-        }
-
-        const data = await response.json();
-        const transformed = transformData(data);
-        setContributionData(transformed);
-      } catch (error) {
-        console.error(
-          "Error fetching or rendering GitHub contributions:",
-          error
-        );
-        setError(error instanceof Error ? error.message : "An error occurred");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [username]);
-
   // Separate useEffect for creating the calendar after data is loaded and component is mounted
   useEffect(() => {
-    if (contributionData && svgRef.current) {
+    if (data && svgRef.current) {
       createCalendar({
         svgEl: svgRef.current,
-        weeklyData: contributionData,
-        onMouseOver: (data) => {
-          if (!data) setTooltip(null);
-          else
+        weeklyData: data.weeks,
+        onMouseOver: (args) => {
+          if (!args) setTooltip(null);
+          else {
+            const { data, x, y } = args;
+
             setTooltip({
-              label: `${data.data.contributionCount} contribution${
-                data.data.contributionCount !== 1 ? "s" : ""
-              } on ${data.data.date.toLocaleDateString()}`,
-              x: data.x + 10,
-              y: data.y - 28,
+              label: `${data.contributionCount} contribution${
+                data.contributionCount !== 1 ? "s" : ""
+              } on ${data.date.toLocaleDateString()}`,
+              x: x + 10,
+              y: y - 28,
             });
+          }
         },
       });
     }
-  }, [contributionData]);
-
-  const transformData = (data: ContributionData) => {
-    return data.weeks.map((week) => ({
-      ...week,
-      contributionDays: week.contributionDays.map((day) => ({
-        ...day,
-        date: new Date(day.date),
-      })),
-    }));
-  };
-
-  if (isLoading) {
-    return <Skeleton className="w-full h-28" />;
-  }
+  }, [data]);
 
   if (error) {
     return (
       <div className="text-sm text-red-500">
-        Failed to load contribution data: {error}
+        Failed to load contribution data: {error.message}
       </div>
     );
+  }
+
+  if (!data) {
+    return <Skeleton className="w-full h-28" />;
   }
 
   return (
@@ -132,9 +96,13 @@ function createCalendar({
   onMouseOver,
 }: {
   svgEl: SVGSVGElement;
-  weeklyData: WeeklyContributionData[];
+  weeklyData: GithubContributionData["weeks"];
   onMouseOver: (
-    _: { data: DailyContributionData; x: number; y: number } | null
+    _: {
+      data: GithubContributionData["weeks"][number]["contributionDays"][number];
+      x: number;
+      y: number;
+    } | null
   ) => void;
 }) {
   // Clear existing content
@@ -259,25 +227,3 @@ function createCalendar({
     .classed("text-[9px]", true)
     .classed("fill-muted-foreground", true);
 }
-
-type ContributionData = {
-  weeks: WeeklyContributionData[];
-  totalContributions: number;
-};
-
-type WeeklyContributionData = {
-  contributionDays: DailyContributionData[];
-  firstDay: string;
-};
-
-type DailyContributionData = {
-  date: Date;
-  contributionCount: number;
-  contributionLevel:
-    | "NONE"
-    | "FIRST_QUARTILE"
-    | "SECOND_QUARTILE"
-    | "THIRD_QUARTILE"
-    | "FOURTH_QUARTILE";
-  weekday: number;
-};
