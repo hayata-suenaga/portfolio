@@ -41,15 +41,17 @@ export function GitHubCharts({ username }: { username: string }) {
         </Link>
       </div>
       <div className="space-y-8">
-        <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
           <div className="min-w-[700px]">
             <GitHubContributionCalendar
               contributionCalendarData={data.contributionCalendar}
             />
           </div>
         </div>
-        <div className="pt-4 border-t">
-          <GitHubPRChart chartData={data.pullRequestContributions} />
+        <div className="pt-4 border-t overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+          <div className="min-w-[700px]">
+            <GitHubPRChart chartData={data.pullRequestContributions} />
+          </div>
         </div>
       </div>
     </div>
