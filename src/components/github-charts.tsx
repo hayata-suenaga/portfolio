@@ -22,7 +22,7 @@ export function GitHubCharts({ username }: { username: string }) {
   }
 
   if (!data) {
-    return <Skeleton className="w-full h-28" />;
+    return <Skeleton className="w-full h-[500px]" />;
   }
 
   return (
