@@ -26,26 +26,32 @@ export function GitHubCharts({ username }: { username: string }) {
   }
 
   return (
-    <div className="mt-8 p-4 rounded-lg border bg-card overflow-hidden">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">GitHub Contributions</h3>
+    <div className="mt-8 p-6 rounded-xl border bg-card shadow-sm">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold tracking-tight">
+          GitHub Activity
+        </h3>
         <Link
-          href="https://github.com/hayata-suenaga"
+          href={`https://github.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors hover:underline"
         >
-          View Profile
+          View Profile →
         </Link>
       </div>
-      <div className="w-full overflow-scroll">
-        <div className="min-w-[700px]">
-          <GitHubContributionCalendar
-            contributionCalendarData={data.contributionCalendar}
-          />
+      <div className="space-y-8">
+        <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+          <div className="min-w-[700px]">
+            <GitHubContributionCalendar
+              contributionCalendarData={data.contributionCalendar}
+            />
+          </div>
+        </div>
+        <div className="pt-4 border-t">
+          <GitHubPRChart chartData={data.pullRequestContributions} />
         </div>
       </div>
-      <GitHubPRChart chartData={data.pullRequestContributions} />
     </div>
   );
 }

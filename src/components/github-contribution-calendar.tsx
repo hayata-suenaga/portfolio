@@ -65,10 +65,11 @@ function CalendarTooltip({
 }) {
   return (
     <div
-      className="absolute pointer-events-none bg-background border border-border p-2 rounded-sm text-foreground text-xs z-50"
+      className="absolute pointer-events-none bg-popover border border-border p-2.5 rounded-lg text-popover-foreground text-xs z-50 shadow-md"
       style={{
         left: x,
         top: y,
+        transform: "translate(-50%, -100%)",
       }}
     >
       {label}
@@ -95,14 +96,16 @@ function createCalendar({
   d3.select(svgEl).selectAll("*").remove();
 
   const MARGIN = {
-    TOP: 16,
+    TOP: 20,
     RIGHT: 0,
     BOTTOM: 0,
-    LEFT: 16,
+    LEFT: 20,
   };
-  const CELL_SIZE = 10;
+  const CELL_SIZE = 11;
+  const CELL_PADDING = 1.5;
+  const CELL_RADIUS = CELL_SIZE / 2;
   const DAYS_IN_WEEK = 7;
-  const LABEL_PADDING = 4;
+  const LABEL_PADDING = 8;
 
   // Calculate the total width based on the number of weeks
   const gridWidth = weeklyData.length * CELL_SIZE;
@@ -127,29 +130,28 @@ function createCalendar({
       .selectAll("rect")
       .data(week.contributionDays)
       .join("rect")
-      .attr("width", CELL_SIZE - 1)
-      .attr("height", CELL_SIZE - 1)
+      .attr("width", CELL_SIZE - CELL_PADDING)
+      .attr("height", CELL_SIZE - CELL_PADDING)
       .attr("x", 0)
       .attr("y", (d) => d.weekday * CELL_SIZE)
-      .attr("rx", CELL_SIZE / 2)
-      .attr("ry", CELL_SIZE / 2)
-      .classed("fill-muted", (d) => d.contributionLevel === "NONE")
-      .classed(
-        "fill-yellow-300",
-        (d) => d.contributionLevel === "FIRST_QUARTILE"
-      )
-      .classed(
-        "fill-yellow-500",
-        (d) => d.contributionLevel === "SECOND_QUARTILE"
-      )
-      .classed(
-        "fill-yellow-700",
-        (d) => d.contributionLevel === "THIRD_QUARTILE"
-      )
-      .classed(
-        "fill-yellow-900",
-        (d) => d.contributionLevel === "FOURTH_QUARTILE"
-      )
+      .attr("rx", CELL_RADIUS)
+      .attr("ry", CELL_RADIUS)
+      .attr("class", (d) => {
+        const baseClass =
+          "transition-colors duration-200 cursor-pointer hover:opacity-80";
+        switch (d.contributionLevel) {
+          case "NONE":
+            return `${baseClass} fill-muted`;
+          case "FIRST_QUARTILE":
+            return `${baseClass} fill-yellow-300`;
+          case "SECOND_QUARTILE":
+            return `${baseClass} fill-yellow-500`;
+          case "THIRD_QUARTILE":
+            return `${baseClass} fill-yellow-700`;
+          case "FOURTH_QUARTILE":
+            return `${baseClass} fill-yellow-900`;
+        }
+      })
       .on("mouseover", (event: MouseEvent, data) => {
         onMouseOver({ data, x: event.pageX, y: event.pageY });
       })
@@ -190,26 +192,23 @@ function createCalendar({
         );
         return weekIndex * CELL_SIZE;
       })
-      .classed("text-[9px]", true)
-      .classed("fill-muted-foreground", true)
-      .attr("text-anchor", "start");
-  }
+      .attr("class", "text-[10px] font-medium fill-muted-foreground");
 
-  // Add day labels on the left
-  const dayLabels = ["", "M", "", "W", "", "F", ""];
-  svg
-    .append("g")
-    .attr(
-      "transform",
-      `translate(${MARGIN.LEFT - LABEL_PADDING}, ${MARGIN.TOP})`
-    )
-    .selectAll("text")
-    .data(dayLabels)
-    .join("text")
-    .text((d) => d)
-    .attr("y", (_, i) => i * CELL_SIZE + CELL_SIZE / 2)
-    .attr("text-anchor", "end")
-    .attr("dominant-baseline", "middle")
-    .classed("text-[9px]", true)
-    .classed("fill-muted-foreground", true);
+    // Add day labels on the left
+    const dayLabels = ["", "M", "", "W", "", "F", ""];
+    svg
+      .append("g")
+      .attr(
+        "transform",
+        `translate(${MARGIN.LEFT - LABEL_PADDING}, ${MARGIN.TOP})`
+      )
+      .selectAll("text")
+      .data(dayLabels)
+      .join("text")
+      .text((d) => d)
+      .attr("y", (_, i) => i * CELL_SIZE + CELL_SIZE / 2)
+      .attr("text-anchor", "end")
+      .attr("dominant-baseline", "middle")
+      .attr("class", "text-[10px] font-medium fill-muted-foreground");
+  }
 }
