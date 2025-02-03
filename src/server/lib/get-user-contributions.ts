@@ -17,25 +17,14 @@ export async function getUserContributions(
       from: from.toISOString(),
       to: to.toISOString(),
     });
+    const prDataResponsePromise = octokit.graphql.paginate(
+      getPRQuery({ username, from: from.toISOString(), to: to.toISOString() })
+    );
 
-    const prDataResponsePromise = octokit.graphql.paginate(PR_QUERY, {
-      username,
-      from: from.toISOString(),
-      to: to.toISOString(),
-    });
     const contributionData = GitHubContributionsResponseSchema.parse(
       await contributionDataPromise
     );
     const prData = GitHubPRResponseSchema.parse(await prDataResponsePromise);
-
-    const repositories = prData.search.nodes.map((pr) => pr.repository.name);
-    const uniqueRepositories = Array.from(new Set(repositories));
-    console.log("uniqueRepositories", uniqueRepositories);
-    console.log("most recent date", prData.search.nodes[0].createdAt);
-    console.log(
-      "most distant date",
-      prData.search.nodes[prData.search.nodes.length - 1].createdAt
-    );
 
     return {
       contributionCalendar:
@@ -74,10 +63,18 @@ const CONTRIBUTIONS_QUERY = `
   }
 `;
 
-const PR_QUERY = `
-  query ($cursor: String, $username: String!, $from: DateTime!, $to: DateTime!) {
+const getPRQuery = ({
+  username,
+  from,
+  to,
+}: {
+  username: string;
+  from: string;
+  to: string;
+}) => `
+  query ($cursor: String) {
     search(
-      query: "is:pr author:$username created:$from..$to is:merged", 
+      query: "is:pr author:${username} created:${from}..${to} is:merged", 
       type: ISSUE, 
       first: 100, 
       after: $cursor
@@ -102,27 +99,3 @@ const PR_QUERY = `
     }
   }
 `;
-
-// const PR_QUERY = `
-//   query ($cursor: String, $username: String!) {
-//     user(login: $username) {
-//       pullRequests(first: 100, after: $cursor, states: MERGED, orderBy: {field: CREATED_AT, direction: DESC}) {
-//         totalCount
-//         nodes {
-//           number
-//           title
-//           url
-//           state
-//           createdAt
-//           repository {
-//             name
-//           }
-//         }
-//         pageInfo {
-//           hasNextPage
-//           endCursor
-//         }
-//       }
-//     }
-//   }
-// `;
