@@ -55,7 +55,6 @@ export function GitHubPRChart({
           />
           <ChartTooltip
             cursor={false}
-            defaultIndex={1}
             content={<ChartTooltipContent labelFormatter={getWeekLabel} />}
           />
           <Bar
