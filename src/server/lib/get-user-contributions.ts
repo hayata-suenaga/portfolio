@@ -25,8 +25,6 @@ export async function getUserContributions(
         validatedResponse.user.contributionsCollection.pullRequestContributions
       ),
     };
-
-    return validatedResponse.user.contributionsCollection;
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Response validation error:", error.errors);

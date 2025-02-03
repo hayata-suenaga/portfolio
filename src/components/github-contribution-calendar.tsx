@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/trpc/react";
 import { GithubContributionData } from "@/server/api/root";
 
-function GitHubContributionCalendar({ username }: { username: string }) {
+function GitHubContributionCalendar({
+  contributionCalendarData,
+}: {
+  contributionCalendarData: GithubContributionData["contributionCalendar"];
+}) {
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const { data, error } = api.github.getUserContributions.useQuery({
-    username,
-    fromDate: new Date("2024-01-01"),
-    toDate: new Date("2024-12-31"),
-  });
 
   const [tooltip, setTooltip] = useState<{
     label: string;
@@ -18,12 +15,11 @@ function GitHubContributionCalendar({ username }: { username: string }) {
     y: number;
   } | null>(null);
 
-  // Separate useEffect for creating the calendar after data is loaded and component is mounted
   useEffect(() => {
-    if (data && svgRef.current) {
+    if (contributionCalendarData && svgRef.current) {
       createCalendar({
         svgEl: svgRef.current,
-        weeklyData: data.contributionCalendar.weeks,
+        weeklyData: contributionCalendarData.weeks,
         onMouseOver: (args) => {
           if (!args) setTooltip(null);
           else {
@@ -40,19 +36,7 @@ function GitHubContributionCalendar({ username }: { username: string }) {
         },
       });
     }
-  }, [data]);
-
-  if (error) {
-    return (
-      <div className="text-sm text-red-500">
-        Failed to load contribution data: {error.message}
-      </div>
-    );
-  }
-
-  if (!data) {
-    return <Skeleton className="w-full h-28" />;
-  }
+  }, [contributionCalendarData]);
 
   return (
     <>
