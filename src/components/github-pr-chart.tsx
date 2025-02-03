@@ -1,6 +1,6 @@
 "use client";
 
-import { CartesianGrid, Line, LineChart, YAxis } from "recharts";
+import { BarChart, CartesianGrid, XAxis, YAxis, Bar } from "recharts";
 
 import {
   ChartConfig,
@@ -15,10 +15,6 @@ const chartConfig = {
     label: "PR Count",
     color: "hsl(var(--chart-4))",
   },
-  //   mobile: {
-  //     label: "Mobile",
-  //     color: "hsl(var(--chart-2))",
-  //   },
 } satisfies ChartConfig;
 
 export function GitHubPRChart({
@@ -28,32 +24,32 @@ export function GitHubPRChart({
 }) {
   return (
     <ChartContainer config={chartConfig} className="h-[300px]">
-      <LineChart
+      <BarChart
         accessibilityLayer
         data={chartData}
         margin={{
-          left: 12,
-          right: 12,
+          top: 20,
         }}
       >
         <CartesianGrid vertical={false} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <Line
-          dataKey="count"
-          type="monotone"
-          stroke="var(--color-desktop)"
-          strokeWidth={2}
-          dot={false}
+        <XAxis
+          dataKey="weekStart"
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value) =>
+            value.toLocaleDateString("en-US", {
+              month: "short",
+            })
+          }
         />
         <YAxis dataKey="count" tickLine={false} tickCount={5} />
-        {/* <Line
-          dataKey="mobile"
-          type="monotone"
-          stroke="var(--color-mobile)"
-          strokeWidth={2}
-          dot={false}
-        /> */}
-      </LineChart>
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent hideLabel />}
+        />
+        <Bar dataKey="count" fill="var(--color-desktop)" radius={8} />
+      </BarChart>
     </ChartContainer>
   );
 }
