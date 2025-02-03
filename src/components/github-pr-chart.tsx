@@ -51,6 +51,7 @@ export function GitHubPRChart({
             tickCount={5}
             tickMargin={8}
             className="text-xs fill-muted-foreground"
+            width={25}
           />
           <ChartTooltip
             cursor={false}
