@@ -13,7 +13,7 @@ import { GithubContributionData } from "@/server/api/root";
 const chartConfig = {
   pr: {
     label: "PR Count",
-    color: "hsl(var(--chart-4))",
+    color: "hsl(var(--primary))",
   },
 } satisfies ChartConfig;
 
@@ -37,7 +37,7 @@ export function GitHubPRChart({
           <XAxis
             dataKey="weekStart"
             tickLine={false}
-            tickMargin={4}
+            tickMargin={8}
             axisLine={false}
             tickFormatter={(value) =>
               value.toLocaleDateString("en-US", {
