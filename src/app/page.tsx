@@ -26,9 +26,9 @@ export default function PortfolioPage() {
         </Button>
       </div>
 
-      <main className="mx-auto max-w-4xl">
+      <main className="">
         {/* Header */}
-        <header className="mb-12">
+        <header className="mb-12 mx-auto max-w-4xl">
           <div className="flex flex-col md:flex-row md:items-start md:gap-8 mb-6">
             <div className="w-48 h-48 relative mb-6 md:mb-0 mx-auto md:mx-0">
               <Image
@@ -89,10 +89,12 @@ export default function PortfolioPage() {
         </header>
 
         {/* GitHub Contributions */}
-        <GitHubCharts username="hayata-suenaga" />
+        <section className="mb-12 mx-auto max-w-4xl">
+          <GitHubCharts username="hayata-suenaga" />
+        </section>
 
         {/* Introduction */}
-        <article className="prose dark:prose-invert max-w-none mb-12">
+        <article className="prose dark:prose-invert max-w-2xl mb-12 mx-auto">
           <p>
             Hi! I&apos;m Hayata, a software engineer with over three years of
             industry experience, much of which I spent at{" "}
@@ -118,7 +120,7 @@ export default function PortfolioPage() {
         </article>
 
         {/* Experience */}
-        <section className="mb-12">
+        <section className="mb-12 mx-auto max-w-2xl">
           <h2 className="text-2xl font-bold mb-6 text-primary">Experience</h2>
 
           <div className="space-y-8">
@@ -332,7 +334,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* Education */}
-        <section>
+        <section className="mb-12 mx-auto max-w-2xl">
           <h2 className="text-2xl font-bold mb-6 text-primary">Education</h2>
 
           <div>
