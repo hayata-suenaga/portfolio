@@ -120,34 +120,39 @@ export default function PortfolioPage() {
         </article>
 
         {/* Experience */}
-        <section className="mb-12 mx-auto max-w-2xl">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Experience</h2>
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-primary mx-auto max-w-2xl">
+            Experience
+          </h2>
 
           <div className="space-y-8">
             <div>
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-semibold">Eisuke L.L.C.</h3>
-                <span className="text-sm text-muted-foreground">
-                  August 2024 - Present
-                </span>
+              <div className="max-w-2xl mx-auto">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-semibold">Eisuke L.L.C.</h3>
+                  <span className="text-sm text-muted-foreground">
+                    August 2024 - Present
+                  </span>
+                </div>
+                <p className="text-muted-foreground mb-2">Founder & CTO</p>
+                <ul className="list-disc pl-4 space-y-2 text-sm">
+                  <li>
+                    Architect and launch complete learning management system
+                    from concept to deployment, including end-to-end technical
+                    decisions for authentication, data modeling, and
+                    infrastructure
+                  </li>
+                  <li>
+                    Build complete learning management system including web
+                    portals for teachers and students and cross-platform mobile
+                    apps (iOS/Android) using Turborepo, Vercel/Next.js,
+                    Expo/React Native, tRPC, PostgreSQL, Stripe and
+                    OpenAI/Anthropic APIs
+                  </li>
+                </ul>
               </div>
-              <p className="text-muted-foreground mb-2">Founder & CTO</p>
-              <ul className="list-disc pl-4 space-y-2 text-sm">
-                <li>
-                  Architect and launch complete learning management system from
-                  concept to deployment, including end-to-end technical
-                  decisions for authentication, data modeling, and
-                  infrastructure
-                </li>
-                <li>
-                  Build complete learning management system including web
-                  portals for teachers and students and cross-platform mobile
-                  apps (iOS/Android) using Turborepo, Vercel/Next.js, Expo/React
-                  Native, tRPC, PostgreSQL, Stripe and OpenAI/Anthropic APIs
-                </li>
-              </ul>
 
-              <div>
+              <div className="max-w-4xl mx-auto">
                 {/* Platforms Section */}
                 <div className="p-12">
                   <h4 className="text-lg font-semibold mb-6 text-center">
@@ -216,7 +221,7 @@ export default function PortfolioPage() {
               </div>
             </div>
 
-            <div>
+            <div className="max-w-2xl mx-auto">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-lg font-semibold">Expensify</h3>
                 <span className="text-sm text-muted-foreground">
@@ -260,7 +265,7 @@ export default function PortfolioPage() {
               </ul>
             </div>
 
-            <div>
+            <div className="max-w-2xl mx-auto">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-lg font-semibold">JackBeNimble Inc</h3>
                 <span className="text-sm text-muted-foreground">
@@ -281,7 +286,7 @@ export default function PortfolioPage() {
               </ul>
             </div>
 
-            <div>
+            <div className="max-w-2xl mx-auto">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-lg font-semibold">Dendron</h3>
                 <span className="text-sm text-muted-foreground">
@@ -304,7 +309,7 @@ export default function PortfolioPage() {
               </ul>
             </div>
 
-            <div>
+            <div className="max-w-2xl mx-auto">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-lg font-semibold">Centre College</h3>
                 <span className="text-sm text-muted-foreground">
