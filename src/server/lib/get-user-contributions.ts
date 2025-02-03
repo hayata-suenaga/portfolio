@@ -1,6 +1,9 @@
 import { z } from "zod";
-import { graphqlWithAuth } from "./graphql-client";
-import { GitHubContributionsResponseSchema, RepositorySchema } from "./types";
+import { octokit } from "./graphql-client";
+import {
+  GitHubContributionsResponseSchema,
+  GitHubPRResponseSchema,
+} from "./types";
 import { aggregateDailyContributions } from "./formatter";
 
 export async function getUserContributions(
@@ -9,37 +12,37 @@ export async function getUserContributions(
   to: Date
 ) {
   try {
-    const result = await graphqlWithAuth(GET_USER_CONTRIBUTIONS, {
+    const contributionDataPromise = octokit.graphql(CONTRIBUTIONS_QUERY, {
       username,
       from: from.toISOString(),
       to: to.toISOString(),
     });
 
-    // Validate the response with Zod
-    const validatedResponse = GitHubContributionsResponseSchema.parse(result);
-
-    const tempResult = await graphqlWithAuth(PR_QUERY, {
+    const prDataResponsePromise = octokit.graphql.paginate(PR_QUERY, {
+      username,
       from: from.toISOString(),
       to: to.toISOString(),
-      userLogin: username,
     });
+    const contributionData = GitHubContributionsResponseSchema.parse(
+      await contributionDataPromise
+    );
+    const prData = GitHubPRResponseSchema.parse(await prDataResponsePromise);
 
-    console.log("prs for two repos", JSON.stringify(tempResult));
-
-    // const tempValidatedResponse = z
-    //   .object({
-    //     eisukeMono: RepositorySchema,
-    //     portfolio: RepositorySchema,
-    //   })
-    //   .parse(tempResult);
+    const repositories = prData.search.nodes.map((pr) => pr.repository.name);
+    const uniqueRepositories = Array.from(new Set(repositories));
+    console.log("uniqueRepositories", uniqueRepositories);
+    console.log("most recent date", prData.search.nodes[0].createdAt);
+    console.log(
+      "most distant date",
+      prData.search.nodes[prData.search.nodes.length - 1].createdAt
+    );
 
     return {
       contributionCalendar:
-        validatedResponse.user.contributionsCollection.contributionCalendar,
+        contributionData.user.contributionsCollection.contributionCalendar,
       pullRequestContributions: aggregateDailyContributions(
-        validatedResponse.user.contributionsCollection.pullRequestContributions
+        prData.search.nodes
       ),
-      // tempPullRequestContributions: tempValidatedResponse,
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -50,10 +53,10 @@ export async function getUserContributions(
   }
 }
 
-const GET_USER_CONTRIBUTIONS = `
-  query getUserContributions($username: String!) {
+const CONTRIBUTIONS_QUERY = `
+  query getUserContributions($username: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $username) {
-      contributionsCollection {
+      contributionsCollection(from: $from, to: $to) {
         contributionCalendar {
           totalContributions
           weeks {
@@ -66,43 +69,60 @@ const GET_USER_CONTRIBUTIONS = `
             firstDay
           }
         }
-        pullRequestContributions(first: 100, orderBy: {direction: DESC}) {
-          nodes {
-            pullRequest {
-              title
-              url
-              state
-              createdAt
-              number
-            }
-          }
-          totalCount
-        }
       }
     }
   }
 `;
 
 const PR_QUERY = `
-  query {
-    user(login: "hayata-suenaga") {
-      pullRequests(first: 100, states: MERGED, orderBy: {field: CREATED_AT, direction: DESC}) {
-        totalCount
-        nodes {
-          createdAt
+  query ($cursor: String, $username: String!, $from: DateTime!, $to: DateTime!) {
+    search(
+      query: "is:pr author:$username created:$from..$to is:merged", 
+      type: ISSUE, 
+      first: 100, 
+      after: $cursor
+    ) {
+      issueCount
+      nodes {
+        ... on PullRequest {
           number
           title
+          url
+          state
+          createdAt
           repository {
             name
           }
         }
-        pageInfo {
-          endCursor
-          startCursor
-          hasNextPage
-          hasPreviousPage
-        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
 `;
+
+// const PR_QUERY = `
+//   query ($cursor: String, $username: String!) {
+//     user(login: $username) {
+//       pullRequests(first: 100, after: $cursor, states: MERGED, orderBy: {field: CREATED_AT, direction: DESC}) {
+//         totalCount
+//         nodes {
+//           number
+//           title
+//           url
+//           state
+//           createdAt
+//           repository {
+//             name
+//           }
+//         }
+//         pageInfo {
+//           hasNextPage
+//           endCursor
+//         }
+//       }
+//     }
+//   }
+// `;

@@ -20,54 +20,51 @@ const WeekSchema = z.object({
   firstDay: z.string().transform((date) => new Date(date)),
 });
 
-const PullRequestSchema = z.object({
-  number: z.number(),
-  title: z.string(),
-  state: z.enum(["OPEN", "CLOSED", "MERGED"]),
-  createdAt: z.string(),
-  url: z.string().url(),
-});
-
-const PullRequestContributionSchema = z
-  .object({
-    pullRequest: PullRequestSchema,
-  })
-  .nullable();
-
 const ContributionCalendarSchema = z.object({
   totalContributions: z.number(),
   weeks: z.array(WeekSchema),
 });
 
-const ContributionsCollectionSchema = z.object({
-  contributionCalendar: ContributionCalendarSchema,
-  pullRequestContributions: z.object({
-    nodes: z.array(PullRequestContributionSchema),
-    totalCount: z.number(),
-  }),
-});
-
 export const GitHubContributionsResponseSchema = z.object({
   user: z.object({
-    contributionsCollection: ContributionsCollectionSchema,
-  }),
-});
-
-export type GitHubContributionsResponse = z.infer<
-  typeof GitHubContributionsResponseSchema
->;
-
-export const SearchResponseSchema = z.object({
-  data: z.object({
-    search: z.object({
-      issueCount: z.number(),
-      nodes: z.array(PullRequestSchema),
+    contributionsCollection: z.object({
+      contributionCalendar: ContributionCalendarSchema,
     }),
   }),
 });
 
-export const RepositorySchema = z.object({
-  pullRequests: z.object({
+const PullRequestSchema = z.object({
+  number: z.number(),
+  title: z.string(),
+  url: z.string().url(),
+  state: z.enum(["OPEN", "CLOSED", "MERGED"]),
+  createdAt: z.string().transform((date) => new Date(date)),
+  repository: z.object({
+    name: z.string(),
+  }),
+});
+
+export type PullRequest = z.infer<typeof PullRequestSchema>;
+
+// export const GitHubPRResponseSchema = z.object({
+//   user: z.object({
+//     pullRequests: z.object({
+//       nodes: z.array(PullRequestSchema),
+//       pageInfo: z.object({
+//         hasNextPage: z.boolean(),
+//         endCursor: z.string(),
+//       }),
+//     }),
+//   }),
+// });
+
+export const GitHubPRResponseSchema = z.object({
+  search: z.object({
+    issueCount: z.number(),
     nodes: z.array(PullRequestSchema),
+    pageInfo: z.object({
+      hasNextPage: z.boolean(),
+      endCursor: z.string().nullable(),
+    }),
   }),
 });

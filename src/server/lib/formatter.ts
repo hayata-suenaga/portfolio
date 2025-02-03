@@ -1,13 +1,9 @@
 import _ from "lodash";
-import { GitHubContributionsResponse } from "./types";
+import { PullRequest } from "./types";
 
-export function aggregateDailyContributions(
-  pullRequestContributions: GitHubContributionsResponse["user"]["contributionsCollection"]["pullRequestContributions"]
-) {
+export function aggregateDailyContributions(pullRequests: PullRequest[]) {
   // Extract all PR creation dates
-  const prDates = pullRequestContributions.nodes
-    .filter(Boolean)
-    .map((node) => node.pullRequest.createdAt);
+  const prDates = pullRequests.map((pr) => pr.createdAt);
 
   // Group PRs by date
   const groupedByDate = _.groupBy(
