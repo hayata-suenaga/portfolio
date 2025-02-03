@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import GitHubContributionCalendar from "@/components/github-contribution-calendar";
 import { ContactDialog } from "@/components/contact-dialog";
+import Hello from "@/components/hello";
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
 
@@ -25,6 +26,8 @@ export default function PortfolioPage() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
+
+      <Hello />
 
       <main className="mx-auto max-w-4xl">
         {/* Header */}
