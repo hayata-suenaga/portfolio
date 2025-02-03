@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Mail, FileDown } from "lucide-react";
+import { Sun, Moon, FileDown } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import Link from "next/link";
