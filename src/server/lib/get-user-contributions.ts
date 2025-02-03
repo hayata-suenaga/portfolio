@@ -18,13 +18,19 @@ export async function getUserContributions(
       to: to.toISOString(),
     });
     const prDataResponsePromise = octokit.graphql.paginate(
-      getPRQuery({ username, from: from.toISOString(), to: to.toISOString() })
+      getPRQuery({ username, from, to })
+    );
+    const prByDateResponsePromise = octokit.graphql(
+      getPRByDateQuery({ username, date: new Date() })
     );
 
     const contributionData = GitHubContributionsResponseSchema.parse(
       await contributionDataPromise
     );
     const prData = GitHubPRResponseSchema.parse(await prDataResponsePromise);
+    const prByDateData = GitHubPRResponseSchema.parse(
+      await prByDateResponsePromise
+    );
 
     return {
       contributionCalendar:
@@ -32,6 +38,7 @@ export async function getUserContributions(
       pullRequestContributions: aggregateWeeklyContributions(
         prData.search.nodes
       ),
+      prsMadeToday: prByDateData.search.nodes,
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -69,12 +76,12 @@ const getPRQuery = ({
   to,
 }: {
   username: string;
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
 }) => `
   query ($cursor: String) {
     search(
-      query: "is:pr author:${username} created:${from}..${to} is:merged", 
+      query: "is:pr author:${username} created:${from.toISOString()}..${to.toISOString()} is:merged", 
       type: ISSUE, 
       first: 100, 
       after: $cursor
@@ -96,6 +103,32 @@ const getPRQuery = ({
         hasNextPage
         endCursor
       }
+    }
+  }
+`;
+
+const getPRByDateQuery = ({
+  username,
+  date,
+}: {
+  username: string;
+  date: Date;
+}) => `
+  query {
+    search(query: "is:pr author:${username} created:>${date.toISOString()}", type: ISSUE, first: 100) {
+      issueCount
+      nodes {
+          ... on PullRequest {
+            number
+            title
+            url
+            state
+            createdAt
+            repository {
+              name
+            }
+          }
+        }
     }
   }
 `;

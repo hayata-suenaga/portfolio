@@ -46,25 +46,15 @@ const PullRequestSchema = z.object({
 
 export type PullRequest = z.infer<typeof PullRequestSchema>;
 
-// export const GitHubPRResponseSchema = z.object({
-//   user: z.object({
-//     pullRequests: z.object({
-//       nodes: z.array(PullRequestSchema),
-//       pageInfo: z.object({
-//         hasNextPage: z.boolean(),
-//         endCursor: z.string(),
-//       }),
-//     }),
-//   }),
-// });
-
 export const GitHubPRResponseSchema = z.object({
   search: z.object({
     issueCount: z.number(),
     nodes: z.array(PullRequestSchema),
-    pageInfo: z.object({
-      hasNextPage: z.boolean(),
-      endCursor: z.string().nullable(),
-    }),
+    pageInfo: z
+      .object({
+        hasNextPage: z.boolean(),
+        endCursor: z.string().nullable(),
+      })
+      .optional(),
   }),
 });
