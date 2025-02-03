@@ -76,12 +76,7 @@ export default function PortfolioPage() {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-4">
-                <a href="mailto:hayata.suenaga@eisuke.org">
-                  <Button className="gap-2">
-                    <Mail className="h-4 w-4" />
-                    Contact Me
-                  </Button>
-                </a>
+                <ContactDialog />
                 <a href="/resume.pdf" download>
                   <Button variant="outline" className="gap-2">
                     <FileDown className="h-4 w-4" />
@@ -91,8 +86,6 @@ export default function PortfolioPage() {
               </div>
             </div>
           </div>
-
-          <ContactDialog />
 
           {/* GitHub Contributions */}
           <div className="mt-8 p-4 rounded-lg border bg-card overflow-hidden">
