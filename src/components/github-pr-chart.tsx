@@ -13,7 +13,7 @@ import { GithubContributionData } from "@/server/api/root";
 const chartConfig = {
   desktop: {
     label: "PR Count",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--chart-4))",
   },
   //   mobile: {
   //     label: "Mobile",

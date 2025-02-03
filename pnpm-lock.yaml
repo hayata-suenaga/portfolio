@@ -14,9 +14,6 @@ importers:
       '@octokit/core':
         specifier: ^6.1.3
         version: 6.1.3
-      '@octokit/graphql':
-        specifier: ^8.2.0
-        version: 8.2.0
       '@octokit/plugin-paginate-graphql':
         specifier: ^5.2.4
         version: 5.2.4(@octokit/core@6.1.3)

@@ -1,5 +1,4 @@
-import { graphql } from "@octokit/graphql";
-
+import { Octokit } from "@octokit/core";
 // GraphQL client setup
 export const graphqlWithAuth = graphql.defaults({
   headers: {

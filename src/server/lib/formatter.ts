@@ -5,9 +5,9 @@ export function aggregateDailyContributions(
   pullRequestContributions: GitHubContributionsResponse["user"]["contributionsCollection"]["pullRequestContributions"]
 ) {
   // Extract all PR creation dates
-  const prDates = pullRequestContributions.nodes.map(
-    (node) => node.pullRequest.createdAt
-  );
+  const prDates = pullRequestContributions.nodes
+    .filter(Boolean)
+    .map((node) => node.pullRequest.createdAt);
 
   // Group PRs by date
   const groupedByDate = _.groupBy(

@@ -1,3 +1,5 @@
+"use client";
+
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import GitHubContributionCalendar from "./github-contribution-calendar";

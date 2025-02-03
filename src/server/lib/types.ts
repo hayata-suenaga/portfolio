@@ -21,15 +21,18 @@ const WeekSchema = z.object({
 });
 
 const PullRequestSchema = z.object({
+  number: z.number(),
   title: z.string(),
+  state: z.enum(["OPEN", "CLOSED", "MERGED"]),
+  createdAt: z.string(),
   url: z.string().url(),
-  state: z.string(),
-  createdAt: z.string().transform((date) => new Date(date)),
 });
 
-const PullRequestContributionSchema = z.object({
-  pullRequest: PullRequestSchema,
-});
+const PullRequestContributionSchema = z
+  .object({
+    pullRequest: PullRequestSchema,
+  })
+  .nullable();
 
 const ContributionCalendarSchema = z.object({
   totalContributions: z.number(),
@@ -53,3 +56,18 @@ export const GitHubContributionsResponseSchema = z.object({
 export type GitHubContributionsResponse = z.infer<
   typeof GitHubContributionsResponseSchema
 >;
+
+export const SearchResponseSchema = z.object({
+  data: z.object({
+    search: z.object({
+      issueCount: z.number(),
+      nodes: z.array(PullRequestSchema),
+    }),
+  }),
+});
+
+export const RepositorySchema = z.object({
+  pullRequests: z.object({
+    nodes: z.array(PullRequestSchema),
+  }),
+});
