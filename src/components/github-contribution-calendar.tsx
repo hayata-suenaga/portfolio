@@ -23,7 +23,7 @@ function GitHubContributionCalendar({ username }: { username: string }) {
     if (data && svgRef.current) {
       createCalendar({
         svgEl: svgRef.current,
-        weeklyData: data.weeks,
+        weeklyData: data.contributionCalendar.weeks,
         onMouseOver: (args) => {
           if (!args) setTooltip(null);
           else {
@@ -96,10 +96,10 @@ function createCalendar({
   onMouseOver,
 }: {
   svgEl: SVGSVGElement;
-  weeklyData: GithubContributionData["weeks"];
+  weeklyData: GithubContributionData["contributionCalendar"]["weeks"];
   onMouseOver: (
     _: {
-      data: GithubContributionData["weeks"][number]["contributionDays"][number];
+      data: GithubContributionData["contributionCalendar"]["weeks"][number]["contributionDays"][number];
       x: number;
       y: number;
     } | null

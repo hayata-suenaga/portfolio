@@ -16,7 +16,7 @@ export async function getUserContributions(
     // Validate the response with Zod
     const validatedResponse = GitHubContributionsResponseSchema.parse(result);
 
-    return validatedResponse.user.contributionsCollection.contributionCalendar;
+    return validatedResponse.user.contributionsCollection;
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Response validation error:", error.errors);
@@ -85,6 +85,7 @@ const PullRequestSchema = z.object({
   state: z.string(),
   createdAt: z.string().transform((date) => new Date(date)),
 });
+
 const PullRequestContributionSchema = z.object({
   pullRequest: PullRequestSchema,
 });
