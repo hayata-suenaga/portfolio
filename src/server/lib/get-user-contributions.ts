@@ -4,7 +4,7 @@ import {
   GitHubContributionsResponseSchema,
   GitHubPRResponseSchema,
 } from "./types";
-import { aggregateWeeklyContributions } from "./formatter";
+import { groupPullRequestsIntoWeeks } from "./formatter";
 
 export async function getUserContributions(
   username: string,
@@ -35,8 +35,10 @@ export async function getUserContributions(
     return {
       contributionCalendar:
         contributionData.user.contributionsCollection.contributionCalendar,
-      pullRequestContributions: aggregateWeeklyContributions(
-        prData.search.nodes
+      pullRequestContributions: groupPullRequestsIntoWeeks(
+        prData.search.nodes,
+        from,
+        to
       ),
       prsMadeToday: prByDateData.search.nodes,
     };

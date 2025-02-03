@@ -9,9 +9,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { GithubContributionData } from "@/server/api/root";
-
+import { startOfMonth, isSameMonth, addDays, format } from "date-fns";
 const chartConfig = {
-  pr: {
+  count: {
     label: "PR Count",
     color: "hsl(var(--primary))",
   },
@@ -39,13 +39,10 @@ export function GitHubPRChart({
             tickLine={false}
             tickMargin={8}
             axisLine={false}
-            tickFormatter={(value) =>
-              value.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })
-            }
-            className="text-xs fill-muted-foreground"
+            interval={0}
+            tickFormatter={getMonthStartLabel}
+            textAnchor="start"
+            className="text-xs fill-muted-foreground text-start"
           />
           <YAxis
             dataKey="count"
@@ -57,11 +54,37 @@ export function GitHubPRChart({
           />
           <ChartTooltip
             cursor={false}
-            content={<ChartTooltipContent hideLabel />}
+            defaultIndex={1}
+            content={<ChartTooltipContent labelFormatter={getWeekLabel} />}
           />
-          <Bar dataKey="count" fill="var(--color-pr)" radius={[4, 4, 0, 0]} />
+          <Bar
+            dataKey="count"
+            fill="var(--color-count)"
+            radius={[4, 4, 0, 0]}
+          />
         </BarChart>
       </ChartContainer>
     </div>
   );
+}
+
+function getMonthStartLabel(dateString: string) {
+  const weekStart = new Date(dateString);
+  const weekEnd = addDays(weekStart, 6);
+
+  const monthStart =
+    weekStart.getDate() === 1
+      ? startOfMonth(weekStart)
+      : !isSameMonth(weekStart, weekEnd)
+      ? startOfMonth(weekEnd)
+      : undefined;
+
+  return monthStart ? format(monthStart, "MMM") : "";
+}
+
+function getWeekLabel(dateString: string) {
+  const weekStart = new Date(dateString);
+  const weekEnd = addDays(weekStart, 6);
+
+  return `${format(weekStart, "MMM dd")} - ${format(weekEnd, "MMM dd")}`;
 }
