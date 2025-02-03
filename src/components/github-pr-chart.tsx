@@ -25,7 +25,7 @@ export function GitHubPRChart({
   return (
     <div className="space-y-4">
       <h4 className="text-sm font-medium text-muted-foreground">
-        Pull Requests
+        Weekly Pull Request Counts
       </h4>
       <ChartContainer config={chartConfig} className="h-[180px] w-full">
         <BarChart accessibilityLayer data={chartData}>
