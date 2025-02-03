@@ -36,5 +36,5 @@ export function aggregateWeeklyContributions(pullRequests: PullRequest[]) {
     }))
     .value();
 
-  return weeklyData;
+  return weeklyData.reverse();
 }
