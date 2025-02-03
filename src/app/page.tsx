@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Mail, FileDown } from "lucide-react";
+import { Sun, Moon, FileDown } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
 import GitHubContributionCalendar from "@/components/github-contribution-calendar";
-
+import { ContactDialog } from "@/components/contact-dialog";
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
 
@@ -76,12 +76,7 @@ export default function PortfolioPage() {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-4">
-                <a href="mailto:hayata.suenaga@eisuke.org">
-                  <Button className="gap-2">
-                    <Mail className="h-4 w-4" />
-                    Contact Me
-                  </Button>
-                </a>
+                <ContactDialog />
                 <a href="/resume.pdf" download>
                   <Button variant="outline" className="gap-2">
                     <FileDown className="h-4 w-4" />
