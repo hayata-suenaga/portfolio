@@ -1,53 +1,40 @@
 import _ from "lodash";
 import { PullRequest } from "./types";
 
-export function aggregateDailyContributions(pullRequests: PullRequest[]) {
-  // Extract all PR creation dates
-  const prDates = pullRequests.map((pr) => pr.createdAt);
+export function aggregateWeeklyContributions(pullRequests: PullRequest[]) {
+  if (pullRequests.length === 0) return [];
 
-  // Group PRs by date
-  const groupedByDate = _.groupBy(
-    prDates,
-    (date) => date.toISOString().split("T")[0]
-  );
+  // Get the date range from the sorted PRs
+  const firstPRDate = new Date(pullRequests[pullRequests.length - 1].createdAt);
+  const lastPRDate = new Date(pullRequests[0].createdAt);
 
-  // Convert to array of objects with date and count
-  const formattedData = Object.entries(groupedByDate).map(([date, prs]) => ({
-    date,
-    count: prs.length,
-  }));
+  // Find the boundaries of complete weeks
+  const firstSunday = new Date(firstPRDate);
+  firstSunday.setDate(firstPRDate.getDate() + ((7 - firstPRDate.getDay()) % 7));
 
-  // Sort by date in ascending order (oldest to newest)
-  const sortedData = _.sortBy(formattedData, (item) =>
-    new Date(item.date).getTime()
-  );
+  const lastSaturday = new Date(lastPRDate);
+  lastSaturday.setDate(lastPRDate.getDate() - ((lastPRDate.getDay() + 1) % 7));
 
-  // Fill in missing dates with zero counts
-  const filledData = fillMissingDates(sortedData);
+  // Group PRs by week
+  const weeklyData = _.chain(pullRequests)
+    .filter((pr) => {
+      const date = new Date(pr.createdAt);
+      return date >= firstSunday && date <= lastSaturday;
+    })
+    .groupBy((pr) => {
+      const date = new Date(pr.createdAt);
+      const sundayOfWeek = new Date(date);
+      sundayOfWeek.setDate(date.getDate() - date.getDay());
+      return sundayOfWeek.toISOString().split("T")[0];
+    })
+    .map((prs, weekStart) => ({
+      weekStart: new Date(weekStart),
+      weekEnd: new Date(
+        new Date(weekStart).setDate(new Date(weekStart).getDate() + 6)
+      ),
+      count: prs.length,
+    }))
+    .value();
 
-  return filledData;
-}
-
-function fillMissingDates(data: Array<{ date: string; count: number }>) {
-  if (data.length === 0) return [];
-
-  const result = [];
-  const startDate = new Date(data[0].date);
-  const endDate = new Date(data[data.length - 1].date);
-
-  // Create a map of existing dates for quick lookup
-  const dateMap = new Map(data.map((item) => [item.date, item.count]));
-
-  // Iterate through all dates in the range
-  const currentDate = new Date(startDate);
-  while (currentDate <= endDate) {
-    const dateStr = currentDate.toISOString().split("T")[0];
-    result.push({
-      date: dateStr,
-      count: dateMap.get(dateStr) || 0,
-    });
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return result;
+  return weeklyData;
 }

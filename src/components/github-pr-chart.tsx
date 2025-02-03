@@ -1,6 +1,6 @@
 "use client";
 
-import { CartesianGrid, Line, LineChart } from "recharts";
+import { CartesianGrid, Line, LineChart, YAxis } from "recharts";
 
 import {
   ChartConfig,
@@ -27,7 +27,7 @@ export function GitHubPRChart({
   chartData: GithubContributionData["pullRequestContributions"];
 }) {
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="h-[300px]">
       <LineChart
         accessibilityLayer
         data={chartData}
@@ -37,13 +37,6 @@ export function GitHubPRChart({
         }}
       >
         <CartesianGrid vertical={false} />
-        {/* <XAxis
-          dataKey="month"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          tickFormatter={(value) => value.slice(0, 3)}
-        /> */}
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Line
           dataKey="count"
@@ -52,6 +45,7 @@ export function GitHubPRChart({
           strokeWidth={2}
           dot={false}
         />
+        <YAxis dataKey="count" tickLine={false} tickCount={5} />
         {/* <Line
           dataKey="mobile"
           type="monotone"
