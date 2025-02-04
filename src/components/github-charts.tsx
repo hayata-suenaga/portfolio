@@ -98,8 +98,6 @@ function generatePlaceholderData(): GithubContributionData["contributionCalendar
     };
   });
 
-  console.log(weeks);
-
   return {
     totalContributions: 0,
     weeks,
