@@ -13,19 +13,6 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-24">
-      {/* Theme Switcher */}
-      <div className="absolute top-6 right-6">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        >
-          <Sun className="h-[1.5rem] w-[1.3rem] dark:hidden" />
-          <Moon className="hidden h-5 w-5 dark:block" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </div>
-
       <main className="">
         {/* Header */}
         <header className="mb-12 mx-auto max-w-4xl">
@@ -73,6 +60,15 @@ export default function PortfolioPage() {
                   >
                     <FaGithub />
                   </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                >
+                  <Sun className="h-5 w-5 hidden dark:block" />
+                  <Moon className="h-5 w-5 dark:hidden" />
+                  <span className="sr-only">Toggle theme</span>
                 </Button>
               </div>
               <div className="flex flex-wrap gap-4">
