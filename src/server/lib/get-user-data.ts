@@ -2,7 +2,7 @@ import { octokit } from "./graphql-client";
 import { z } from "zod";
 
 export async function getUserData(username: string) {
-  const userData = await octokit.request(USER_DATA_QUERY, {
+  const userData = await octokit.graphql(USER_DATA_QUERY, {
     username,
   });
 
