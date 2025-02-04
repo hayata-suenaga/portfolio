@@ -50,7 +50,12 @@ export function GitHubCharts({ username }: { username: string }) {
       </div>
       <div className="space-y-8">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className={cn("min-w-[700px]", data ? "" : "animate-pulse")}>
+          <div
+            className={cn(
+              "min-w-[700px]",
+              data ? "" : "animate-pulse opacity-70"
+            )}
+          >
             <GitHubContributionCalendar
               contributionCalendarData={
                 data?.contributionCalendar ??
@@ -60,7 +65,12 @@ export function GitHubCharts({ username }: { username: string }) {
           </div>
         </div>
         <div className="pt-4 border-t overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className={cn("min-w-[700px]", data ? "" : "animate-pulse")}>
+          <div
+            className={cn(
+              "min-w-[700px]",
+              data ? "" : "animate-pulse opacity-70"
+            )}
+          >
             <GitHubPRChart
               chartData={data?.pullRequestContributions ?? prPlaceholderData}
             />
