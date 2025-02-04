@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import Link from "next/link";
 import GitHubContributionCalendar from "./github-contribution-calendar";
 import { GitHubPRChart } from "./github-pr-chart";
 import { addDays, format, startOfWeek, getYear } from "date-fns";
@@ -11,6 +10,7 @@ import { endOfYear } from "date-fns";
 import { startOfYear } from "date-fns";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -66,46 +66,39 @@ export function GitHubCharts({ username }: { username: string }) {
   return (
     <div className="mt-8 rounded-xl border bg-card p-6 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h3 className="text-lg font-semibold tracking-tight">
-            GitHub Activity
-          </h3>
-          <Select
-            value={selectedYear.toString()}
-            onValueChange={(value) => setSelectedYear(parseInt(value))}
-            disabled={!userData}
-          >
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              {availableYears.map((year) => (
-                <SelectItem key={year} value={year.toString()}>
-                  {year}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Link
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:underline"
+        <h3 className="text-lg font-semibold tracking-tight">
+          GitHub Activity
+        </h3>
+        <Select
+          value={selectedYear.toString()}
+          onValueChange={(value) => setSelectedYear(parseInt(value))}
+          disabled={!userData}
         >
-          View Profile →
-        </Link>
+          <SelectTrigger className="w-[100px]">
+            <SelectValue placeholder="Select year" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableYears.map((year) => (
+              <SelectItem key={year} value={year.toString()}>
+                {year}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="space-y-8">
-        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div
-            className={cn(
-              "min-w-[700px]",
-              isLoading
-                ? "animate-pulse opacity-70 pointer-events-none select-none"
-                : ""
-            )}
-          >
+        <div className="relative overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm z-10">
+              <div className="flex flex-col items-center gap-2">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">
+                  Loading contribution data...
+                </span>
+              </div>
+            </div>
+          )}
+          <div className="min-w-[700px]">
             <GitHubContributionCalendar
               contributionCalendarData={
                 data?.contributionCalendar ??
@@ -114,15 +107,25 @@ export function GitHubCharts({ username }: { username: string }) {
             />
           </div>
         </div>
-        <div className="border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+        <div className="space-y-4">
+          <h4 className="text-sm font-medium text-muted-foreground">
+            Weekly Pull Request Counts
+          </h4>
           <div
             className={cn(
-              "min-w-[700px]",
-              isLoading
-                ? "animate-pulse opacity-70 pointer-events-none select-none"
-                : ""
+              "relative min-w-[700px] border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
             )}
           >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm z-10">
+                <div className="flex flex-col items-center gap-2">
+                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    Loading PR data...
+                  </span>
+                </div>
+              </div>
+            )}
             <GitHubPRChart
               chartData={data?.pullRequestContributions ?? prPlaceholderData}
             />

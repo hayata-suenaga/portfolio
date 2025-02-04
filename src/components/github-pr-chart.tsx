@@ -23,48 +23,39 @@ export function GitHubPRChart({
   chartData: GithubContributionData["pullRequestContributions"];
 }) {
   return (
-    <div className="space-y-4">
-      <h4 className="text-sm font-medium text-muted-foreground">
-        Weekly Pull Request Counts
-      </h4>
-      <ChartContainer config={chartConfig} className="h-[180px] w-full">
-        <BarChart accessibilityLayer data={chartData}>
-          <CartesianGrid
-            vertical={false}
-            strokeDasharray="4"
-            className="stroke-border"
-          />
-          <XAxis
-            dataKey="weekStart"
-            tickLine={false}
-            tickMargin={8}
-            axisLine={false}
-            interval={0}
-            tickFormatter={getMonthStartLabel}
-            textAnchor="start"
-            className="text-xs fill-muted-foreground text-start"
-          />
-          <YAxis
-            dataKey="count"
-            tickLine={false}
-            axisLine={false}
-            tickCount={5}
-            tickMargin={8}
-            className="text-xs fill-muted-foreground"
-            width={25}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent labelFormatter={getWeekLabel} />}
-          />
-          <Bar
-            dataKey="count"
-            fill="var(--color-count)"
-            radius={[4, 4, 0, 0]}
-          />
-        </BarChart>
-      </ChartContainer>
-    </div>
+    <ChartContainer config={chartConfig} className="h-[180px] w-full">
+      <BarChart accessibilityLayer data={chartData}>
+        <CartesianGrid
+          vertical={false}
+          strokeDasharray="4"
+          className="stroke-border"
+        />
+        <XAxis
+          dataKey="weekStart"
+          tickLine={false}
+          tickMargin={8}
+          axisLine={false}
+          interval={0}
+          tickFormatter={getMonthStartLabel}
+          textAnchor="start"
+          className="text-xs fill-muted-foreground text-start"
+        />
+        <YAxis
+          dataKey="count"
+          tickLine={false}
+          axisLine={false}
+          tickCount={5}
+          tickMargin={8}
+          className="text-xs fill-muted-foreground"
+          width={25}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent labelFormatter={getWeekLabel} />}
+        />
+        <Bar dataKey="count" fill="var(--color-count)" radius={[4, 4, 0, 0]} />
+      </BarChart>
+    </ChartContainer>
   );
 }
 
