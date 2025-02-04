@@ -4,20 +4,48 @@ import { api } from "@/trpc/react";
 import Link from "next/link";
 import GitHubContributionCalendar from "./github-contribution-calendar";
 import { GitHubPRChart } from "./github-pr-chart";
-import { addDays, format, startOfWeek } from "date-fns";
+import { addDays, format, startOfWeek, getYear } from "date-fns";
 import { eachDayOfInterval } from "date-fns";
 import { eachWeekOfInterval } from "date-fns";
 import { endOfYear } from "date-fns";
 import { startOfYear } from "date-fns";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function GitHubCharts({ username }: { username: string }) {
+  const [selectedYear, setSelectedYear] = useState(getYear(new Date()));
+
+  const { data: userData } = api.github.getUserData.useQuery({
+    username,
+  });
   const { data, error } = api.github.getUserContributions.useQuery({
     username,
-    fromDate: new Date("2024-01-01"),
-    toDate: new Date("2024-12-31"),
+    fromDate: new Date(`${selectedYear}-01-01`),
+    toDate: new Date(`${selectedYear}-12-31`),
   });
+
+  // Generate available years (from 2022 to current year)
+  const availableYears = useMemo(() => {
+    const currentYear = getYear(new Date());
+    if (!userData) return [currentYear];
+
+    const years = [];
+    for (
+      let year = getYear(userData.user.createdAt);
+      year <= currentYear;
+      year++
+    ) {
+      years.push(year);
+    }
+    return years;
+  }, [userData]);
 
   const contributionCalendarPlaceholderData = useMemo(
     generatePlaceholderData,
@@ -33,17 +61,37 @@ export function GitHubCharts({ username }: { username: string }) {
     );
   }
 
+  const isLoading = !data;
+
   return (
-    <div className="mt-8 p-6 rounded-xl border bg-card shadow-sm">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold tracking-tight">
-          GitHub Activity
-        </h3>
+    <div className="mt-8 rounded-xl border bg-card p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <h3 className="text-lg font-semibold tracking-tight">
+            GitHub Activity
+          </h3>
+          <Select
+            value={selectedYear.toString()}
+            onValueChange={(value) => setSelectedYear(parseInt(value))}
+            disabled={!userData}
+          >
+            <SelectTrigger className="w-[100px]">
+              <SelectValue placeholder="Select year" />
+            </SelectTrigger>
+            <SelectContent>
+              {availableYears.map((year) => (
+                <SelectItem key={year} value={year.toString()}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Link
           href={`https://github.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-muted-foreground hover:text-foreground transition-colors hover:underline"
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:underline"
         >
           View Profile →
         </Link>
@@ -53,7 +101,9 @@ export function GitHubCharts({ username }: { username: string }) {
           <div
             className={cn(
               "min-w-[700px]",
-              data ? "" : "animate-pulse opacity-70"
+              isLoading
+                ? "animate-pulse opacity-70 pointer-events-none select-none"
+                : ""
             )}
           >
             <GitHubContributionCalendar
@@ -64,11 +114,13 @@ export function GitHubCharts({ username }: { username: string }) {
             />
           </div>
         </div>
-        <div className="pt-4 border-t overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+        <div className="border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
           <div
             className={cn(
               "min-w-[700px]",
-              data ? "" : "animate-pulse opacity-70"
+              isLoading
+                ? "animate-pulse opacity-70 pointer-events-none select-none"
+                : ""
             )}
           >
             <GitHubPRChart
