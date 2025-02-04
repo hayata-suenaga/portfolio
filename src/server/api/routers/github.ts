@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { getUserContributions } from "@/server/lib/get-user-contributions";
+import { getUserData } from "@/server/lib/get-user-data";
 
 export const githubRouter = createTRPCRouter({
   getUserContributions: publicProcedure
@@ -13,12 +14,12 @@ export const githubRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { username, fromDate, toDate } = input;
+      return getUserContributions(username, fromDate, toDate);
+    }),
 
-      try {
-        const data = await getUserContributions(username, fromDate, toDate);
-        return data;
-      } catch {
-        throw new Error("Failed to fetch GitHub contributions");
-      }
+  getUserData: publicProcedure
+    .input(z.object({ username: z.string() }))
+    .query(async ({ input }) => {
+      return getUserData(input.username);
     }),
 });

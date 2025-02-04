@@ -22,20 +22,30 @@ import {
 export function GitHubCharts({ username }: { username: string }) {
   const [selectedYear, setSelectedYear] = useState(getYear(new Date()));
 
-  // Generate available years (from 2022 to current year)
-  const availableYears = useMemo(() => {
-    const years = [];
-    for (let year = 2022; year <= getYear(new Date()); year++) {
-      years.push(year);
-    }
-    return years;
-  }, []);
-
+  const { data: userData } = api.github.getUserData.useQuery({
+    username,
+  });
   const { data, error } = api.github.getUserContributions.useQuery({
     username,
     fromDate: new Date(`${selectedYear}-01-01`),
     toDate: new Date(`${selectedYear}-12-31`),
   });
+
+  // Generate available years (from 2022 to current year)
+  const availableYears = useMemo(() => {
+    const currentYear = getYear(new Date());
+    if (!userData) return [currentYear];
+
+    const years = [];
+    for (
+      let year = getYear(userData.user.createdAt);
+      year <= currentYear;
+      year++
+    ) {
+      years.push(year);
+    }
+    return years;
+  }, [userData]);
 
   const contributionCalendarPlaceholderData = useMemo(
     generatePlaceholderData,
@@ -50,6 +60,8 @@ export function GitHubCharts({ username }: { username: string }) {
       </div>
     );
   }
+
+  const isLoading = !data;
 
   return (
     <div className="mt-8 rounded-xl border bg-card p-6 shadow-sm">
@@ -88,7 +100,9 @@ export function GitHubCharts({ username }: { username: string }) {
           <div
             className={cn(
               "min-w-[700px]",
-              data ? "" : "animate-pulse opacity-70"
+              isLoading
+                ? "animate-pulse opacity-70 pointer-events-none select-none"
+                : ""
             )}
           >
             <GitHubContributionCalendar
@@ -103,7 +117,9 @@ export function GitHubCharts({ username }: { username: string }) {
           <div
             className={cn(
               "min-w-[700px]",
-              data ? "" : "animate-pulse opacity-70"
+              isLoading
+                ? "animate-pulse opacity-70 pointer-events-none select-none"
+                : ""
             )}
           >
             <GitHubPRChart
