@@ -10,6 +10,7 @@ import { endOfYear } from "date-fns";
 import { startOfYear } from "date-fns";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -86,7 +87,17 @@ export function GitHubCharts({ username }: { username: string }) {
         </Select>
       </div>
       <div className="space-y-8">
-        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+        <div className="relative overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm z-10">
+              <div className="flex flex-col items-center gap-2">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">
+                  Loading contribution data...
+                </span>
+              </div>
+            </div>
+          )}
           <div
             className={cn(
               "min-w-[700px]",
@@ -103,15 +114,25 @@ export function GitHubCharts({ username }: { username: string }) {
             />
           </div>
         </div>
-        <div className="border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+        <div className="space-y-4">
+          <h4 className="text-sm font-medium text-muted-foreground">
+            Weekly Pull Request Counts
+          </h4>
           <div
             className={cn(
-              "min-w-[700px]",
-              isLoading
-                ? "animate-pulse opacity-70 pointer-events-none select-none"
-                : ""
+              "relative min-w-[700px] border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
             )}
           >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm z-10">
+                <div className="flex flex-col items-center gap-2">
+                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    Loading PR data...
+                  </span>
+                </div>
+              </div>
+            )}
             <GitHubPRChart
               chartData={data?.pullRequestContributions ?? prPlaceholderData}
             />
