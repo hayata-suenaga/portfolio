@@ -73,6 +73,7 @@ export function GitHubCharts({ username }: { username: string }) {
           <Select
             value={selectedYear.toString()}
             onValueChange={(value) => setSelectedYear(parseInt(value))}
+            disabled={!userData}
           >
             <SelectTrigger className="w-[100px]">
               <SelectValue placeholder="Select year" />
