@@ -98,14 +98,7 @@ export function GitHubCharts({ username }: { username: string }) {
               </div>
             </div>
           )}
-          <div
-            className={cn(
-              "min-w-[700px]",
-              isLoading
-                ? "animate-pulse opacity-70 pointer-events-none select-none"
-                : ""
-            )}
-          >
+          <div className="min-w-[700px]">
             <GitHubContributionCalendar
               contributionCalendarData={
                 data?.contributionCalendar ??
