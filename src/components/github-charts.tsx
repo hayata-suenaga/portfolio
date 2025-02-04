@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import Link from "next/link";
 import GitHubContributionCalendar from "./github-contribution-calendar";
 import { GitHubPRChart } from "./github-pr-chart";
 import { addDays, format, startOfWeek, getYear } from "date-fns";
