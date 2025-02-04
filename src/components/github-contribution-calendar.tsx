@@ -162,12 +162,19 @@ function createCalendar({
 
   // Add month labels at the top
   if (weeklyData.length > 0) {
+    // Find a date in the middle of the data to get the target year
+    const targetYear =
+      weeklyData[
+        Math.floor(weeklyData.length / 2)
+      ].contributionDays[0].date.getFullYear();
     const months = Array.from(
       new Set(
         weeklyData.flatMap((week) =>
-          week.contributionDays.map(
-            (day) => new Date(day.date.getFullYear(), day.date.getMonth(), 1)
-          )
+          week.contributionDays
+            .filter((day) => day.date.getFullYear() === targetYear)
+            .map(
+              (day) => new Date(day.date.getFullYear(), day.date.getMonth(), 1)
+            )
         )
       )
     ).sort((a, b) => a.getTime() - b.getTime());
