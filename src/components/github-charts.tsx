@@ -10,6 +10,7 @@ import { eachWeekOfInterval } from "date-fns";
 import { endOfYear } from "date-fns";
 import { startOfYear } from "date-fns";
 import { useMemo } from "react";
+import { cn } from "@/lib/utils";
 
 export function GitHubCharts({ username }: { username: string }) {
   const { data, error } = api.github.getUserContributions.useQuery({
@@ -49,7 +50,7 @@ export function GitHubCharts({ username }: { username: string }) {
       </div>
       <div className="space-y-8">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className="min-w-[700px]">
+          <div className={cn("min-w-[700px]", data ? "" : "animate-pulse")}>
             <GitHubContributionCalendar
               contributionCalendarData={
                 data?.contributionCalendar ??
@@ -59,7 +60,7 @@ export function GitHubCharts({ username }: { username: string }) {
           </div>
         </div>
         <div className="pt-4 border-t overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className="min-w-[700px]">
+          <div className={cn("min-w-[700px]", data ? "" : "animate-pulse")}>
             <GitHubPRChart
               chartData={data?.pullRequestContributions ?? prPlaceholderData}
             />
