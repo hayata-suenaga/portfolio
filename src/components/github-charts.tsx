@@ -3,8 +3,14 @@
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import GitHubContributionCalendar from "./github-contribution-calendar";
-import { Skeleton } from "./ui/skeleton";
 import { GitHubPRChart } from "./github-pr-chart";
+import { addDays, format, startOfWeek } from "date-fns";
+import { eachDayOfInterval } from "date-fns";
+import { eachWeekOfInterval } from "date-fns";
+import { endOfYear } from "date-fns";
+import { startOfYear } from "date-fns";
+import { useMemo } from "react";
+import { cn } from "@/lib/utils";
 
 export function GitHubCharts({ username }: { username: string }) {
   const { data, error } = api.github.getUserContributions.useQuery({
@@ -13,16 +19,18 @@ export function GitHubCharts({ username }: { username: string }) {
     toDate: new Date("2024-12-31"),
   });
 
+  const contributionCalendarPlaceholderData = useMemo(
+    generatePlaceholderData,
+    []
+  );
+  const prPlaceholderData = useMemo(generateChartPlaceholderData, []);
+
   if (error) {
     return (
       <div className="text-sm text-red-500">
         Failed to load contribution data: {error.message}
       </div>
     );
-  }
-
-  if (!data) {
-    return <Skeleton className="w-full h-[500px]" />;
   }
 
   return (
@@ -42,18 +50,88 @@ export function GitHubCharts({ username }: { username: string }) {
       </div>
       <div className="space-y-8">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className="min-w-[700px]">
+          <div
+            className={cn(
+              "min-w-[700px]",
+              data ? "" : "animate-pulse opacity-70"
+            )}
+          >
             <GitHubContributionCalendar
-              contributionCalendarData={data.contributionCalendar}
+              contributionCalendarData={
+                data?.contributionCalendar ??
+                contributionCalendarPlaceholderData
+              }
             />
           </div>
         </div>
         <div className="pt-4 border-t overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-          <div className="min-w-[700px]">
-            <GitHubPRChart chartData={data.pullRequestContributions} />
+          <div
+            className={cn(
+              "min-w-[700px]",
+              data ? "" : "animate-pulse opacity-70"
+            )}
+          >
+            <GitHubPRChart
+              chartData={data?.pullRequestContributions ?? prPlaceholderData}
+            />
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+function generatePlaceholderData() {
+  const currentYear = new Date().getFullYear();
+  const yearStart = startOfYear(new Date(currentYear, 0, 1));
+  const yearEnd = endOfYear(new Date(currentYear, 0, 1));
+
+  // Get all weeks in the year
+  const weeksInYear = eachWeekOfInterval(
+    { start: yearStart, end: yearEnd },
+    { weekStartsOn: 0 } // Week starts on Sunday
+  );
+
+  const weeks = weeksInYear.map((weekStart) => {
+    // Get all days in the week
+    const daysInWeek = eachDayOfInterval({
+      start: weekStart,
+      end: addDays(weekStart, 6),
+    });
+
+    const contributionDays = daysInWeek.map((date) => ({
+      date: date,
+      contributionCount: 0,
+      contributionLevel: "NONE" as const,
+      weekday: date.getDay(),
+    }));
+
+    return {
+      contributionDays,
+      firstDay: startOfWeek(weekStart, { weekStartsOn: 0 }),
+    };
+  });
+
+  return {
+    totalContributions: 0,
+    weeks,
+  };
+}
+
+export function generateChartPlaceholderData() {
+  const currentYear = new Date().getFullYear();
+  const yearStart = startOfYear(new Date(currentYear, 0, 1));
+  const yearEnd = endOfYear(new Date(currentYear, 0, 1));
+
+  // Get all weeks in the year
+  const weeks = eachWeekOfInterval(
+    { start: yearStart, end: yearEnd },
+    { weekStartsOn: 0 } // Week starts on Sunday
+  );
+
+  return weeks.map((weekStart) => ({
+    weekStart: format(weekStart, "yyyy-MM-dd"),
+    prs: [],
+    count: 0,
+  }));
 }
