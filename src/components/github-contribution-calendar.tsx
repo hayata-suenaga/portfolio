@@ -65,7 +65,7 @@ function CalendarTooltip({
 }) {
   return (
     <div
-      className="absolute pointer-events-none bg-popover border border-border p-2.5 rounded-lg text-popover-foreground text-xs z-50 shadow-md"
+      className="fixed pointer-events-none bg-popover border border-border p-2.5 rounded-lg text-popover-foreground text-xs z-50 shadow-md"
       style={{
         left: x,
         top: y,
@@ -153,7 +153,7 @@ function createCalendar({
         }
       })
       .on("mouseover", (event: MouseEvent, data) => {
-        onMouseOver({ data, x: event.pageX, y: event.pageY });
+        onMouseOver({ data, x: event.clientX, y: event.clientY });
       })
       .on("mouseout", () => {
         onMouseOver(null);

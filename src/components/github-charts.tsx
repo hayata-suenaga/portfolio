@@ -113,7 +113,7 @@ export function GitHubCharts({ username }: { username: string }) {
           </h4>
           <div
             className={cn(
-              "relative min-w-[700px] border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
+              "relative border-t pt-4 overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
             )}
           >
             {isLoading && (
@@ -126,9 +126,11 @@ export function GitHubCharts({ username }: { username: string }) {
                 </div>
               </div>
             )}
-            <GitHubPRChart
-              chartData={data?.pullRequestContributions ?? prPlaceholderData}
-            />
+            <div className="min-w-[700px]">
+              <GitHubPRChart
+                chartData={data?.pullRequestContributions ?? prPlaceholderData}
+              />
+            </div>
           </div>
         </div>
       </div>
