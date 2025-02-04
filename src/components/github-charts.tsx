@@ -66,35 +66,25 @@ export function GitHubCharts({ username }: { username: string }) {
   return (
     <div className="mt-8 rounded-xl border bg-card p-6 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h3 className="text-lg font-semibold tracking-tight">
-            GitHub Activity
-          </h3>
-          <Select
-            value={selectedYear.toString()}
-            onValueChange={(value) => setSelectedYear(parseInt(value))}
-            disabled={!userData}
-          >
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              {availableYears.map((year) => (
-                <SelectItem key={year} value={year.toString()}>
-                  {year}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Link
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:underline"
+        <h3 className="text-lg font-semibold tracking-tight">
+          GitHub Activity
+        </h3>
+        <Select
+          value={selectedYear.toString()}
+          onValueChange={(value) => setSelectedYear(parseInt(value))}
+          disabled={!userData}
         >
-          View Profile →
-        </Link>
+          <SelectTrigger className="w-[100px]">
+            <SelectValue placeholder="Select year" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableYears.map((year) => (
+              <SelectItem key={year} value={year.toString()}>
+                {year}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="space-y-8">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
