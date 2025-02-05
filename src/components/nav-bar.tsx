@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-4 z-40 mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-8 saturate-100 backdrop-blur-md h-16 font-semibold text-sm text-foreground/60 bg-background/75 border border-border/50"
+        "fixed inset-x-0 md:top-4 top-0 rounded-none z-40 mx-auto flex max-w-6xl items-center justify-between md:rounded-2xl px-8 saturate-100 backdrop-blur-md h-16 font-semibold text-sm text-foreground/60 bg-background/75 border border-border/50"
       )}
     >
       <Link href="/" className="flex items-center justify-center gap-1">
