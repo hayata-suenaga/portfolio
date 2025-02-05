@@ -3,6 +3,9 @@ import { FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ContactDialog } from "./contact-dialog";
+import Link from "next/link";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import ThemeButton from "./theme-button";
 
 export default function HeroSection() {
   return (
@@ -15,6 +18,37 @@ export default function HeroSection() {
           <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
             Full Stack Software Engineer
           </p>
+          <div className="flex gap-2 mb-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="[&_svg]:size-6"
+              asChild
+            >
+              <Link
+                href="https://www.linkedin.com/in/hayata-suenaga/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedin />
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="[&_svg]:size-6"
+              asChild
+            >
+              <Link
+                href="https://github.com/hayata-suenaga"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub />
+              </Link>
+            </Button>
+            <ThemeButton />
+          </div>
           <div className="flex flex-wrap gap-4">
             <ContactDialog />
             <a href="/resume.pdf" download>
