@@ -1,5 +1,5 @@
+import { Clock, MapPin } from "lucide-react";
 import { RoughNotation } from "react-rough-notation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function WhoAmISection() {
   return (
@@ -17,21 +17,27 @@ export default function WhoAmISection() {
           </RoughNotation>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="flex flex-col justify-center gap-8">
-            <Card className="max-w-72">
-              <CardHeader>
-                <CardTitle className="text-base">Years of Experience</CardTitle>
-              </CardHeader>
-              <CardContent>+3 years</CardContent>
-            </Card>
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="flex md:flex-col flex-row justify-start md:justify-center items-start md:gap-8 gap-4">
+            <div className="p-4 border border-border rounded-md space-y-3">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-muted-foreground" />
+                <p className="text-sm font-medium text-muted-foreground">
+                  Years of Experience
+                </p>
+              </div>
+              <p className="font-semibold">+3 years</p>
+            </div>
 
-            <Card className="max-w-72">
-              <CardHeader>
-                <CardTitle className="text-base">Location</CardTitle>
-              </CardHeader>
-              <CardContent>San Francisco, CA / Tokyo, JP</CardContent>
-            </Card>
+            <div className="p-4 border border-border rounded-md space-y-3">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-muted-foreground" />
+                <p className="text-sm font-medium text-muted-foreground">
+                  Location
+                </p>
+              </div>
+              <p className="font-semibold">San Francisco, CA / Tokyo, JP</p>
+            </div>
           </div>
 
           <article className="prose dark:prose-invert">
