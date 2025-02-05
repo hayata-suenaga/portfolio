@@ -1,9 +1,22 @@
 "use client";
 
 import Link from "next/link";
-
+import {
+  Menu,
+  User,
+  Calculator,
+  Baby,
+  Briefcase,
+  GraduationCap,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import ThemeButton from "./theme-button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Header() {
   return (
@@ -15,16 +28,51 @@ export default function Header() {
       <Link href="/" className="flex items-center justify-center gap-1">
         hayata.io
       </Link>
-      <div className="flex items-center gap-4">
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex items-center gap-4">
         <div className="flex items-center gap-3">
-          <Link href="#whoami">Who am I?</Link>
-          <Link href="#in-numbers">In numbers</Link>
-          <Link href="#eisuke">Eisuke</Link>
-          <Link href="#experience">Experience</Link>
-          <Link href="#education">Education</Link>
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+            >
+              <link.icon className="h-4 w-4" />
+              {link.label}
+            </Link>
+          ))}
         </div>
         <ThemeButton />
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden flex items-center gap-2">
+        <ThemeButton />
+        <DropdownMenu>
+          <DropdownMenuTrigger aria-label="Navigation menu" className="p-2">
+            <Menu className="h-5 w-5" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            {NAV_LINKS.map((link) => (
+              <DropdownMenuItem key={link.href} asChild>
+                <Link href={link.href} className="flex items-center gap-2">
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
 }
+
+const NAV_LINKS = [
+  { href: "#whoami", label: "Who am I?", icon: User },
+  { href: "#in-numbers", label: "In numbers", icon: Calculator },
+  { href: "#eisuke", label: "Eisuke", icon: Baby },
+  { href: "#experience", label: "Experience", icon: Briefcase },
+  { href: "#education", label: "Education", icon: GraduationCap },
+];
