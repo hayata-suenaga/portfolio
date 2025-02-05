@@ -17,7 +17,7 @@ export default function Header() {
       </Link>
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-3">
-          <Link href="#who-am-i">Who am I?</Link>
+          <Link href="#whoami">Who am I?</Link>
           <Link href="#in-numbers">In numbers</Link>
           <Link href="#eisuke">Eisuke</Link>
           <Link href="#experience">Experience</Link>
