@@ -2,7 +2,7 @@ import { RoughNotation } from "react-rough-notation";
 
 export default function EducationSection() {
   return (
-    <section id="education" className="mx-auto max-w-4xl py-16">
+    <section id="education" className="mx-auto max-w-4xl">
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"

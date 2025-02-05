@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function EisukeSection() {
   return (
-    <section id="eisuke" className="max-w-4xl mx-auto py-16">
+    <section id="eisuke" className="max-w-4xl mx-auto">
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"
