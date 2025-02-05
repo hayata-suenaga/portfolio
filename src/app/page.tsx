@@ -1,92 +1,12 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { Sun, Moon, FileDown } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { useTheme } from "next-themes";
-import Link from "next/link";
 import Image from "next/image";
-import { ContactDialog } from "@/components/contact-dialog";
 import { GitHubCharts } from "@/components/github-charts";
 import HeroSection from "@/components/hero";
 
 export default function PortfolioPage() {
-  const { theme, setTheme } = useTheme();
-
   return (
     <div className="min-h-screen bg-background p-6 md:p-24">
       <main className="">
         <HeroSection />
-
-        {/* Header */}
-        <header className="mb-12 mx-auto max-w-4xl">
-          <div className="flex flex-col md:flex-row md:items-start md:gap-8 mb-6">
-            <div className="w-48 h-48 relative mb-6 md:mb-0 mx-auto md:mx-0">
-              <Image
-                src="/profile.png"
-                alt="Hayata Suenaga"
-                width={192}
-                height={192}
-                className="rounded-full object-cover"
-                priority
-              />
-            </div>
-            <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-2">Hayata Suenaga</h1>
-              <h2 className="text-xl text-muted-foreground mb-6">
-                Software Engineer
-              </h2>
-              <div className="flex gap-2 mb-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="[&_svg]:size-6"
-                  asChild
-                >
-                  <Link
-                    href="https://www.linkedin.com/in/hayata-suenaga/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaLinkedin />
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="[&_svg]:size-6"
-                  asChild
-                >
-                  <Link
-                    href="https://github.com/hayata-suenaga"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaGithub />
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                >
-                  <Sun className="h-5 w-5 hidden dark:block" />
-                  <Moon className="h-5 w-5 dark:hidden" />
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <ContactDialog />
-                <a href="/resume.pdf" download>
-                  <Button variant="outline" className="gap-2">
-                    <FileDown className="h-4 w-4" />
-                    Download Resume
-                  </Button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </header>
 
         {/* GitHub Contributions */}
         <section className="mb-12 mx-auto max-w-4xl">
