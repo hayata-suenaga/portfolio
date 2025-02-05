@@ -3,7 +3,7 @@ import { RoughNotation } from "react-rough-notation";
 
 export default function ExperienceSection() {
   return (
-    <section className="py-32">
+    <section id="experience" className="py-32">
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"
