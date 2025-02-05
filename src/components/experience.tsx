@@ -9,11 +9,11 @@ export default function ExperienceSection() {
             key={index}
             className="relative flex flex-col gap-5 md:flex-row md:gap-16"
           >
-            <div className="top-28 h-min shrink-0 md:sticky space-y-4 w-48">
+            <div className="top-28 h-min shrink-0 md:sticky md:w-48 flex md:flex-col gap-5 w-auto md:items-start">
               <Badge variant="secondary">{experience.role}</Badge>
-              <p className="text-xs font-medium text-muted-foreground">
+              <span className="text-xs font-medium text-muted-foreground">
                 {experience.date}
-              </p>
+              </span>
             </div>
             <div>
               <h2 className="mb-4 text-lg font-semibold md:leading-5">
