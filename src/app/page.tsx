@@ -13,17 +13,19 @@ export default function PortfolioPage() {
 
         <section className="py-32">
           <div className="mx-auto max-w-4xl">
-            <RoughNotation
-              type="underline"
-              strokeWidth={2}
-              order={1}
-              color="hsl(47.9, 95.8%, 53.1%)"
-              show
-            >
-              <h2 className="inline text-3xl font-bold">Who am I?</h2>
-            </RoughNotation>
+            <div className="flex justify-center mb-12">
+              <RoughNotation
+                type="underline"
+                strokeWidth={2}
+                order={1}
+                color="hsl(47.9, 95.8%, 53.1%)"
+                show
+              >
+                <h2 className="text-3xl font-bold">Who am I?</h2>
+              </RoughNotation>
+            </div>
 
-            <div className="grid md:grid-cols-2 gap-4 mt-12">
+            <div className="grid md:grid-cols-2 gap-4">
               <div className="flex flex-col justify-center gap-8">
                 <Card className="max-w-72">
                   <CardHeader>
@@ -73,13 +75,38 @@ export default function PortfolioPage() {
 
         {/* GitHub Contributions */}
         <section className="mx-auto max-w-4xl py-32">
-          <GitHubCharts username="hayata-suenaga" />
+          <div className="flex justify-center mb-12">
+            <RoughNotation
+              type="underline"
+              strokeWidth={2}
+              order={1}
+              color="hsl(47.9, 95.8%, 53.1%)"
+              show
+            >
+              <h2 className="text-3xl font-bold">In numbers</h2>
+            </RoughNotation>
+          </div>
+
+          <div className="mt-12">
+            <GitHubCharts username="hayata-suenaga" />
+          </div>
         </section>
 
         <ExperienceSection />
 
         <div className="max-w-4xl mx-auto py-32">
-          {/* Platforms Section */}
+          <div className="flex justify-center mb-12">
+            <RoughNotation
+              type="underline"
+              strokeWidth={2}
+              order={1}
+              color="hsl(47.9, 95.8%, 53.1%)"
+              show
+            >
+              <h2 className="text-3xl font-bold">Eisuke</h2>
+            </RoughNotation>
+          </div>
+
           <div className="p-12">
             <h4 className="text-lg font-semibold mb-6 text-center">
               Our Platforms
@@ -147,8 +174,18 @@ export default function PortfolioPage() {
         </div>
 
         {/* Education */}
-        <section className="mx-auto max-w-2xl py-32">
-          <h2 className="text-2xl font-bold mb-6 text-primary">Education</h2>
+        <section className="mx-auto max-w-4xl py-32">
+          <div className="flex justify-center mb-12">
+            <RoughNotation
+              type="underline"
+              strokeWidth={2}
+              order={1}
+              color="hsl(47.9, 95.8%, 53.1%)"
+              show
+            >
+              <h2 className="text-3xl font-bold">Education</h2>
+            </RoughNotation>
+          </div>
 
           <div>
             <div className="flex justify-between items-start mb-2">

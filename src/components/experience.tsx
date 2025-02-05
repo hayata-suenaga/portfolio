@@ -1,9 +1,22 @@
 import { Badge } from "@/components/ui/badge";
+import { RoughNotation } from "react-rough-notation";
 
 export default function ExperienceSection() {
   return (
     <section className="py-32">
-      <div className="mx-auto max-w-4xl mt-20 space-y-20 md:mt-40 md:space-y-32">
+      <div className="flex justify-center mb-12">
+        <RoughNotation
+          type="underline"
+          strokeWidth={2}
+          order={1}
+          color="hsl(47.9, 95.8%, 53.1%)"
+          show
+        >
+          <h2 className="text-3xl font-bold">Experience</h2>
+        </RoughNotation>
+      </div>
+
+      <div className="mx-auto max-w-4xl space-y-20">
         {EXPERIENCES.map((experience, index) => (
           <div
             key={index}
