@@ -4,6 +4,7 @@ import HeroSection from "@/components/hero";
 import ExperienceSection from "@/components/experience";
 import { RoughNotation } from "react-rough-notation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SocialLinks from "@/components/social-links";
 
 export default function PortfolioPage() {
   return (
@@ -215,6 +216,8 @@ export default function PortfolioPage() {
           </div>
         </section>
       </main>
+
+      <SocialLinks />
     </div>
   );
 }
