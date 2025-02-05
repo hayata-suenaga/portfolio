@@ -7,19 +7,19 @@ export default function ExperienceSection() {
         {EXPERIENCES.map((experience, index) => (
           <div
             key={index}
-            className="relative flex flex-col gap-5 md:flex-row md:gap-20"
+            className="relative flex flex-col gap-5 md:flex-row md:gap-16"
           >
-            <div className="top-28 flex h-min shrink-0 items-center gap-5 md:sticky">
+            <div className="top-28 h-min shrink-0 md:sticky space-y-4 w-48">
               <Badge variant="secondary">{experience.role}</Badge>
-              <span className="text-xs font-medium text-muted-foreground">
+              <p className="text-xs font-medium text-muted-foreground">
                 {experience.date}
-              </span>
+              </p>
             </div>
             <div>
-              <h2 className="mb-4 text-lg font-semibold md:text-2xl md:leading-5">
+              <h2 className="mb-4 text-lg font-semibold md:leading-5">
                 {experience.company}
               </h2>
-              <ul className="ml-4 mt-5 space-y-2 text-muted-foreground md:text-lg">
+              <ul className="ml-4 mt-5 space-y-2 text-muted-foreground text-sm">
                 {experience.achievements.map(
                   (achievement, achievementIndex) => (
                     <li key={achievementIndex} className="list-disc">
