@@ -7,11 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PortfolioPage() {
   return (
-    <div className="min-h-screen bg-background p-6 md:p-24">
+    <div className="min-h-screen bg-background px-6">
       <main>
         <HeroSection />
 
-        <section className="py-32">
+        <section id="whoami" className="py-32">
           <div className="mx-auto max-w-4xl">
             <div className="flex justify-center mb-12">
               <RoughNotation
