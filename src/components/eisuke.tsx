@@ -16,7 +16,7 @@ export default function EisukeSection() {
         </RoughNotation>
       </div>
 
-      <div className="p-12">
+      <div className="mb-8">
         <h4 className="text-lg font-semibold mb-6 text-center">
           Our Platforms
         </h4>
@@ -44,7 +44,6 @@ export default function EisukeSection() {
         </div>
       </div>
 
-      {/* Beta Apps Section */}
       <div>
         <h4 className="text-lg font-semibold mb-6 text-center">
           Try Our Beta Apps
@@ -92,13 +91,13 @@ function WebsitePreview({ url }: { url: string }) {
       rel="noopener noreferrer"
       className="block hover:scale-105 transition-transform duration-300"
     >
-      <div className="w-[195px] h-[135px] overflow-hidden rounded-sm border border-border pointer-events-none">
+      <div className="w-[260px] h-[180px] overflow-hidden rounded-sm border border-border pointer-events-none">
         <iframe
           src={`https://${url}`}
           style={{
             width: "1300px",
             height: "900px",
-            transform: "scale(0.15)",
+            transform: "scale(0.2)",
             transformOrigin: "0 0",
           }}
         />
