@@ -22,25 +22,25 @@ export default function EisukeSection() {
         and mobile applications to help people master English vocabulary.
       </p>
 
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="flex flex-col items-center group">
             <WebsitePreview url="eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+            <p className="font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
               Main Website
             </p>
           </div>
 
           <div className="flex flex-col items-center group">
             <WebsitePreview url="app.eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+            <p className="font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
               Student Portal
             </p>
           </div>
 
           <div className="flex flex-col items-center sm:col-span-2 lg:col-span-1 group">
             <WebsitePreview url="teacher.eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+            <p className="font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
               Teacher Portal
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function EisukeSection() {
                 className="dark:invert-[0.15]"
               />
             </div>
-            <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
               iOS Beta
             </span>
           </div>
@@ -73,7 +73,7 @@ export default function EisukeSection() {
                 className="dark:invert-[0.15]"
               />
             </div>
-            <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
               Android Beta
             </span>
           </div>
