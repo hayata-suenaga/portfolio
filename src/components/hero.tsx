@@ -15,7 +15,7 @@ export default function HeroSection({
   return (
     <section className="py-32">
       <div className="mx-auto max-w-4xl grid gap-8 lg:gap-0 lg:grid-cols-2 border border-green-500">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left border border-red-500">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left border border-red-500 order-2 lg:order-1">
           <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
             {heading}
           </h1>
@@ -32,7 +32,7 @@ export default function HeroSection({
             </a>
           </div>
         </div>
-        <div className="flex justify-center items-center border border-blue-500">
+        <div className="flex justify-center items-center border border-blue-500 order-1 lg:order-2">
           <Image
             src="/profile.png"
             alt="Hayata Suenaga"
