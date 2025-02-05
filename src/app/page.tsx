@@ -11,7 +11,7 @@ export default function PortfolioPage() {
       <main>
         <HeroSection />
 
-        <section id="whoami" className="py-32">
+        <section id="whoami" className="py-16">
           <div className="mx-auto max-w-4xl">
             <div className="flex justify-center mb-12">
               <RoughNotation
@@ -74,7 +74,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* GitHub Contributions */}
-        <section className="mx-auto max-w-4xl py-32">
+        <section className="mx-auto max-w-4xl py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
@@ -94,7 +94,7 @@ export default function PortfolioPage() {
 
         <ExperienceSection />
 
-        <div className="max-w-4xl mx-auto py-32">
+        <div className="max-w-4xl mx-auto py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
@@ -174,7 +174,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Education */}
-        <section className="mx-auto max-w-4xl py-32">
+        <section className="mx-auto max-w-4xl py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
