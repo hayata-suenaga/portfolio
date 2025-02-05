@@ -6,16 +6,11 @@ import ExperienceSection from "@/components/experience";
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-background p-6 md:p-24">
-      <main className="">
+      <main>
         <HeroSection />
 
-        {/* GitHub Contributions */}
-        <section className="mb-12 mx-auto max-w-4xl">
-          <GitHubCharts username="hayata-suenaga" />
-        </section>
-
         {/* Introduction */}
-        <article className="prose dark:prose-invert max-w-2xl mb-12 mx-auto">
+        <article className="prose dark:prose-invert max-w-2xl mb-12 mx-auto py-32">
           <p>
             Hi! I&apos;m Hayata, a software engineer with over three years of
             industry experience, much of which I spent at{" "}
@@ -40,9 +35,14 @@ export default function PortfolioPage() {
           </p>
         </article>
 
+        {/* GitHub Contributions */}
+        <section className="mx-auto max-w-4xl py-32">
+          <GitHubCharts username="hayata-suenaga" />
+        </section>
+
         <ExperienceSection />
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto py-32">
           {/* Platforms Section */}
           <div className="p-12">
             <h4 className="text-lg font-semibold mb-6 text-center">
@@ -111,7 +111,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Education */}
-        <section className="mb-12 mx-auto max-w-2xl">
+        <section className="mx-auto max-w-2xl py-32">
           <h2 className="text-2xl font-bold mb-6 text-primary">Education</h2>
 
           <div>
