@@ -1,35 +1,16 @@
-import { ArrowRight } from "lucide-react";
+import { FileDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ContactDialog } from "./contact-dialog";
 
 export default function HeroSection({
   heading = "Blocks Built With Shadcn & Tailwind",
   description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
-  buttons = {
-    primary: {
-      text: "Discover all components",
-      url: "https://www.shadcnblocks.com",
-    },
-    secondary: {
-      text: "View on GitHub",
-      url: "https://www.shadcnblocks.com",
-    },
-  },
 }: {
   badge?: string;
   heading: string;
   description: string;
-  buttons?: {
-    primary?: {
-      text: string;
-      url: string;
-    };
-    secondary?: {
-      text: string;
-      url: string;
-    };
-  };
 }) {
   return (
     <section className="py-32">
@@ -41,20 +22,14 @@ export default function HeroSection({
           <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
             {description}
           </p>
-          <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-            {buttons.primary && (
-              <Button asChild className="w-full sm:w-auto">
-                <a href={buttons.primary.url}>{buttons.primary.text}</a>
+          <div className="flex flex-wrap gap-4">
+            <ContactDialog />
+            <a href="/resume.pdf" download>
+              <Button variant="outline" className="gap-2">
+                <FileDown className="h-4 w-4" />
+                Download Resume
               </Button>
-            )}
-            {buttons.secondary && (
-              <Button asChild variant="outline" className="w-full sm:w-auto">
-                <a href={buttons.secondary.url}>
-                  {buttons.secondary.text}
-                  <ArrowRight className="size-4" />
-                </a>
-              </Button>
-            )}
+            </a>
           </div>
         </div>
         <div className="flex justify-center items-center border border-blue-500">
