@@ -16,7 +16,7 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-background p-6 md:p-24">
       <main className="">
-        <HeroSection heading="Hayata Suenaga" description="Software Engineer" />
+        <HeroSection />
 
         {/* Header */}
         <header className="mb-12 mx-auto max-w-4xl">
