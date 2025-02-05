@@ -13,7 +13,7 @@ export default function HeroSection() {
             Hayata Suenaga
           </h1>
           <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
-            Software Engineer
+            Full Stack Software Engineer
           </p>
           <div className="flex flex-wrap gap-4">
             <ContactDialog />
