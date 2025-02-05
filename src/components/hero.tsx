@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ContactDialog } from "./contact-dialog";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import ThemeButton from "./theme-button";
 
 export default function HeroSection() {
   return (
@@ -45,7 +44,6 @@ export default function HeroSection() {
                 <FaGithub />
               </Link>
             </Button>
-            <ThemeButton />
           </div>
           <div className="flex flex-wrap gap-4">
             <ContactDialog />
