@@ -8,12 +8,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { ContactDialog } from "@/components/contact-dialog";
 import { GitHubCharts } from "@/components/github-charts";
+import HeroSection from "@/components/hero";
+
 export default function PortfolioPage() {
   const { theme, setTheme } = useTheme();
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-24">
       <main className="">
+        <HeroSection heading="Hayata Suenaga" description="Software Engineer" />
+
         {/* Header */}
         <header className="mb-12 mx-auto max-w-4xl">
           <div className="flex flex-col md:flex-row md:items-start md:gap-8 mb-6">
