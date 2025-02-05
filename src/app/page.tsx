@@ -9,7 +9,7 @@ import EducationSection from "@/components/education";
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-background px-6">
-      <main className="space-y-16">
+      <main className="space-y-16 pb-32">
         <HeroSection />
 
         <WhoAmISection />

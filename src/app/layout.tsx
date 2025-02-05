@@ -29,7 +29,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="scroll-pt-[80px] scroll-smooth"
+      className="scroll-pt-[100px] scroll-smooth"
     >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
