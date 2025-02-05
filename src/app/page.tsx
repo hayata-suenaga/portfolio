@@ -4,14 +4,15 @@ import HeroSection from "@/components/hero";
 import ExperienceSection from "@/components/experience";
 import { RoughNotation } from "react-rough-notation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SocialLinks from "@/components/social-links";
 
 export default function PortfolioPage() {
   return (
-    <div className="min-h-screen bg-background p-6 md:p-24">
+    <div className="min-h-screen bg-background px-6">
       <main>
         <HeroSection />
 
-        <section className="py-32">
+        <section id="whoami" className="py-16">
           <div className="mx-auto max-w-4xl">
             <div className="flex justify-center mb-12">
               <RoughNotation
@@ -74,7 +75,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* GitHub Contributions */}
-        <section className="mx-auto max-w-4xl py-32">
+        <section className="mx-auto max-w-4xl py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
@@ -94,7 +95,7 @@ export default function PortfolioPage() {
 
         <ExperienceSection />
 
-        <div className="max-w-4xl mx-auto py-32">
+        <div className="max-w-4xl mx-auto py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
@@ -174,7 +175,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Education */}
-        <section className="mx-auto max-w-4xl py-32">
+        <section className="mx-auto max-w-4xl py-16">
           <div className="flex justify-center mb-12">
             <RoughNotation
               type="underline"
@@ -215,6 +216,8 @@ export default function PortfolioPage() {
           </div>
         </section>
       </main>
+
+      <SocialLinks />
     </div>
   );
 }
