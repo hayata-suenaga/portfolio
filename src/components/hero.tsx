@@ -10,12 +10,10 @@ import ThemeButton from "./theme-button";
 export default function HeroSection() {
   return (
     <section className="py-32">
-      <div className="mx-auto max-w-4xl grid gap-8 lg:gap-0 lg:grid-cols-2 border border-green-500">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left border border-red-500 order-2 lg:order-1">
-          <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
-            Hayata Suenaga
-          </h1>
-          <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
+      <div className="mx-auto max-w-4xl grid gap-8 lg:gap-0 lg:grid-cols-2">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
+          <h1 className="text-4xl font-bold mb-2">Hayata Suenaga</h1>
+          <p className="text-xl text-muted-foreground mb-6">
             Full Stack Software Engineer
           </p>
           <div className="flex gap-2 mb-4">
@@ -59,7 +57,7 @@ export default function HeroSection() {
             </a>
           </div>
         </div>
-        <div className="flex justify-center items-center border border-blue-500 order-1 lg:order-2">
+        <div className="flex justify-center items-center order-1 lg:order-2">
           <Image
             src="/profile.png"
             alt="Hayata Suenaga"
