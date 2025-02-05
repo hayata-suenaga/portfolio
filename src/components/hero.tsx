@@ -8,7 +8,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen relative flex flex-col justify-center">
+    <section className="min-h-dvh relative flex flex-col justify-center">
       <div className="mx-auto max-w-4xl grid gap-8 lg:gap-0 lg:grid-cols-2 w-full">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
           <h1 className="text-4xl font-bold mb-2">Hayata Suenaga</h1>
