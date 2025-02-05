@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function WhoAmISection() {
   return (
-    <section id="whoami" className="py-16">
+    <section id="whoami">
       <div className="mx-auto max-w-4xl">
         <div className="flex justify-center mb-12">
           <RoughNotation
