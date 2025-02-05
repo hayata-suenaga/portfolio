@@ -12,7 +12,7 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-background px-6">
       <HeroSection />
 
-      <main className="space-y-16 pb-16">
+      <main className="space-y-24">
         <WhoAmISection />
 
         <GitHubContributionSection />
@@ -22,11 +22,9 @@ export default function PortfolioPage() {
         <EisukeSection />
 
         <EducationSection />
-
-        <div className="border-t border-border max-w-4xl mx-auto">
-          <Cta />
-        </div>
       </main>
+
+      <Cta />
 
       <SocialLinks />
     </div>

@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export default function Cta() {
   return (
-    <section className="mx-auto max-w-4xl md:pb-44 pb-28 pt-16">
+    <section className="mx-auto max-w-4xl py-44">
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"
