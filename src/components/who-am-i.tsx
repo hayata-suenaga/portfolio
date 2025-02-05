@@ -1,3 +1,4 @@
+import { Clock, MapPin } from "lucide-react";
 import { RoughNotation } from "react-rough-notation";
 
 export default function WhoAmISection() {
@@ -18,13 +19,24 @@ export default function WhoAmISection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="flex md:flex-col flex-row justify-start md:justify-center items-start gap-8">
-            <div className="p-4 border border-border rounded-md space-y-2">
-              <p>Years of Experience</p>
-              <p>+3 years</p>
+            <div className="p-4 border border-border rounded-md space-y-3">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-muted-foreground" />
+                <p className="text-sm font-medium text-muted-foreground">
+                  Years of Experience
+                </p>
+              </div>
+              <p className="font-semibold">+3 years</p>
             </div>
-            <div className="p-4 border border-border rounded-md space-y-2">
-              <p>Location</p>
-              <p>San Francisco, CA / Tokyo, JP</p>
+
+            <div className="p-4 border border-border rounded-md space-y-3">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-muted-foreground" />
+                <p className="text-sm font-medium text-muted-foreground">
+                  Location
+                </p>
+              </div>
+              <p className="font-semibold">San Francisco, CA / Tokyo, JP</p>
             </div>
           </div>
 
