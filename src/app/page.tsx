@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { GitHubCharts } from "@/components/github-charts";
 import HeroSection from "@/components/hero";
+import ExperienceSection from "@/components/experience";
 
 export default function PortfolioPage() {
   return (
@@ -38,6 +39,8 @@ export default function PortfolioPage() {
             EdTech space.
           </p>
         </article>
+
+        <ExperienceSection />
 
         {/* Experience */}
         <section className="mb-12">
