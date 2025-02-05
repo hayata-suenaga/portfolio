@@ -64,7 +64,7 @@ export function GitHubCharts({ username }: { username: string }) {
   const isLoading = !data;
 
   return (
-    <div className="mt-8 rounded-xl border bg-card p-6 shadow-sm">
+    <div>
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-lg font-semibold tracking-tight">
           GitHub Activity
