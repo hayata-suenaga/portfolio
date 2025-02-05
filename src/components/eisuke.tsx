@@ -20,7 +20,7 @@ export default function EisukeSection() {
       <p className="mb-12 max-w-lg mx-auto text-center">
         I&apos;m building
         <strong> Eisuke</strong>, a language learning platform that combines web
-        and mobile applications to help people master English vocabulary.
+        and mobile applications to help students in Japan learn English.
       </p>
 
       <div className="mb-12">
