@@ -1,34 +1,9 @@
-import { Zap } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export default function ExperienceSection() {
   return (
     <section className="py-32">
       <div className="container">
-        <div className="text-center">
-          <h1 className="mb-4 text-3xl font-semibold md:text-5xl">Changelog</h1>
-          <p className="mb-6 text-muted-foreground md:text-lg">
-            Get the latest updates and improvements to our platform.
-          </p>
-          <div className="mx-auto mb-9 flex w-full max-w-sm items-center space-x-2">
-            <Input type="email" placeholder="abc@example.com" />
-            <Button type="submit">Subscribe</Button>
-          </div>
-          <div className="mx-auto flex w-fit items-center rounded-lg border px-3 py-2.5 text-xs">
-            <span className="text-muted-foreground">
-              New features and improvements!
-            </span>
-            <a
-              className="ml-2 flex items-center font-semibold hover:underline"
-              href="#"
-            >
-              v1.2.1 <Zap className="h-3.5" />
-            </a>
-          </div>
-        </div>
         <div className="mx-auto mt-20 max-w-screen-lg space-y-20 md:mt-40 md:space-y-32">
           <div className="relative flex flex-col gap-5 md:flex-row md:gap-20">
             <div className="top-28 flex h-min shrink-0 items-center gap-5 md:sticky">
