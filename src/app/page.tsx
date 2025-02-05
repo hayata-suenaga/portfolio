@@ -2,6 +2,7 @@ import Image from "next/image";
 import { GitHubCharts } from "@/components/github-charts";
 import HeroSection from "@/components/hero";
 import ExperienceSection from "@/components/experience";
+import { RoughNotation } from "react-rough-notation";
 
 export default function PortfolioPage() {
   return (
@@ -9,31 +10,44 @@ export default function PortfolioPage() {
       <main>
         <HeroSection />
 
-        {/* Introduction */}
-        <article className="prose dark:prose-invert max-w-2xl mb-12 mx-auto py-32">
-          <p>
-            Hi! I&apos;m Hayata, a software engineer with over three years of
-            industry experience, much of which I spent at{" "}
-            <strong>Expensify</strong> working on systems serving{" "}
-            <u>15M+ users</u>. Based in San Francisco and sometimes in Japan.
-          </p>
+        <section className="py-32">
+          <div className="mx-auto max-w-4xl">
+            <RoughNotation
+              type="underline"
+              strokeWidth={2}
+              order={1}
+              color="hsl(47.9, 95.8%, 53.1%)"
+              show
+            >
+              <h2 className="inline text-3xl font-bold">Who am I?</h2>
+            </RoughNotation>
+            <article className="prose dark:prose-invert mt-12">
+              <p>
+                Hi! I&apos;m Hayata, a software engineer with over three years
+                of industry experience, much of which I spent at{" "}
+                <strong>Expensify</strong> working on systems serving{" "}
+                <u>15M+ users</u>. Based in San Francisco and sometimes in
+                Japan.
+              </p>
 
-          <p>
-            At Expensify, I led critical projects and managed engineering teams.
-            Now, I&apos;m building
-            <strong> Eisuke</strong>, a language learning platform that combines
-            web and mobile applications to help people master English
-            vocabulary.
-          </p>
+              <p>
+                At Expensify, I led critical projects and managed engineering
+                teams. Now, I&apos;m building
+                <strong> Eisuke</strong>, a language learning platform that
+                combines web and mobile applications to help people master
+                English vocabulary.
+              </p>
 
-          <p>
-            I focus on identifying common patterns that can be solved through
-            existing solutions, letting teams ship faster by focusing purely on
-            business logic. My recent interest is in{" "}
-            <u>natural language processing</u> and its applications in the
-            EdTech space.
-          </p>
-        </article>
+              <p>
+                I focus on identifying common patterns that can be solved
+                through existing solutions, letting teams ship faster by
+                focusing purely on business logic. My recent interest is in{" "}
+                <u>natural language processing</u> and its applications in the
+                EdTech space.
+              </p>
+            </article>
+          </div>
+        </section>
 
         {/* GitHub Contributions */}
         <section className="mx-auto max-w-4xl py-32">
