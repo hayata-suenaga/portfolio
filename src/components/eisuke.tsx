@@ -16,10 +16,13 @@ export default function EisukeSection() {
         </RoughNotation>
       </div>
 
+      <p className="mb-12 max-w-lg mx-auto text-center">
+        I&apos;m building
+        <strong> Eisuke</strong>, a language learning platform that combines web
+        and mobile applications to help people master English vocabulary.
+      </p>
+
       <div className="mb-8">
-        <h4 className="text-lg font-semibold mb-6 text-center">
-          Our Platforms
-        </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="flex flex-col items-center group">
             <WebsitePreview url="eisuke.org" />
@@ -45,9 +48,6 @@ export default function EisukeSection() {
       </div>
 
       <div>
-        <h4 className="text-lg font-semibold mb-6 text-center">
-          Try Our Beta Apps
-        </h4>
         <div className="flex gap-12 justify-center">
           <div className="flex flex-col items-center group">
             <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">

@@ -49,14 +49,6 @@ export default function WhoAmISection() {
             </p>
 
             <p>
-              At Expensify, I led critical projects and managed engineering
-              teams. Now, I&apos;m building
-              <strong> Eisuke</strong>, a language learning platform that
-              combines web and mobile applications to help people master English
-              vocabulary.
-            </p>
-
-            <p>
               I focus on identifying common patterns that can be solved through
               existing solutions, letting teams ship faster by focusing purely
               on business logic. My recent interest is in{" "}
