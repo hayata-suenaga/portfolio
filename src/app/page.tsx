@@ -5,6 +5,7 @@ import WhoAmISection from "@/components/who-am-i";
 import GitHubContributionSection from "@/components/github-contribution";
 import EisukeSection from "@/components/eisuke";
 import EducationSection from "@/components/education";
+import Cta from "@/components/cta";
 
 export default function PortfolioPage() {
   return (
@@ -21,6 +22,10 @@ export default function PortfolioPage() {
         <EisukeSection />
 
         <EducationSection />
+
+        <div className="border-t border-border max-w-4xl mx-auto">
+          <Cta />
+        </div>
       </main>
 
       <SocialLinks />
