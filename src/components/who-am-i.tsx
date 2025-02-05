@@ -18,7 +18,7 @@ export default function WhoAmISection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="flex md:flex-col flex-row justify-start md:justify-center items-start gap-8">
+          <div className="flex md:flex-col flex-row justify-start md:justify-center items-start md:gap-8 gap-4">
             <div className="p-4 border border-border rounded-md space-y-3">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-muted-foreground" />
