@@ -17,9 +17,9 @@ export default function PortfolioPage() {
 
         <GitHubContributionSection />
 
-        <ExperienceSection />
-
         <EisukeSection />
+
+        <ExperienceSection />
 
         <EducationSection />
       </main>

@@ -1,5 +1,6 @@
 import { RoughNotation } from "react-rough-notation";
 import Image from "next/image";
+import { Apple, Backpack, Bot, Home, School } from "lucide-react";
 
 export default function EisukeSection() {
   return (
@@ -16,38 +17,41 @@ export default function EisukeSection() {
         </RoughNotation>
       </div>
 
-      <div className="mb-8">
-        <h4 className="text-lg font-semibold mb-6 text-center">
-          Our Platforms
-        </h4>
+      <p className="mb-12 max-w-lg mx-auto text-center">
+        I&apos;m building
+        <strong> Eisuke</strong>, a language learning platform that combines web
+        and mobile applications to help students in Japan learn English.
+      </p>
+
+      <div className="mb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="flex flex-col items-center group">
             <WebsitePreview url="eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
-              Main Website
-            </p>
+            <div className="flex items-center gap-2 mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+              <Home className="w-4 h-4" />
+              <span>Main Website</span>
+            </div>
           </div>
 
           <div className="flex flex-col items-center group">
             <WebsitePreview url="app.eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
-              Student Portal
-            </p>
+            <div className="flex items-center gap-2 mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+              <Backpack className="w-4 h-4" />
+              <span>Student Portal</span>
+            </div>
           </div>
 
           <div className="flex flex-col items-center sm:col-span-2 lg:col-span-1 group">
             <WebsitePreview url="teacher.eisuke.org" />
-            <p className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
-              Teacher Portal
-            </p>
+            <div className="flex items-center gap-2 mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+              <School className="w-4 h-4" />
+              <span>Teacher Portal</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div>
-        <h4 className="text-lg font-semibold mb-6 text-center">
-          Try Our Beta Apps
-        </h4>
         <div className="flex gap-12 justify-center">
           <div className="flex flex-col items-center group">
             <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">
@@ -59,9 +63,10 @@ export default function EisukeSection() {
                 className="dark:invert-[0.15]"
               />
             </div>
-            <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
-              iOS Beta
-            </span>
+            <div className="flex items-center gap-2 mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+              <Apple className="w-4 h-4" />
+              <span>iOS Beta</span>
+            </div>
           </div>
           <div className="flex flex-col items-center group">
             <div className="p-4 bg-background border rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105">
@@ -73,9 +78,10 @@ export default function EisukeSection() {
                 className="dark:invert-[0.15]"
               />
             </div>
-            <span className="text-sm font-medium mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
-              Android Beta
-            </span>
+            <div className="flex items-center gap-2 mt-3 text-muted-foreground group-hover:text-foreground transition-colors">
+              <Bot className="w-4 h-4" />
+              <span>iOS Beta</span>
+            </div>
           </div>
         </div>
       </div>
