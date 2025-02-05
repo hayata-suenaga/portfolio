@@ -44,8 +44,8 @@ export default function WhoAmISection() {
             <p>
               Hi! I&apos;m Hayata, a software engineer with over three years of
               industry experience, much of which I spent at{" "}
-              <strong>Expensify</strong> working on systems serving{" "}
-              <u>15M+ users</u>. Based in San Francisco and sometimes in Japan.
+              <strong>Expensify</strong> in San Francisco working on systems
+              serving <u>15M+ users</u>.
             </p>
 
             <p>
