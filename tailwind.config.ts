@@ -10,7 +10,8 @@ export default {
   theme: {
     extend: {
       animation: {
-        "linear-indicator": "i-spy linear both",
+        "linear-indicator": "scale-y linear both",
+        "nav-bar-indicator": "scale-x linear both",
         "scroll-out": "scroll-out linear both",
       },
       keyframes: {
@@ -25,7 +26,25 @@ export default {
             opacity: "0",
           },
         },
-        "i-spy": {
+        "scale-x": {
+          "entry 0%": {
+            transformOrigin: "left",
+            transform: "scaleX(0)",
+          },
+          "entry 100%": {
+            transformOrigin: "left",
+            transform: "scaleX(1)",
+          },
+          "exit 0%": {
+            transformOrigin: "right",
+            transform: "scaleX(1)",
+          },
+          "exit 100%": {
+            transformOrigin: "right",
+            transform: "scaleX(0)",
+          },
+        },
+        "scale-y": {
           "entry 0%": {
             transformOrigin: "top",
             transform: "scaleY(0)",

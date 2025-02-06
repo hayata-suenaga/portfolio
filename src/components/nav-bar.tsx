@@ -25,16 +25,20 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4 font-semibold text-sm text-foreground/60">
-          <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center">
             {NAV_ITEMS.map((link) => (
-              <Link
-                key={link.href}
-                href={`#${link.href}`}
-                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
-              >
-                <link.icon className="h-4 w-4" />
-                {link.label}
+              <Link key={link.href} href={`#${link.href}`}>
+                <div className="flex items-center gap-1.5 hover:text-foreground transition-colors font-semibold text-sm text-secondary-foreground mx-2">
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </div>
+                <div
+                  className="w-full h-[2px] bg-primary mt-1 animate-nav-bar-indicator"
+                  style={{
+                    animationTimeline: `--${link.href}`,
+                  }}
+                />
               </Link>
             ))}
           </div>
