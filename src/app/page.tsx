@@ -8,6 +8,8 @@ import EducationSection from "@/components/education";
 import Cta from "@/components/cta";
 import VerticalNav from "@/components/vertical-nav";
 import { NAV_ITEMS } from "@/lib/nav-items";
+import Header from "@/components/nav-bar";
+import Footer from "@/components/footer";
 
 const VIEW__TIMELINE_NAMES = NAV_ITEMS.map((item) => `--${item.href}`).join(
   ","
@@ -16,29 +18,33 @@ const VIEW__TIMELINE_NAMES = NAV_ITEMS.map((item) => `--${item.href}`).join(
 export default function PortfolioPage() {
   return (
     <div
-      className="min-h-screen bg-background px-6"
+      className="min-h-screen bg-background"
       style={{
         timelineScope: VIEW__TIMELINE_NAMES,
       }}
     >
-      <HeroSection />
+      <Header />
 
-      <main className="space-y-24">
-        <WhoAmISection />
+      <div className="px-6">
+        <HeroSection />
 
-        <GitHubContributionSection />
+        <main className="space-y-24">
+          <WhoAmISection />
 
-        <EisukeSection />
+          <GitHubContributionSection />
 
-        <ExperienceSection />
+          <EisukeSection />
 
-        <EducationSection />
-      </main>
+          <ExperienceSection />
 
-      <Cta />
+          <EducationSection />
+        </main>
+
+        <Cta />
+        <Footer />
+      </div>
 
       <SocialLinks />
-
       <VerticalNav />
     </div>
   );
