@@ -6,6 +6,7 @@ import GitHubContributionSection from "@/components/github-contribution";
 import EisukeSection from "@/components/eisuke";
 import EducationSection from "@/components/education";
 import Cta from "@/components/cta";
+import VerticalNav from "@/components/vertical-nav";
 
 export default function PortfolioPage() {
   return (
@@ -27,6 +28,8 @@ export default function PortfolioPage() {
       <Cta />
 
       <SocialLinks />
+
+      <VerticalNav />
     </div>
   );
 }
