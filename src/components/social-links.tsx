@@ -36,7 +36,7 @@ export default function SocialLinks() {
             </Link>
           </Button>
         </div>
-        <div className="w-1 h-20 bg-primary-foreground" />
+        <div className="w-1 h-20 bg-foreground" />
       </div>
     </>
   );
