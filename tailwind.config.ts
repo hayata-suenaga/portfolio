@@ -9,6 +9,29 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        "linear-indicator": "i-spy linear both",
+      },
+      keyframes: {
+        "i-spy": {
+          "entry 0%": {
+            transformOrigin: "top",
+            transform: "scaleY(0)",
+          },
+          "entry 100%": {
+            transformOrigin: "top",
+            transform: "scaleY(1)",
+          },
+          "exit 0%": {
+            transformOrigin: "bottom",
+            transform: "scaleY(1)",
+          },
+          "exit 100%": {
+            transformOrigin: "bottom",
+            transform: "scaleY(0)",
+          },
+        },
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

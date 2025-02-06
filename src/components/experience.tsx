@@ -3,7 +3,13 @@ import { RoughNotation } from "react-rough-notation";
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className={`mx-auto max-w-4xl`}>
+    <section
+      id="experience"
+      className="mx-auto max-w-4xl"
+      style={{
+        viewTimelineName: "--experience",
+      }}
+    >
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"

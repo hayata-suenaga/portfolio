@@ -4,7 +4,13 @@ import { Apple, Backpack, Bot, Home, School } from "lucide-react";
 
 export default function EisukeSection() {
   return (
-    <section id="eisuke" className="max-w-4xl mx-auto">
+    <section
+      id="eisuke"
+      className="max-w-4xl mx-auto"
+      style={{
+        viewTimelineName: "--eisuke",
+      }}
+    >
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"

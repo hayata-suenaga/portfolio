@@ -3,7 +3,13 @@ import { GitHubCharts } from "./github-charts";
 
 export default function GitHubContributionSection() {
   return (
-    <section id="in-numbers" className="mx-auto max-w-4xl">
+    <section
+      id="in-numbers"
+      className="mx-auto max-w-4xl"
+      style={{
+        viewTimelineName: "--in-numbers",
+      }}
+    >
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"

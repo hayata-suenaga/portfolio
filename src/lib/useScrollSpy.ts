@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 
-const useScrollspy = (ids: string[], offset: number = 0) => {
-  const [activeId, setActiveId] = useState("");
+const useScrollspy = (ids: string[]) => {
+  const [activeIds, setActiveIds] = useState<string[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        const activeIdSet = new Set<string>(activeIds);
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
+          if (entry.intersectionRatio > 0) {
+            activeIdSet.add(entry.target.id);
+          } else {
+            activeIdSet.delete(entry.target.id);
           }
         });
+        setActiveIds(Array.from(activeIdSet));
       },
-      { rootMargin: `${-offset}px 0px 0px 0px`, threshold: 0.2 }
+      { rootMargin: "-100px", threshold: 0.2 }
     );
 
     ids.forEach((id) => {
@@ -30,9 +34,9 @@ const useScrollspy = (ids: string[], offset: number = 0) => {
         }
       });
     };
-  }, [ids, offset]);
+  }, [activeIds, ids]);
 
-  return activeId;
+  return activeIds;
 };
 
 export default useScrollspy;
