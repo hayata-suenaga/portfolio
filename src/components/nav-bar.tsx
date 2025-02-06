@@ -51,7 +51,10 @@ export default function Header() {
             <DropdownMenuContent align="end" className="w-48">
               {NAV_ITEMS.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
-                  <Link href={link.href} className="flex items-center gap-2">
+                  <Link
+                    href={`#${link.href}`}
+                    className="flex items-center gap-2"
+                  >
                     <link.icon className="h-4 w-4" />
                     {link.label}
                   </Link>
