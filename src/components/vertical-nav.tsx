@@ -15,7 +15,7 @@ export default function VerticalNav() {
           <Link key={href} title={label} href={`#${href}`}>
             <div className="flex gap-2 items-stretch">
               <div
-                className={`animate-linear-indicator w-[2px] bg-primary`}
+                className={`animate-linear-indicator w-[2px] bg-primary supports-[animation-timeline:view()]:block hidden`}
                 style={{
                   animationTimeline: `--${href}`,
                 }}
