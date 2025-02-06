@@ -11,8 +11,20 @@ export default {
     extend: {
       animation: {
         "linear-indicator": "i-spy linear both",
+        "scroll-out": "scroll-out linear both",
       },
       keyframes: {
+        "scroll-out": {
+          "cover 0%": {
+            opacity: "1",
+          },
+          "cover 75%": {
+            opacity: "0",
+          },
+          "cover 100%": {
+            opacity: "0",
+          },
+        },
         "i-spy": {
           "entry 0%": {
             transformOrigin: "top",

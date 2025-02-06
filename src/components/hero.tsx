@@ -67,7 +67,12 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
+      <div
+        className="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-scroll-out"
+        style={{
+          animationTimeline: "view()",
+        }}
+      >
         <a
           href="#whoami"
           className="link-outline animate-bounce hidden md:flex items-center flex-col text-muted-foreground hover:text-primary"
