@@ -3,7 +3,7 @@ import { RoughNotation } from "react-rough-notation";
 
 export default function ExperienceSection() {
   return (
-    <section id="experience">
+    <section id="experience" className={`mx-auto max-w-4xl`}>
       <div className="flex justify-center mb-12">
         <RoughNotation
           type="underline"
@@ -16,7 +16,7 @@ export default function ExperienceSection() {
         </RoughNotation>
       </div>
 
-      <div className="mx-auto max-w-4xl space-y-20">
+      <div className="space-y-20">
         {EXPERIENCES.map((experience, index) => (
           <div
             key={index}
