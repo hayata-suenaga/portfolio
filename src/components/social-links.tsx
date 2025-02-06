@@ -5,7 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 export default function SocialLinks() {
   return (
     <>
-      <div className="hidden fixed right-16 bottom-0 lg:flex flex-col items-center justify-between space-y-8">
+      <div className="hidden fixed xl:right-16 right-2 bottom-0 lg:flex flex-col items-center justify-between space-y-8">
         <div className="flex flex-col space-y-6">
           <Button
             variant="ghost"

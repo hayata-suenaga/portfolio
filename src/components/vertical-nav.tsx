@@ -9,7 +9,7 @@ export default function VerticalNav() {
   const activeSectionIds = useScrollspy(NAV_ITEMS.map((nav) => nav.href));
 
   return (
-    <div className="hidden fixed left-10 bottom-1/3 lg:flex flex-col">
+    <div className="hidden fixed left-1 bottom-1/3 lg:flex flex-col xl:left-16">
       {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
         return (
           <Link key={href} title={label} href={`#${href}`}>
