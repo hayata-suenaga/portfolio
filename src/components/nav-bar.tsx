@@ -34,7 +34,7 @@ export default function Header() {
                   {link.label}
                 </div>
                 <div
-                  className="w-full h-[2px] bg-primary mt-1 animate-nav-bar-indicator"
+                  className="w-full h-[2px] bg-primary mt-1 animate-nav-bar-indicator supports-[animation-timeline:view()]:block hidden"
                   style={{
                     animationTimeline: `--${link.href}`,
                   }}
