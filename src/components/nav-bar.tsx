@@ -1,14 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Menu,
-  User,
-  Calculator,
-  Baby,
-  Briefcase,
-  GraduationCap,
-} from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ThemeButton from "./theme-button";
 import {
@@ -17,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NAV_ITEMS } from "@/lib/nav-items";
 
 export default function Header() {
   return (
@@ -33,10 +27,10 @@ export default function Header() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-4 font-semibold text-sm text-foreground/60">
           <div className="flex items-center gap-3">
-            {NAV_LINKS.map((link) => (
+            {NAV_ITEMS.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={`#${link.href}`}
                 className="flex items-center gap-1.5 hover:text-foreground transition-colors"
               >
                 <link.icon className="h-4 w-4" />
@@ -55,7 +49,7 @@ export default function Header() {
               <Menu className="h-5 w-5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              {NAV_LINKS.map((link) => (
+              {NAV_ITEMS.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
                   <Link href={link.href} className="flex items-center gap-2">
                     <link.icon className="h-4 w-4" />
@@ -70,11 +64,3 @@ export default function Header() {
     </div>
   );
 }
-
-const NAV_LINKS = [
-  { href: "#whoami", label: "Who am I?", icon: User },
-  { href: "#in-numbers", label: "In numbers", icon: Calculator },
-  { href: "#eisuke", label: "Eisuke", icon: Baby },
-  { href: "#experience", label: "Experience", icon: Briefcase },
-  { href: "#education", label: "Education", icon: GraduationCap },
-];
