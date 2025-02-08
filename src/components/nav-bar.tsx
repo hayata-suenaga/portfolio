@@ -14,10 +14,10 @@ import { NAV_ITEMS } from "@/lib/nav-items";
 
 export default function Header() {
   return (
-    <div className="fixed inset-x-0 md:top-4 top-0 mx-0 md:mx-4 z-40">
+    <div className="fixed inset-x-0 mx-0 z-40 backdrop-blur-md h-16 p-4">
       <header
         className={cn(
-          "max-w-6xl rounded-none mx-auto flex items-center justify-between md:rounded-2xl px-8 saturate-100 backdrop-blur-md h-16 bg-background/75 border border-border/50"
+          "max-w-6xl mx-auto flex items-center justify-between px-8"
         )}
       >
         <Link href="/" className="font-bold text-lg">

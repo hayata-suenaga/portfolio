@@ -25,9 +25,8 @@ export default function PortfolioPage() {
     >
       <Header />
 
+      <HeroSection />
       <div className="px-6">
-        <HeroSection />
-
         <main className="space-y-24">
           <WhoAmISection />
 
