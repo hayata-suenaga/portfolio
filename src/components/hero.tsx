@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, FileDown, Mouse } from "lucide-react";
+import { ChevronDown, FileDown, Mouse, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ContactDialog } from "./contact-dialog";
@@ -10,20 +10,24 @@ import { useState, useEffect } from "react";
 import { format, toZonedTime } from "date-fns-tz";
 
 export default function HeroSection() {
-  const [tokyoTime, setTokyoTime] = useState("");
+  const [tokyoTime, setTokyoTime] = useState({ time: "", isPM: false });
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
       const tokyoDate = toZonedTime(now, "Asia/Tokyo");
-      setTokyoTime(format(tokyoDate, "HH:mm:ss", { timeZone: "Asia/Tokyo" }));
+      const formattedTime = format(tokyoDate, "h:mm", {
+        timeZone: "Asia/Tokyo",
+      });
+      const isPM = format(tokyoDate, "a", { timeZone: "Asia/Tokyo" }) === "PM";
+      setTokyoTime({ time: formattedTime, isPM });
     };
 
     // Update immediately
     updateTime();
 
     // Update every second
-    const interval = setInterval(updateTime, 1000);
+    const interval = setInterval(updateTime, 60000); // Update every minute
 
     return () => clearInterval(interval);
   }, []);
@@ -42,9 +46,14 @@ export default function HeroSection() {
           <p className="text-xl text-muted-foreground mb-2">
             Full Stack Software Engineer
           </p>
-          <p className="text-sm text-muted-foreground mb-6">
-            Current time in Tokyo: {tokyoTime}
-          </p>
+          <div className="mb-6 flex items-center text-sm text-muted-foreground gap-2">
+            <span>Current time in Tokyo: {tokyoTime.time}</span>
+            {tokyoTime.isPM ? (
+              <Moon className="h-4 w-4" />
+            ) : (
+              <Sun className="h-4 w-4" />
+            )}
+          </div>
           <div className="flex gap-2 mb-4">
             <Button
               variant="ghost"
