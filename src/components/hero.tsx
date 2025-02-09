@@ -1,12 +1,37 @@
-import { ChevronDown, FileDown, Mouse } from "lucide-react";
+"use client";
 
+import { ChevronDown, FileDown, Mouse, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ContactDialog } from "./contact-dialog";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { format, toZonedTime } from "date-fns-tz";
 
 export default function HeroSection() {
+  const [tokyoTime, setTokyoTime] = useState({ time: "", isPM: false });
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const tokyoDate = toZonedTime(now, "Asia/Tokyo");
+      const formattedTime = format(tokyoDate, "h:mm", {
+        timeZone: "Asia/Tokyo",
+      });
+      const isPM = format(tokyoDate, "a", { timeZone: "Asia/Tokyo" }) === "PM";
+      setTokyoTime({ time: formattedTime, isPM });
+    };
+
+    // Update immediately
+    updateTime();
+
+    // Update every second
+    const interval = setInterval(updateTime, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-svh relative flex flex-col justify-center">
       <img
@@ -18,9 +43,17 @@ export default function HeroSection() {
       <div className="mx-auto max-w-4xl grid gap-8 lg:gap-0 lg:grid-cols-2 w-full">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
           <h1 className="text-4xl font-bold mb-2">Hayata Suenaga</h1>
-          <p className="text-xl text-muted-foreground mb-6">
+          <p className="text-xl text-muted-foreground mb-2">
             Full Stack Software Engineer
           </p>
+          <div className="mb-6 flex items-center text-sm text-muted-foreground gap-2">
+            <span>Current time in Tokyo: {tokyoTime.time}</span>
+            {tokyoTime.isPM ? (
+              <Moon className="h-4 w-4" />
+            ) : (
+              <Sun className="h-4 w-4" />
+            )}
+          </div>
           <div className="flex gap-2 mb-4">
             <Button
               variant="ghost"
