@@ -33,7 +33,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-svh relative flex flex-col justify-center py-24">
+    <section className="supports-[height:1svh]:min-h-svh relative flex flex-col justify-center py-24">
       <img
         src="/top-wave.svg"
         alt="Wave Shape"
