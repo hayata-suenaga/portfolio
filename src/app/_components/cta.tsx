@@ -1,5 +1,5 @@
 import { RoughNotation } from "react-rough-notation";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 
 export default function Cta() {
   return (

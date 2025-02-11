@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
-import ThemeButton from "./theme-button";
+import ThemeButton from "../../components/theme-button";
 import {
   DropdownMenu,
   DropdownMenuContent,

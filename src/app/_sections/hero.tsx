@@ -3,7 +3,7 @@
 import { ChevronDown, FileDown, Mouse, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ContactDialog } from "./contact-dialog";
+import { ContactDialog } from "../_components/contact-dialog";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useState, useEffect } from "react";

@@ -1,5 +1,5 @@
 import { RoughNotation } from "react-rough-notation";
-import { GitHubCharts } from "./github-charts";
+import { GitHubCharts } from "../_components/github-charts";
 
 export default function GitHubContributionSection() {
   return (

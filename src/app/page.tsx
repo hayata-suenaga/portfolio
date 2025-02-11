@@ -1,15 +1,15 @@
-import HeroSection from "@/components/hero";
-import ExperienceSection from "@/components/experience";
-import SocialLinks from "@/components/social-links";
-import WhoAmISection from "@/components/who-am-i";
-import GitHubContributionSection from "@/components/github-contribution";
-import EisukeSection from "@/components/eisuke";
-import EducationSection from "@/components/education";
-import Cta from "@/components/cta";
-import VerticalNav from "@/components/vertical-nav";
+import HeroSection from "@/app/_sections/hero";
+import ExperienceSection from "@/app/_sections/experience";
+import SocialLinks from "@/app/_components/social-links";
+import WhoAmISection from "@/app/_sections/who-am-i";
+import GitHubContributionSection from "@/app/_sections/github-contribution";
+import EisukeSection from "@/app/_sections/eisuke";
+import EducationSection from "@/app/_sections/education";
+import Cta from "@/app/_components/cta";
+import VerticalNav from "@/app/_components/vertical-nav";
 import { NAV_ITEMS } from "@/lib/nav-items";
-import Header from "@/components/nav-bar";
-import Footer from "@/components/footer";
+import Header from "@/app/_components/nav-bar";
+import Footer from "@/app/_components/footer";
 
 const VIEW__TIMELINE_NAMES = NAV_ITEMS.map((item) => `--${item.href}`).join(
   ","
