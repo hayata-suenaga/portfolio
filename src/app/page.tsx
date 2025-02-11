@@ -5,7 +5,7 @@ import WhoAmISection from "@/app/_sections/who-am-i";
 import GitHubContributionSection from "@/app/_sections/github-contribution";
 import EisukeSection from "@/app/_sections/eisuke";
 import EducationSection from "@/app/_sections/education";
-import Cta from "@/app/_sections/cta";
+import Cta from "@/app/_components/cta";
 import VerticalNav from "@/app/_components/vertical-nav";
 import { NAV_ITEMS } from "@/lib/nav-items";
 import Header from "@/app/_components/nav-bar";
